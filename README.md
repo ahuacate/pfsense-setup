@@ -9,7 +9,6 @@ Network prerequisites are:
 
 Other Prerequisites are:
 - [x] Proxmox node fully configured as per [PROXMOX-NODE BUILDING](https://github.com/ahuacate/proxmox-node/blob/master/README.md#proxmox-node-building)
-- [x] pfSense is fully configured on typhoon-01 including both OpenVPN Gateways VPNGATE-LOCAL and VPNGATE-WORLD.
 
 
 Tasks to be performed are:
