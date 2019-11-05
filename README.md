@@ -58,6 +58,7 @@ Now using the pfSense web interface `Interfaces` > `OPT1` to open a configuratio
 | Block bogon networks | `[]` | *Uncheck the box*
 
 And click `Save`.
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_01.png)
 
 Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuration form, then fill up the necessary fields as follows:
 
