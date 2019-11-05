@@ -242,6 +242,8 @@ Click `Save`.
 Then to check whether the connection works navigate `Status` > `OpenVPN` and Status field for vpngate-world and vpngate-local should show `up`. This means you are connected to your provider.
 
 ## 5.00 Create two new Gateways
+Gateways act just like the WAN or LAN does, it’s almost like a physical port on your firewall except in this case it’s for your VPN and not a physical port on the device. Creating a gateway allows us to specify traffic that should utilise the specific VPN Client the gateway is for.
+
 Next we need to add an interface for each new OpenVPN connection and then a Gateway for each interface. 
 
 ### 5.01 Add Network Interface Ports
@@ -288,9 +290,47 @@ Your `Interfaces` > `Assignments` tab should now look like this:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_04.png)
 
-At this point you are ready to create the firewall rules. Now I would **highly recommend a reboot** here as this was the only thing that made the next few steps work. So do a reboot `Diagnostics` > `Reboot` and perform a `Reboot`.
+### 5.03 Setting up a Gateway for vpngate-world
+Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and edit the necessary fields as follows:
 
-If you dont things might get not work in the steps ahead.
+| Edit Gateway | Value | Notes
+| :---  | :---: | :--- |
+| Disabled | `[]` Disable this gateway 
+| Interface | `VPNGATEWORLD`
+| Address Family | `IPv4`
+| Name | `VPNGATEWORLD_VPNV4`
+| Gateway | dynamic
+| Gateway Monitoring | `[]` Disable Gateway Monitoring 
+| Gateway Action | `[]` Disable Gateway Monitoring
+| Monitor IP | `85.203.37.1` | *Change to your VPN providers DNS*
+| Force State | `[]` Mark Gateway as Down
+| Description | `Interface VPNGATEWORLD_VPNV4 Gateway`
+
+And click `Save`.
+
+### 5.04 Setting up a Gateway for vpngate-local
+Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and edit the necessary fields as follows:
+
+| Edit Gateway | Value | Notes
+| :---  | :---: | :--- |
+| Disabled | `[]` Disable this gateway 
+| Interface | `VPNGATELOCAL`
+| Address Family | `IPv4`
+| Name | `VPNGATELOCAL_VPNV4`
+| Gateway | dynamic
+| Gateway Monitoring | `[]` Disable Gateway Monitoring 
+| Gateway Action | `[]` Disable Gateway Monitoring
+| Monitor IP | `85.203.37.1` | *Change to your VPN providers DNS*
+| Force State | `[]` Mark Gateway as Down
+| Description | `Interface VPNGATELOCAL_VPNV4 Gateway`
+
+And click `Save`. Your pfSense web interface go to `System` > `Routing` > `Gateways Tab` should look like:
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_04.png)
+
+**IMPORTANT**: At this point you are ready to create the firewall rules. But I would **highly recommend a reboot** here as this was the only thing that made the next few steps work. So do a reboot `Diagnostics` > `Reboot` and perform a `Reboot`.
+
+If you don't things might not work in the steps ahead.
 
 ## 6.00 Adding Firewall Aliases
 Aliases act as placeholders for real hosts, networks or ports. They can be used to minimize the number of changes that have to be made if a host, network or port changes. The name of an alias can be entered instead of the IP address, network or port in all fields that have a red background. In simple terms --- use them.
