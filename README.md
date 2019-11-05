@@ -13,9 +13,43 @@ Other Prerequisites are:
 
 
 Tasks to be performed are:
-
-- [ ] 00.00 Patches & Fixes
-
+- [1.00 Setup pfSense](#100-setup-pfsense)
+	- [1.01 Change Your pfSense Password](#101-change-your-pfsense-password)
+	- [1.02 Enable AES-NI](#102-enable-aes-ni)
+	- [1.03 Preventing IP address leaks](#103-preventing-ip-address-leaks)
+- [2.0 Fix a Static IPv4 and edit Interfaces OPT1, OPT2 WAN](#20-fix-a-static-ipv4-and-edit-interfaces-opt1-opt2-wan)
+	- [2.01 Edit Interface OPT1](#201-edit-interface-opt1)
+	- [2.02 Edit Interface OPT2](#202-edit-interface-opt2)
+	- [2.03 Edit Interface WAN](#203-edit-interface-wan)
+- [3.00 Add DHCP Servers to OPT1 and OPT2](#300-add-dhcp-servers-to-opt1-and-opt2)
+	- [3.01 Setup DHCP Servers for OPT1 and OPT2](#301-setup-dhcp-servers-for-opt1-and-opt2)
+- [4.00 Setup OpenVPN Client Server](#400-setup-openvpn-client-server)
+	- [4.01 Add your OpenVPN Client Certificate details](#401-add-your-openvpn-client-certificate-details)
+	- [4.02 Create your OpenVPN Client Server](#402-create-your-openvpn-client-server)
+- [5.00 Create two new Gateways](#500-create-two-new-gateways)
+	- [5.01 Add Network Interface Ports](#501-add-network-interface-ports)
+	- [5.02 Edit the new Interface Ports](#502-edit-the-new-interface-ports)
+	- [5.03 Setting up a Gateway for vpngate-world](#503-setting-up-a-gateway-for-vpngate-world)
+	- [5.04 Setting up a Gateway for vpngate-local](#504-setting-up-a-gateway-for-vpngate-local)
+- [6.00 Adding Firewall Aliases](#600-adding-firewall-aliases)
+	- [6.01 Create Firewall Alias - Chromecast IP List](#601-create-firewall-alias---chromecast-ip-list)
+- [7.00 Adding NAT Rules - Outbound](#700-adding-nat-rules---outbound)
+	- [7.01 Create NAT Rule VLAN30 to vpngate-world](#701-create-nat-rule-vlan30-to-vpngate-world)
+	- [7.02 Create NAT Rule VLAN40 to vpngate-local](#702-create-nat-rule-vlan40-to-vpngate-local)
+- [8.00 Adding Firewall Rules](#800-adding-firewall-rules)
+	- [8.01 Allow Rule for OPT1 - vpngate-world](#801-allow-rule-for-opt1---vpngate-world)
+	- [8.02 Allow Rule for OPT2 - vpngate-local](#802-allow-rule-for-opt2---vpngate-local)
+	- [8.03 Redirect DNS on OPT1 - vpngate-world](#803-redirect-dns-on-opt1---vpngate-world)
+	- [8.04 Redirect DNS on OPT2 - vpngate-local](#804-redirect-dns-on-opt2---vpngate-local)
+	- [8.05 Allow OPT2 access to Chromecast and TV devices - vpngate-local](#805-allow-opt2-access-to-chromecast-and-tv-devices---vpngate-local)
+- [8.00 Setup pfSense DNS](#800-setup-pfsense-dns)
+	- [8.01 Set Up DNS Resolver](#801-set-up-dns-resolver)
+	- [8.02 Set Up General DNS](#802-set-up-general-dns)
+- [9.00 Install Avahi for mdns](#900-install-avahi-for-mdns)
+	- [9.01 Install Avahi Package](#901-install-avahi-package)
+	- [9.02 Setup Avahi](#902-setup-avahi)
+- [10.00 Setup NTP](#1000-setup-ntp)
+- [11.00 Finish Up](#1100-finish-up)
 
 ## 1.00 Setup pfSense
 You can now access pfSense webConfigurator by opening the following URL in your web browser: http://192.168.1.253/ . In the pfSense webConfigurator we are going to setup two OpenVPN Gateways, namely vpngate-world and vpngate-local. Your default login details are User > admin | Pwd > pfsense
@@ -677,7 +711,6 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 And click `Save`.
 
 ### 8.02 Set Up General DNS
-
 Navigate to `System` > `General Settings` and fill up the necessary fields as follows:
 
 | General Setup | Value | Value | Notes
@@ -697,15 +730,38 @@ Navigate to `System` > `General Settings` and fill up the necessary fields as fo
 
 And click `Save`. Your pfSense appliance is now configured for DNS servers.
 
-## 9.00 Setup NTP
+## 9.00 Install Avahi for mdns
+The Avahi package used in pfSense software is a system which facilitates service discovery on a local network. This means that a laptop or computer may be connected into a network and instantly be able to view other people to chat with, locate chromecast devices and find printers to print to or find files being shared.
+
+### 9.01 Install Avahi Package
+In the pfSense WebGUI go to System > Package Manager > Available Packages and type ‘avahi’ into the search criteria and then click Search.
+
+Make sure you click `+ Install` and then Confirm on the next page. Installation may take a short while as it downloads and updates certain packages.
+
+### 9.02 Setup Avahi
+After installation of Avahi navigate to `Services` > `Avahi` and fill up the necessary fields as follows:
+
+| Avahi Setup | Value | Notes
+| :---  | :--- | :--- 
+| **General Settings**
+| Enable | `pfSense`
+| Interface Action | `Allow Interfaces`
+| Interfaces | `OPT2` | *We are only going to enable Avahi mdns on our VLAN40 or VPNGATE-LOCAL network*
+| Disable IPv4 | `[]` Disable support for IPv4
+| Disable IPv6 | `[]` Disable support for IPv6
+| Enable Reflection | `[x]` Repeat mdns packets across subnets
+| **Publishing**
+| Enable publishing | `[]` Enable publishing of information about the pfSense host
+
+And click `Save`.
+
+## 10.00 Setup NTP
 This is easy. Navigate to `Services` > `NTP` >`Settings` and fill up the necessary fields as follows:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_ntp_01.png)
 
-## 10.00 Setup Gateway Monitoring
-
-## 10.00 Finish Up
-After all your rules are in place head over to `Diagnostics` > `States` > `Reset States Tab` > and tick `Reset the firewall state table` click `Reset`. After doing any firewall changes that involve a gateway change its best doing a state reset before checking if anything has worked (odds are it will not work if you dont). PfSense WebGUI may hang for period but dont despair because it will return in a few seconds for routing to come back and up to a minute, don’t panic.
+## 11.00 Finish Up
+After all the above is in place head over to `Diagnostics` > `States` > `Reset States Tab` > and tick `Reset the firewall state table` click `Reset`. After doing any firewall changes that involve a gateway change its best doing a state reset before checking if anything has worked (odds are it will not work if you dont). PfSense WebGUI may hang for period but dont despair because it will return in a few seconds for routing to come back and up to a minute, don’t panic.
 
 And finally navigate to `Diagnostics` > `Reboot` and reboot your pfSense machine.
 
