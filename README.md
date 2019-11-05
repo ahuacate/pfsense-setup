@@ -326,7 +326,7 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and 
 
 And click `Save`. Your pfSense web interface go to `System` > `Routing` > `Gateways Tab` should look like:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_04.png)
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_gateway_00.png)
 
 **IMPORTANT**: At this point you are ready to create the firewall rules. But I would **highly recommend a reboot** here as this was the only thing that made the next few steps work. So do a reboot `Diagnostics` > `Reboot` and perform a `Reboot`.
 
