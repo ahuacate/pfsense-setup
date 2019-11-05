@@ -80,6 +80,7 @@ Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuratio
 | Block bogon networks | `[]` | *Uncheck the box*
 
 And click `Save`.
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_02.png)
 
 Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration form, then edit the necessary fields to match the following:
 
@@ -106,6 +107,7 @@ Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration
 | Block bogon networks | `[]` | *Uncheck the box*
 
 And click `Save`.
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_03.png)
 
 ### 7.4 Setup DHCP Servers for OPT1 and OPT2
 Now using the pfSense web interface `Services` > `DHCP Server` > `OPT1 Tab` or `OPT2 Tab` to open a configuration form, then fill up the necessary fields as follows:
