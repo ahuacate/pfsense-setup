@@ -37,6 +37,19 @@ Now using the pfSense web interface `System` > `Advanced` > `Miscellaneous Tab` 
 
 Remember to hit the `Save` button at the bottom of the page.
 
+### 1.03 Preventing IP address leaks
+This is an important step required to reduce the chance of leaks in the event the VPN goes down for any reason.
+
+Navigate using the pfSense web interface to `System` > `Advanced` and `Miscellaneous Tab`. Scroll down to Gateway Monitoring and set the following:
+
+| Miscellaneous Tab| Value | Notes
+| :---  | :---: | :--- |
+| **Gateway Monitoring**
+| State Killing on Gateway Failure | `[]` Flush all states when a gateway goes down
+| Skip rules when gateway is down | `[x]` Do not create rules when gateway is down
+
+And click `Save`
+
 ## 2.0 Fix a Static IPv4 and edit Interfaces OPT1, OPT2 WAN
 Edit the interfaces as follows:
 
@@ -423,7 +436,7 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
 | Destination 
 | | `[]` Invert match.
 | | `Single host or alias` 
-| | `85.203.37.1`
+| | `85.203.37.1` | *Change to your VPN providers DNS*
 | Destination Port Range
 | | From `DNS (53)`
 | | Custom `Leave Blank`
@@ -462,7 +475,7 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
 | Destination 
 | | `[]` Invert match.
 | | `Single host or alias` 
-| | `85.203.37.1`
+| | `85.203.37.1` | *Change to your VPN providers DNS*
 | Destination Port Range
 | | From `DNS (53)`
 | | Custom `Leave Blank`
@@ -544,7 +557,6 @@ Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and
 
 Click `Save`.
 
-
 Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
 
 | Firewall Rule / OPT2 | Value | Notes
@@ -581,75 +593,89 @@ Your `Firewall` > `Rules` > `OPT2 tab` should now look like:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_00.png)
 
+## 8.00 Setup pfSense DNS
+Here will setup two DNS services.
 
-
-### 1.09 Setup pfSense DNS
-Here will setup different DNS services for each OpenVPN WAN. I do not recommend setting one up for the non-OpenVPN WAN because it may cause DNS leaks when using a OpenVPN Gateway because of how pfSense DNS Resolver works.
-
-Navigate to `System` > `General Settings` and under DNS servers add IP addresses for Cloudflare DNS servers and select your WAN gateway.
-
-| DNS Server Settings | Value | Value | Notes
-| :---  | :--- | :--- | :---
-| DNS Servers | `85.203.37.1` | `VPNGATEWORLD_VPNV4-opt3-wan-xxxx`
-| DNS Servers | `85.203.37.2` | `VPNGATELOCAL_VPNV4-opt4-wan-xxxx`
-| **Below is Optional BUT not recommended**
-| DNS Servers | `1.1.1.1` | `WAN_DHCP - wan-xxxx`
-
-After entering the DNS IP addresses, scroll down to the bottom of the page and click `Save`. Your pfSense appliance is now configured for DNS servers.
-
-**Note:** The problem with setting up DNS for WAN (non encrypted gateway) is in the event OpenDNS queries fail, it will likely use 127.0.0.1 (itself - host) as another available DNS server. But if you must, I recommend you use Cloudflare’s DNS service which is arguably the best DNS servers to use in pfSense and here we configure Cloudfare DNS over TLS for added security.
-
-To configure the pfSense DNS resolver to send DNS queries over TLS, navigate to `Services` > `DNS Resolver` and on the tab `General Settings` scroll down to the `Display Custom Options` box. Enter the following lines (you should be able to simply copy / paste the section text block below):
-```
-server:
-forward-zone:
-name: "."
-forward-ssl-upstream: yes
-forward-addr: 1.1.1.1@853
-forward-addr: 1.0.0.1@853
-```
-After entering the above code, scroll down to the bottom of the page and click `Save` and then to the top of the page click `Apply Changes`.
-
-### 7.9.1 Set Up DNS Resolver
+### 8.01 Set Up DNS Resolver
 To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` and on the tab `General Settings` fill up the necessary fields as follows:
 
-| General Settings | Value | Notes
+| DNS Resolver Settings | Value | Notes
 | :---  | :--- | :--- 
+| **General Settings Tab**
+| **General DNS Resolver Options**
 | Enable | `☑ Enable DNS resolver` | 
 | Listen Port | Leave Default | 
 | Enable SSL/TLS Service | `[]` | 
 | SSL/TLS Certificate | Leave Default | 
-| SSL/TLS Listen Port | Leave Default | 
-| Network Interfaces | `OPT1` | *Select ONLY OPT1, OPT2 and Localhost - Use the Ctrl key to toggle selection*
+| SSL/TLS Listen Port | Leave Default | *Should be 853 by default*
+| Network Interfaces | `LAN` | *Select ONLY LAN, OPT1, OPT2 and Localhost - Use the Ctrl key to toggle selection*
+||`OPT1`
 ||`OPT2`
 ||`Localhost`
 | Outgoing Network Interfaces | `VPNGATEWORLD` |*Select ONLY VPNGATEWORLD and VPNGATELOCAL - Use the Ctrl key to toggle selection*
 || `VPNGATELOCAL`
-| System Domain Local Zone Type | `Transparent` | 
+| System Domain Local Zone Type | `Static` | 
 | DNSSEC | `☑ Enable DNSSEC Support` | 
 | DNS Query Forwarding | `[]` Enable Forwarding Mode | *Uncheck*
 || `[]` Use SSL/TLS for outgoing DNS Queries to Forwarding Servers | *Uncheck*
 | DHCP Registration | `[]` Register DHCP leases in the DNS Resolver | *Uncheck*
 | Static DHCP | `[]` Register DHCP static mappings in the DNS Resolver | *Uncheck*
-| OpenVPN Clients | `[]` Register connected OpenVPN clients in the DNS Resolver | *Uncheck*
-| **Below is Optional only if you want add TLS and Cloudfare DNS as shown in Step 7.9 - Not Recommended**
+| OpenVPN Clients | `[x]` Register connected OpenVPN clients in the DNS Resolver | *Check*
 | Display Custom Options | Click `Display Custom Options` | 
-| Custom options  | server:
-||forward-zone:
-||name: "."
-||forward-ssl-upstream: yes
-||forward-addr: 1.1.1.1@853
-||forward-addr: 1.0.0.1@853
-||server:include: /var/unbound/pfb_dnsbl.*conf | 
+| Custom options  | `server:include: /var/unbound/pfb_dnsbl.*conf`
+| ** Advanced Settings Tab**
+| **Advanced Pricvacy Options**
+| Hide Identity | `[x]` id.server and hostname.bind queries are refused
+| Hide Version | `[x]` version.server and version.bind queries are refused
+| Query Name Minimization | `[]` Send minimum amount of QNAME/QTYPE information to upstream servers to enhance privacy
+| Strict Query Name Minimization | `[]` Do not fall-back to sending full QNAME to potentially broken DNS servers
+| **Advanced Resolver Options**
+| Prefetch Support | `[]` Message cache elements are prefetched before they expire to help keep the cache up to date
+| Prefetch DNS Key Support | `[x]` DNSKEYs are fetched earlier in the validation process when a Delegation signer is encountered
+| Harden DNSSEC Data | `[x]` DNSSEC data is required for trust-anchored zones.
 
-### 7.9.1 Finish Up
+And click `Save`.
+
+### 8.02 Set Up General DNS
+
+Navigate to `System` > `General Settings` and fill up the necessary fields as follows:
+
+| General Setup | Value | Value | Notes
+| :---  | :--- | :--- | :---
+| **System**
+| Hostname | `pfSense`
+| Domain | `localdomain`
+| **DNS Server Settings**
+| DNS Servers | `1.1.1.1` | DNS Hostname - Leave Default | `none` | *Must choose none*
+| DNS Servers | `1.0.0.1` | DNS Hostname - Leave Default | `none` | *Must choose none*
+| DNS Server Override | `[]` Allow DNS server list to be overridden by DHCP/PPP on WAN
+| Disable DNS Forwarde | `[x]` Do not use the DNS Forwarder/DNS Resolver as a DNS server for the firewall
+| **Localisation**
+| Timezone | Select your region
+| Timeservers | 0.pfsense.pool.ntp.org
+| Language | Select your language
+
+And click `Save`. Your pfSense appliance is now configured for DNS servers.
+
+## 9.00 Setup NTP
+This is easy. Navigate to `Services` > `NTP` >`Settings` and fill up the necessary fields as follows:
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_ntp_01.png)
+
+## 10.00 Setup Gateway Monitoring
+
+## 10.00 Finish Up
 After all your rules are in place head over to `Diagnostics` > `States` > `Reset States Tab` > and tick `Reset the firewall state table` click `Reset`. After doing any firewall changes that involve a gateway change its best doing a state reset before checking if anything has worked (odds are it will not work if you dont). PfSense WebGUI may hang for period but dont despair because it will return in a few seconds for routing to come back and up to a minute, don’t panic.
 
 And finally navigate to `Diagnostics` > `Reboot` and reboot your pfSense machine.
 
-Once you’re done head over to any client PC on the network or mobile on the WiFi SSID on either `vpngate-world` VLAN30 or `vpngate-local` VLAN40 networks and use IP checker to if its all working https://wtfismyip.com
+Once you’re done head over to any client PC on the network or mobile on the WiFi SSID on either `vpngate-world` VLAN30 or `vpngate-local` VLAN40 networks and use IP checker to if its all working https://wtfismyip.com with NO DNS Leaks https://www.dnsleaktest.com/ (use the extended option on dnsleaktest).
 
 Success! (hopefully)
+
+---
+
+## 00.00 Patches and Fixes
 
 ## 8.0 Install & Setup pfBlockerNG on pfSense
 pfBlockerNG can add other security enhancements such as blocking known bad IP addresses with blocklists. For example, getting rid of adverts and pop-ups from websites. If you don’t already have a blocklist functionality in place on your pfSense (such as PiHole), I would strongly suggest adding pfBlockerNG Devel to your new OpenVPN Gateways (VPNGGATEWORLD and VPNGATELOCAL).
