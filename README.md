@@ -37,7 +37,10 @@ Now using the pfSense web interface `System` > `Advanced` > `Miscellaneous Tab` 
 
 Remember to hit the `Save` button at the bottom of the page.
 
-### 1.03 Add DHCP Servers to OPT1 and OPT2 and fix a Static IPv4 to WAN
+## 2.0 Fix a Static IPv4 and edit Interfaces OPT1, OPT2 WAN
+Edit the interfaces as follows:
+
+### 2.01 Edit Interface OPT1
 Now using the pfSense web interface `Interfaces` > `OPT1` to open a configuration form, then fill up the necessary fields as follows:
 
 | Interfaces/OPT1 (vtnet2) | Value | Notes
@@ -58,8 +61,10 @@ Now using the pfSense web interface `Interfaces` > `OPT1` to open a configuratio
 | Block bogon networks | `[]` | *Uncheck the box*
 
 And click `Save`.
+
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_01.png)
 
+### 2.02 Edit Interface OPT2
 Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuration form, then fill up the necessary fields as follows:
 
 | Interfaces/OPT2 (vtnet3) | Value | Notes
@@ -80,8 +85,10 @@ Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuratio
 | Block bogon networks | `[]` | *Uncheck the box*
 
 And click `Save`.
+
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_02.png)
 
+### 2.03 Edit Interface WAN
 Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration form, then edit the necessary fields to match the following:
 
 | Interfaces/WAN (vtnet1) | Value | Notes
@@ -107,9 +114,13 @@ Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration
 | Block bogon networks | `[]` | *Uncheck the box*
 
 And click `Save`.
+
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_03.png)
 
-### 7.4 Setup DHCP Servers for OPT1 and OPT2
+## 3.00 Add DHCP Servers to OPT1 and OPT2
+Because in UniFi we have configured VLAN30 and VLAN40 as `VLAN Only` status we must configure a pfSense DHCP Server for both these VLANs.
+
+### 3.01 Setup DHCP Servers for OPT1 and OPT2
 Now using the pfSense web interface `Services` > `DHCP Server` > `OPT1 Tab` or `OPT2 Tab` to open a configuration form, then fill up the necessary fields as follows:
 
 | General Options | OPT 1 Value | OPT2 Value | Notes |
@@ -127,15 +138,16 @@ Now using the pfSense web interface `Services` > `DHCP Server` > `OPT1 Tab` or `
 | WINS servers | Leave blank
 | DNS servers | Leave Blank | Leave Blank | *DNS Server 1-4: Must leave all blank. We are going to use DNS Resolver for DNS tasks. If you add DNS here then pFBlockerNG will not work.*
 | **Other Options**
-| Gateway | `192.168.30.5` | `192.168.40.51`
+| Gateway | `192.168.30.5` | `192.168.40.5`
 | Default Lease time | `86320` | `86320`
 | Maximum lease time | `86400` | `86400`
 
 Remember to hit the `Save` button at the bottom of the page.
 
-### 7.5 Add your OpenVPN Client Server details
+## 4.00 Setup OpenVPN Client Server
 Here we going to create OpenVPN clients vpngate-world and vpngate-local. You will need your VPN account server username and password details and have your vpn server provider OVPN configuration file open in a text editor so you can copy various certificate and key details (cut & paste). Note the values for this form will vary between different VPN providers but there should be a tutorial showing your providers pfSense configuration settings on the internet somewhere. 
 
+### 4.01 Add your OpenVPN Client Certificate details
 Now using the pfSense web interface `System` > `Cert. Manager` > `CAs` > `Add` to open a configuration form, then fill up the necessary fields as follows:
 
 | Create/Edit CA | Value | Notes
@@ -158,7 +170,8 @@ Click `Save`. Stay on this page and click `Certificates` at the top. Click `Add`
 
 Click `Save`.
 
-Now using the pfSense web interface `VPN` > `OpenVPN` > `Clients Tab` > `Add` to open a configuration form, then fill up the necessary fields as follows (creating one each for vpngate-world and vpngate-local):
+### 4.02 Create your OpenVPN Client Server
+Now using the pfSense web interface `VPN` > `OpenVPN` > `Clients Tab` > `Add` to open a configuration form, then fill up the necessary fields as follows (creating one each for `vpngate-world` and `vpngate-local`):
 
 | General Information | Value | Notes
 | :---  | :---: | :--- |
@@ -215,9 +228,13 @@ Click `Save`.
 
 Then to check whether the connection works navigate `Status` > `OpenVPN` and Status field for vpngate-world and vpngate-local should show `up`. This means you are connected to your provider.
 
-### 7.6 Add two new Gateways
-Next we need to add an interface for each new OpenVPN connection and then a Gateway for each interface. Now using the pfSense web interface `Interfaces` > `Assignments` the configuration form will show two available network ports which can be added, ovpnc1 (vpngate-world) and ovpnc2 (vpngate-local). Now `Add` both and remember to click `Save`.
+## 5.00 Create two new Gateways
+Next we need to add an interface for each new OpenVPN connection and then a Gateway for each interface. 
 
+### 5.01 Add Network Interface Ports
+Now using the pfSense web interface `Interfaces` > `Assignments` the configuration form will show two available network ports which can be added, ovpnc1 (vpngate-world) and ovpnc2 (vpngate-local). Now `Add` both and remember to click `Save`.
+
+### 5.02 Edit the new Interface Ports
 Then click on the corresponding `Interface` names one at a time, likely to be `OPT3` and `OPT4`,  and edit the necessary fields as follows (editing both OPT3 and OPT4):
 
 The first edit will be `OPT3`:
@@ -235,6 +252,8 @@ The first edit will be `OPT3`:
 | Block private networks and loopback addresses | `[]` | *Uncheck the box*
 | Block bogon networks | `[]` | *Uncheck the box*
 
+Click `Save`.
+
 Now edit `OPT4`:
 
 | Interfaces/OPT4 (ovpnc2) | Value | Notes
@@ -250,25 +269,49 @@ Now edit `OPT4`:
 | Block private networks and loopback addresses | `[]` | *Uncheck the box*
 | Block bogon networks | `[]` | *Uncheck the box*
 
-Click `Save`.
+Click `Save`. 
 
-At this point you are ready to create the firewall rules. Now I would **highly recommend a reboot** here as this was the only thing that made the next few steps work. So do a reboot `Diagnostics` > `Reboot` and perform a `Reboot`. If you dont things might get not work in the steps ahead.
+Your `Interfaces` > `Assignments` tab should now look like this:
 
-### 7.7 Adding NAT Rules
-Next we need to add the NAT rules to allow for traffic to go out of the  VPN encrypted gateway(s), this is done from the `Firewall` > `NAT` > `Outbound Tab`. 
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_04.png)
+
+At this point you are ready to create the firewall rules. Now I would **highly recommend a reboot** here as this was the only thing that made the next few steps work. So do a reboot `Diagnostics` > `Reboot` and perform a `Reboot`.
+
+If you dont things might get not work in the steps ahead.
+
+## 6.00 Adding Firewall Aliases
+Aliases act as placeholders for real hosts, networks or ports. They can be used to minimize the number of changes that have to be made if a host, network or port changes. The name of an alias can be entered instead of the IP address, network or port in all fields that have a red background. In simple terms --- use them.
+
+### 6.01 Create Firewall Alias - Chromecast IP List
+Here you list all your Chromecast and TV device IPs. So when you add a Chromecast IP assign it a static IP and enter it into the `Chromecast_IP_Addresses` alias list.
+
+Now create a new alias `Firewall` > `Aliases` > `IP Tab` > `Add` to open a new configuration form, then fill up the necessary fields as follows and adding your chromecast and TV devices:
+
+| Alias Field | Value | Value |
+| :---  | :--- | :--- |
+| **Properties**
+| Name | `Chromecast_IP_Addresses`
+| Description | `List of Chromecast device IPv4 Addresses`
+| Type | `Host(s)`
+| **Hosts(s)**
+| IP ir FQDN | `192.168.20.151` | `Chromecast Living Room`
+
+## 7.00 Adding NAT Rules - Outbound
+Next we need to add the NAT rules to allow for traffic to go out of the VPN encrypted gateway(s), this is done from the `Firewall` > `NAT` > `Outbound Tab`. 
 
 If you have Automatic NAT enabled you want to enable Manual Outbound NAT and click `Save`. Now you will see and be able to edit the NAT Mappings configuration form.
 
 But first you must find any rules that allows the devices you wish to tunnel, with a `Source` value of `192.168.30.0/24` and `192.168.40.0/24` and delete them and click `Save` at the bottom right of the form page. **DO NOT DELETE** the `Mappings` with `Source` values like `127.0.0.0/8, ::1/128, 192.168.1.0/24`!
 
-Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `Add` to open a new configuration form, then fill up the necessary fields as follows (creating one each for `VLAN30 to vpngate-world` and `VLAN40 to vpngate-local`):
+### 7.01 Create NAT Rule VLAN30 to vpngate-world
+Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `Add` to open a new configuration form, then fill up the necessary fields as follows:
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
 | Disabled | `[]` Disable this rule
 | Do not NAT | `[]` Enabling this option will .....
 | Interface | `VPNGATEWORLD`
-|Address Family | `IPv4+IPv6`
+| Address Family | `IPv4+IPv6`
 | Protocol | `any`
 | Source | `Network` | `192.168.30.0/24`
 | Destination | `Any` | Leave blank
@@ -279,9 +322,12 @@ Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `Add` to open a 
 | No XMLRPC Sync | `[]`
 | Description | `VLAN30 to vpngate-world`
 
-And click `Save`. 
+And click `Save`.
 
-Repeat the above steps for `VLAN40 to vpngate-local` changing to the values as follows:
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_01.png)
+
+### 7.02 Create NAT Rule VLAN40 to vpngate-local
+Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `Add` to open a new configuration form, then fill up the necessary fields as follows:
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
@@ -299,7 +345,9 @@ Repeat the above steps for `VLAN40 to vpngate-local` changing to the values as f
 | No XMLRPC Sync | `[]`
 | Description | `VLAN40 to vpngate-local`
 
-And click `Save`. 
+And click `Save`.
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_02.png)
 
 Now your first two mappings for the new gateways show look like this:
 
@@ -308,10 +356,11 @@ Now your first two mappings for the new gateways show look like this:
 |[]|VPNGATEWORLD|192.168.30.0/24|*|*|*|VPNGATEWORLD address|*|:heavy_check_mark:|VLAN30 to vpngate-world
 |[]|VPNGATELOCAL|192.168.40.0/24|*|*|*|VPNGATELOCAL address|*|:heavy_check_mark:|VLAN40 to vpngate-local
 
-### 7.8 Adding the Firewall Rules
-This is simple because we are going to send all the traffic in a subnet(s) (VLAN30 > vpngate-world / VLAN40 > vpngate-local) through the openVPN tunnel. 
+## 8.00 Adding Firewall Rules
+This is simple because we are going to send all the traffic in a subnet(s) (VLAN30 > vpngate-world / VLAN40 > vpngate-local) through the openVPN tunnel. And remember Firewall rules work top down so best set `Allow Rules` above `Block Rules` below.
 
-So first lets do OPT1 / vpngate-world so go `Firewall` > `Rules` > `OPT1 tab` and `Add` a new rule:
+### 8.01 Allow Rule for OPT1 - vpngate-world
+Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add` a new rule:
 
 | Edit Firewall Rule / OPT1 | Value | Notes|
 | :---  | :--- | :--- |
@@ -323,13 +372,14 @@ So first lets do OPT1 / vpngate-world so go `Firewall` > `Rules` > `OPT1 tab` an
 | **Extra Options**
 | Log | `[]` Log packets that are handled by this rule
 | Description | `VLAN30 Traffic to vpngate-world`
-| Advanced Options | Click `Display Advanced` | *This is a important step. You only want to edit one value in `Advanced`!!!!
+| Advanced Options | Click `Display Advanced` | *This is a important step. You only want to edit one value in `Advanced`!!!!*
 | **Advanced Options**
-| Gateway | `VPNGATEWORLD_VPNV$-x.x.x.x-Interface VPNGATEWORLD_VPNV4 Gateway` | `MUST Change to this gateway!`
+| Gateway | `VPNGATEWORLD_VPNV$-x.x.x.x-Interface VPNGATEWORLD_VPNV4 Gateway` | *MUST Change to this gateway!*
 
 Click `Save`.
 
-Now do OPT2 / vpngate-local so go `Firewall` > `Rules` > `OPT2 tab` and `Add` a new rule:
+### 8.02 Allow Rule for OPT2 - vpngate-local
+Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add` a new rule:
 
 | Edit Firewall Rule / OPT2 | Value | Notes|
 | :---  | :--- | :--- |
@@ -347,9 +397,193 @@ Now do OPT2 / vpngate-local so go `Firewall` > `Rules` > `OPT2 tab` and `Add` a 
 
 Click `Save` and `Apply`.
 
-The above rules will send all the traffic on that interface into the VPN tunnel, you must ensure that the ‘gateway’ option is set to your VPN gateway and that this rule is above any other rule that allows hosts to go out to the internet. pfSense needs to be able to catch this rule before any others.
+The above two rules will send all the traffic on that interface into the VPN tunnel, you must ensure that the ‘gateway’ option is set to your VPN gateway and that this rule is above any other rule that allows hosts to go out to the internet. pfSense needs to be able to catch this rule before any others.
 
-### 7.9 Setup pfSense DNS
+### 8.03 Redirect DNS on OPT1 - vpngate-world
+When your computer needs to know an IP Address of a host it will use a DNS server and by default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
+
+To fix this problem we’re going to create a basic port forward rule which will take traffic destined for UDP port 53 (the DNS server port) and forward it to a different DNS server that is operated by your VPN provider. In this example we will redirect DNS 53 to ExpressVPN DNS server IP address.
+
+Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
+
+| Firewall Rule / OPT1 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `[]` disable this rule
+| Interface | `OPT1`
+| Addresss Family | `IPv4`
+| Protocol | `TCP/UDP`
+| **Source**
+| Source 
+| | `[]` Invert match. 
+| | `OPT1 net` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `[]` Invert match.
+| | `Single host or alias` 
+| | `85.203.37.1`
+| Destination Port Range
+| | From `DNS (53)`
+| | Custom `Leave Blank`
+| | To `DNS (53)`
+| | Custom `Leave Blank`
+| **Extra Options**
+| Log | `[]` Log packets that are handled by this rule
+| Description | `VLAN40 Traffic to vpngate-world`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_01.png)
+
+### 8.04 Redirect DNS on OPT2 - vpngate-local
+When your computer needs to know an IP Address of a host it will use a DNS server and by default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
+
+To fix this problem we’re going to create a basic port forward rule which will take traffic destined for UDP port 53 (the DNS server port) and forward it to a different DNS server that is operated by your VPN provider. In this example we will redirect DNS 53 to ExpressVPN DNS server IP address.
+
+Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
+
+| Firewall Rule / OPT2 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `[]` disable this rule
+| Interface | `OPT2`
+| Addresss Family | `IPv4`
+| Protocol | `TCP/UDP`
+| **Source**
+| Source 
+| | `[]` Invert match. 
+| | `OPT2 net` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `[]` Invert match.
+| | `Single host or alias` 
+| | `85.203.37.1`
+| Destination Port Range
+| | From `DNS (53)`
+| | Custom `Leave Blank`
+| | To `DNS (53)`
+| | Custom `Leave Blank`
+| **Extra Options**
+| Log | `[]` Log packets that are handled by this rule
+| Description | `VLAN40 Traffic to vpngate-local`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_02.png)
+
+### 8.05 Allow OPT2 access to Chromecast and TV devices - vpngate-local
+By default VLAN40 (vpngate-local) has no access to any other other VLAN. For convenience we allow certain VLAN40 ports access to our Chromecast Alias IP address.
+
+Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
+
+| Firewall Rule / OPT2 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `[]` disable this rule
+| Interface | `OPT2`
+| Addresss Family | `IPv4`
+| Protocol | `TCP`
+| **Source**
+| Source 
+| | `[]` Invert match. 
+| | `OPT2 net` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `[]` Invert match.
+| | `Single host or alias` 
+| | `Chromecast_IP_Addresses` | *Here we use the Firewall alias `Chromecast_IP_Addresses` we created before*
+| Destination Port Range
+| | From `Other`
+| | Custom `8008`
+| | To `Other`
+| | Custom `8009`
+| **Extra Options**
+| Log | `[]` Log packets that are handled by this rule
+| Description | `Allow OPT2 (VPNGate-local) Port 8008-8009 to Chromecast`
+| Advanced Options | Leave Default
+
+Click `Save`.
+
+Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
+
+| Firewall Rule / OPT2 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `[]` disable this rule
+| Interface | `OPT2`
+| Addresss Family | `IPv4`
+| Protocol | `UDP`
+| **Source**
+| Source 
+| | `[]` Invert match. 
+| | `OPT2 net` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `[]` Invert match.
+| | `Single host or alias` 
+| | `224.0.0.251` | 
+| Destination Port Range
+| | From `Other`
+| | Custom `1900`
+| | To `Other`
+| | Custom `1900`
+| **Extra Options**
+| Log | `[]` Log packets that are handled by this rule
+| Description | `Allow OPT2 (VPNGate-local) Port 1900 to Chromecast`
+| Advanced Options | Leave Default
+
+Click `Save`.
+
+
+Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
+
+| Firewall Rule / OPT2 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `[]` disable this rule
+| Interface | `OPT2`
+| Addresss Family | `IPv4`
+| Protocol | `UDP`
+| **Source**
+| Source 
+| | `[]` Invert match. 
+| | `OPT2 net` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `[]` Invert match.
+| | `Single host or alias` 
+| | `224.0.0.251` | 
+| Destination Port Range
+| | From `Other`
+| | Custom `5353`
+| | To `Other`
+| | Custom `5353`
+| **Extra Options**
+| Log | `[]` Log packets that are handled by this rule
+| Description | `Allow OPT2 (VPNGate-local) Port 5353 to Chromecast`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+Your `Firewall` > `Rules` > `OPT2 tab` should now look like:
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_00.png)
+
+
+
+### 1.09 Setup pfSense DNS
 Here will setup different DNS services for each OpenVPN WAN. I do not recommend setting one up for the non-OpenVPN WAN because it may cause DNS leaks when using a OpenVPN Gateway because of how pfSense DNS Resolver works.
 
 Navigate to `System` > `General Settings` and under DNS servers add IP addresses for Cloudflare DNS servers and select your WAN gateway.
