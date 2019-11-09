@@ -113,7 +113,7 @@ Now using the pfSense web interface `Interfaces` > `OPT1` to open a configuratio
 | IPv4 Upstream gateway | `None`
 | **Reserved Networks**
 | Block private networks and loopback addresses | `[ ]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 And click `Save`.
 
@@ -137,7 +137,7 @@ Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuratio
 | IPv4 Upstream gateway | `None`
 | **Reserved Networks**
 | Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 And click `Save`.
 
@@ -165,8 +165,8 @@ Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration
 | Gateway IPv4 | `192.168.2.5`
 | Description | `WAN/VPN Egress Gateway` | *And click `Save` to create the new gateway*
 | **Reserved Networks**
-| Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block private networks and loopback addresses | `☐` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 And click `Save`.
 
@@ -181,10 +181,10 @@ Now using the pfSense web interface `Services` > `DHCP Server` > `OPT1 Tab` or `
 | General Options | OPT 1 Value | OPT2 Value | Notes |
 | :---  | :---: | :---: | :---
 | Enable | `☑` |  `☑` | *Opt1&2 Check the box*
-| BOOTP | `[ ]` | `[ ]` | *Disable*
-| Deny unknown clients | `[ ]` | `[ ]` | *Disable*
-| Ignore denied clients | `[ ]` | `[ ]` | *Disable*
-| Ignore client identifiers | `[ ]` | `[ ]` | *Disable*
+| BOOTP | `☐` | `☐` | *Disable*
+| Deny unknown clients | `☐` | `☐` | *Disable*
+| Ignore denied clients | `☐` | `☐` | *Disable*
+| Ignore client identifiers | `☐` | `☐` | *Disable*
 | Subnet | 192.168.30.0 | 192.168.40.0 |
 | Subnet mask |255.255.255.0 | 255.255.255.0 | 
 | Available range | 192.168.30.1 - 192.168.30.254 | 192.168.40.1 - 192.168.40.254 |
@@ -335,8 +335,8 @@ The first edit will be `OPT3`:
 | MTU | Leave blank
 | MSS | Leave blank
 | **Reserved Networks**
-| Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block private networks and loopback addresses | `☐` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 Click `Save`.
 
@@ -352,8 +352,8 @@ Now edit `OPT4`:
 | MTU | Leave blank
 | MSS | Leave blank
 | **Reserved Networks**
-| Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block private networks and loopback addresses | `☐` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 Click `Save`. 
 
@@ -369,8 +369,8 @@ Now edit `OPT5`:
 | MTU | Leave blank
 | MSS | Leave blank
 | **Reserved Networks**
-| Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block private networks and loopback addresses | `☐` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 Click `Save`.
 
@@ -386,8 +386,8 @@ Now edit `OPT6`:
 | MTU | Leave blank
 | MSS | Leave blank
 | **Reserved Networks**
-| Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block private networks and loopback addresses | `☐` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 Click `Save`.
 
@@ -403,8 +403,8 @@ Now edit `OPT7`:
 | MTU | Leave blank
 | MSS | Leave blank
 | **Reserved Networks**
-| Block private networks and loopback addresses | `[]` | *Uncheck the box*
-| Block bogon networks | `[]` | *Uncheck the box*
+| Block private networks and loopback addresses | `☐` | *Uncheck the box*
+| Block bogon networks | `☐` | *Uncheck the box*
 
 Click `Save`. 
 
@@ -422,10 +422,10 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and 
 | Address Family | `IPv4`
 | Name | `VPNGATEWORLD01_VPNV4`
 | Gateway | dynamic
-| Gateway Monitoring | `[]` Disable Gateway Monitoring 
-| Gateway Action | `[]` Disable Gateway Monitoring
+| Gateway Monitoring | `☐` Disable Gateway Monitoring 
+| Gateway Action | `☐` Disable Gateway Monitoring
 | Monitor IP | `8.8.4.4` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `[]` Mark Gateway as Down
+| Force State | `☐` Mark Gateway as Down
 | Description | `Interface VPNGATEWORLD01_VPNV4 Gateway`
 
 And click `Save`.
@@ -437,10 +437,10 @@ And click `Save`.
 | Address Family | `IPv4`
 | Name | `VPNGATEWORLD02_VPNV4`
 | Gateway | dynamic
-| Gateway Monitoring | `[]` Disable Gateway Monitoring 
-| Gateway Action | `[]` Disable Gateway Monitoring
+| Gateway Monitoring | `☐` Disable Gateway Monitoring 
+| Gateway Action | `☐` Disable Gateway Monitoring
 | Monitor IP | `8.8.8.8` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `[]` Mark Gateway as Down
+| Force State | `☐` Mark Gateway as Down
 | Description | `Interface VPNGATEWORLD01_VPNV4 Gateway`
 
 And click `Save`.
@@ -450,44 +450,44 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and 
 
 | Edit Gateway | Value | Notes
 | :---  | :---: | :--- |
-| Disabled | `[]` Disable this gateway 
+| Disabled | `☐` Disable this gateway 
 | Interface | `VPNGATELOCAL01`
 | Address Family | `IPv4`
 | Name | `VPNGATELOCAL01_VPNV4`
 | Gateway | dynamic
-| Gateway Monitoring | `[]` Disable Gateway Monitoring 
-| Gateway Action | `[]` Disable Gateway Monitoring
+| Gateway Monitoring | `☐` Disable Gateway Monitoring 
+| Gateway Action | `☐` Disable Gateway Monitoring
 | Monitor IP | `208.67.220.220` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `[]` Mark Gateway as Down
+| Force State | `☐` Mark Gateway as Down
 | Description | `Interface VPNGATELOCAL01_VPNV4 Gateway`
 
 And click `Save`. 
 
 | Edit Gateway | Value | Notes
 | :---  | :---: | :--- |
-| Disabled | `[]` Disable this gateway 
+| Disabled | `☐` Disable this gateway 
 | Interface | `VPNGATELOCAL02`
 | Address Family | `IPv4`
 | Name | `VPNGATELOCAL02_VPNV4`
 | Gateway | dynamic
-| Gateway Monitoring | `[]` Disable Gateway Monitoring 
-| Gateway Action | `[]` Disable Gateway Monitoring
+| Gateway Monitoring | `☐` Disable Gateway Monitoring 
+| Gateway Action | `☐` Disable Gateway Monitoring
 | Monitor IP | `208.67.222.222` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `[]` Mark Gateway as Down
+| Force State | `☐` Mark Gateway as Down
 | Description | `Interface VPNGATELOCAL02_VPNV4 Gateway`
 
 And click `Save`.
 | Edit Gateway | Value | Notes
 | :---  | :---: | :--- |
-| Disabled | `[]` Disable this gateway 
+| Disabled | `☐` Disable this gateway 
 | Interface | `VPNGATELOCAL03`
 | Address Family | `IPv4`
 | Name | `VPNGATELOCAL02_VPNV4`
 | Gateway | dynamic
-| Gateway Monitoring | `[]` Disable Gateway Monitoring 
-| Gateway Action | `[]` Disable Gateway Monitoring
+| Gateway Monitoring | `☐` Disable Gateway Monitoring 
+| Gateway Action | `☐` Disable Gateway Monitoring
 | Monitor IP | `9.9.9.9 ` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `[]` Mark Gateway as Down
+| Force State | `☐` Mark Gateway as Down
 | Description | `Interface VPNGATELOCAL03_VPNV4 Gateway`
 
 And click `Save`.
@@ -574,20 +574,20 @@ Now create a new alias `Firewall` > `Aliases` > `IP Tab` > `Add` to open a new c
 | **Hosts(s)**
 | IP ir FQDN | `192.168.20.151` | `Chromecast Living Room`
 
-## 8.00 Adding NAT Rules - Outbound
+## 8.00 Adding NAT Rules
 Next we need to add the NAT rules to allow for traffic to go out of the VPN encrypted gateway(s), this is done from the `Firewall` > `NAT` > `Outbound Tab`. 
 
 If you have Automatic NAT enabled you want to enable Manual Outbound NAT and click `Save`. Now you will see and be able to edit the NAT Mappings configuration form.
 
 But first you must find any rules that allows the devices you wish to tunnel, with a `Source` value of `192.168.30.0/24` and `192.168.40.0/24` and delete them and click `Save` at the bottom right of the form page. **DO NOT DELETE** the `Mappings` with `Source` values like `127.0.0.0/8, ::1/128, 192.168.1.0/24`!
 
-### 8.01 Create NAT Rule VLAN30 to vpngate-world01/02
+### 8.01 Create NAT Rule VLAN30 to vpngate-world01/02 - Outbound
 Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows to create two new entries:
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
-| Disabled | `[]` Disable this rule
-| Do not NAT | `[]` Enabling this option will .....
+| Disabled | `☐` Disable this rule
+| Do not NAT | `☐` Enabling this option will .....
 | Interface | `VPNGATEWORLD01`
 | Address Family | `IPv4`
 | Protocol | `any`
@@ -597,15 +597,15 @@ Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up
 | Address | `Interface Address`
 | Port or Range | Leave blank
 | **Misc**
-| No XMLRPC Sync | `[]`
+| No XMLRPC Sync | `☐`
 | Description | `VLAN30 to vpngate-world01`
 
 And click `Save`.
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
-| Disabled | `[]` Disable this rule
-| Do not NAT | `[]` Enabling this option will .....
+| Disabled | `☐` Disable this rule
+| Do not NAT | `☐` Enabling this option will .....
 | Interface | `VPNGATEWORLD02`
 | Address Family | `IPv4`
 | Protocol | `any`
@@ -615,20 +615,20 @@ And click `Save`.
 | Address | `Interface Address`
 | Port or Range | Leave blank
 | **Misc**
-| No XMLRPC Sync | `[]`
+| No XMLRPC Sync | `☐`
 | Description | `VLAN30 to vpngate-world02`
 
 And click `Save`. A example for the `VLAN30 to vpngate-world01` is shown here:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_01.png)
 
-### 8.02 Create NAT Rule VLAN40 to vpngate-local
+### 8.02 Create NAT Rule VLAN40 to vpngate-local - Outbound
 Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows to create 3 new entries:
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
-| Disabled | `[]` Disable this rule
-| Do not NAT | `[]` Enabling this option will .....
+| Disabled | `☐` Disable this rule
+| Do not NAT | `☐` Enabling this option will .....
 | Interface | `VPNGATELOCAL01`
 |Address Family | `IPv4`
 | Protocol | `any`
@@ -638,15 +638,15 @@ Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up
 | Address | `Interface Address`
 | Port or Range | Leave blank
 | **Misc**
-| No XMLRPC Sync | `[]`
+| No XMLRPC Sync | `☐`
 | Description | `VLAN40 to vpngate-local01`
 
 And click `Save`.
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
-| Disabled | `[]` Disable this rule
-| Do not NAT | `[]` Enabling this option will .....
+| Disabled | `☐` Disable this rule
+| Do not NAT | `☐` Enabling this option will .....
 | Interface | `VPNGATELOCAL02`
 |Address Family | `IPv4`
 | Protocol | `any`
@@ -656,15 +656,15 @@ And click `Save`.
 | Address | `Interface Address`
 | Port or Range | Leave blank
 | **Misc**
-| No XMLRPC Sync | `[]`
+| No XMLRPC Sync | `☐`
 | Description | `VLAN40 to vpngate-local02`
 
 And click `Save`.
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
-| Disabled | `[]` Disable this rule
-| Do not NAT | `[]` Enabling this option will .....
+| Disabled | `☐` Disable this rule
+| Do not NAT | `☐` Enabling this option will .....
 | Interface | `VPNGATELOCAL03`
 |Address Family | `IPv4`
 | Protocol | `any`
@@ -674,7 +674,7 @@ And click `Save`.
 | Address | `Interface Address`
 | Port or Range | Leave blank
 | **Misc**
-| No XMLRPC Sync | `[]`
+| No XMLRPC Sync | `☐`
 | Description | `VLAN40 to vpngate-local03`
 
 And click `Save`. A example for the `VLAN40 to vpngate-local01` is shown here:
@@ -691,6 +691,88 @@ Now your first two mappings for the new gateways show look like this (you may ne
 |[]|VPNGATEWORLD01|192.168.30.0/24|*|*|*|VPNGATEWORLD01 address|*|:heavy_check_mark:|VLAN30 to vpngate-world01
 |[]|VPNGATEWORLD02|192.168.30.0/24|*|*|*|VPNGATEWORLD02 address|*|:heavy_check_mark:|VLAN30 to vpngate-world02
 
+### 8.03 Create DNS (53) Port Forward Rule for vpngate-local - Port Forward
+Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
+
+| Edit Redirect Entry / OPT2 | Value | Notes
+| :---  | :--- | :--- |
+| Disabled | `☐`
+| No RDR (NOT) | `☐`
+| Interface | `OPT2`
+| Addresss Family | `IPv4`
+| Protocol | `TCP/UDP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `OPT2 net` 
+| | Source Address - leave blank
+|Source Port Range
+| | From `Any`
+| | Custom `Leave Blank`
+| | To `Any`
+| | Custom `Leave Blank`
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `any` 
+| | Destination Address - leave blank
+| Destination Port Range
+| | From `DNS`
+| | Custom `Leave Blank`
+| | To `DNS`
+| | Custom `Leave Blank`
+| Redirect target IP | 85.203.37.1 | *This is ExpressVPN DNS - change to your providers*
+| Rewdirect target port
+| | Port `DNS`
+| | Custom `Leave Blank`
+| Description | Redirect DNS to vpngate-local
+| No XMLRPC Sync | `☐` Do not automatically sync to other CARP members
+| NAT reflection | Use System Default
+| Filter rule association | None
+
+And click `Save`
+
+### 8.04 Create DNS (53) Port Forward Rule for vpngate-world - Port Forward
+Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
+
+| Edit Redirect Entry / OPT1 | Value | Notes
+| :---  | :--- | :--- |
+| Disabled | `☐`
+| No RDR (NOT) | `☐`
+| Interface | `OPT1`
+| Addresss Family | `IPv4`
+| Protocol | `TCP/UDP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `OPT1 net` 
+| | Source Address - leave blank
+|Source Port Range
+| | From `Any`
+| | Custom `Leave Blank`
+| | To `Any`
+| | Custom `Leave Blank`
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `any` 
+| | Destination Address - leave blank
+| Destination Port Range
+| | From `DNS`
+| | Custom `Leave Blank`
+| | To `DNS`
+| | Custom `Leave Blank`
+| Redirect target IP | 85.203.37.1 | *This is ExpressVPN DNS - change to your providers*
+| Rewdirect target port
+| | Port `DNS`
+| | Custom `Leave Blank`
+| Description | Redirect DNS to vpngate-world
+| No XMLRPC Sync | `☐` Do not automatically sync to other CARP members
+| NAT reflection | Use System Default
+| Filter rule association | None
+
+And click `Save` and `Apply Changes`
+
 ## 9.00 Adding Firewall Rules
 This is simple because we are going to send all the traffic in a subnet(s) (VLAN30 >> VPNGATEWORLD_GROUP / VLAN40 >> VPNGATELOCAL_GROUP ) through the openVPN tunnels. 
 
@@ -702,22 +784,22 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `^Add` a new rule:
 | Edit Firewall Rule / OPT1 | Value | Notes|
 | :---  | :--- | :--- |
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT1`
 | Addresss Family | `IPv4`
 | Protocol | `Any`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `any` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `any` 
 | | Destination Address - leave blank
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `VLAN30 Traffic to vpngate-world`
 | Advanced Options | Click `Display Advanced` | *This is a important step. You only want to edit one value in `Advanced`!!!!*
 | **Advanced Options**
@@ -731,22 +813,22 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add` a new rule:
 | Edit Firewall Rule / OPT2 | Value | Notes|
 | :---  | :--- | :--- |
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT2`
 | Addresss Family | `IPv4`
 | Protocol | `Any`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `any` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `any` 
 | | Destination Address - leave blank
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `VLAN40 Traffic to vpngate-local`
 | Advanced Options | Click `Display Advanced` | *This is a important step. You only want to edit one value in `Advanced`!!!!*
 | **Advanced Options**
@@ -767,18 +849,18 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
 | :---  | :--- | :---
 | **Edit Firewall Rule **
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT1`
 | Addresss Family | `IPv4`
 | Protocol | `TCP/UDP`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `OPT1 net` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `Single host or alias` 
 | | `85.203.37.1` | *Change to your VPN providers DNS*
 | Destination Port Range
@@ -787,7 +869,7 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
 | | To `DNS (53)`
 | | Custom `Leave Blank`
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `VLAN40 Traffic to vpngate-world`
 | Advanced Options | Leave Default
 
@@ -806,18 +888,18 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
 | :---  | :--- | :---
 | **Edit Firewall Rule **
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT2`
 | Addresss Family | `IPv4`
 | Protocol | `TCP/UDP`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `OPT2 net` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `Single host or alias` 
 | | `85.203.37.1` | *Change to your VPN providers DNS*
 | Destination Port Range
@@ -826,7 +908,7 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
 | | To `DNS (53)`
 | | Custom `Leave Blank`
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `VLAN40 Traffic to vpngate-local`
 | Advanced Options | Leave Default
 
@@ -843,18 +925,18 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
 | :---  | :--- | :---
 | **Edit Firewall Rule **
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT2`
 | Addresss Family | `IPv4`
 | Protocol | `TCP`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `OPT2 net` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `Single host or alias` 
 | | `Chromecast_IP_Addresses` | *Here we use the Firewall alias `Chromecast_IP_Addresses` we created before*
 | Destination Port Range
@@ -863,7 +945,7 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
 | | To `Other`
 | | Custom `8009`
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `Allow OPT2 (VPNGate-local) Port 8008-8009 to Chromecast`
 | Advanced Options | Leave Default
 
@@ -875,18 +957,18 @@ Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and
 | :---  | :--- | :---
 | **Edit Firewall Rule **
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT2`
 | Addresss Family | `IPv4`
 | Protocol | `UDP`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `OPT2 net` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `Single host or alias` 
 | | `224.0.0.251` | 
 | Destination Port Range
@@ -895,7 +977,7 @@ Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and
 | | To `Other`
 | | Custom `1900`
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `Allow OPT2 (VPNGate-local) Port 1900 to Chromecast`
 | Advanced Options | Leave Default
 
@@ -907,18 +989,18 @@ Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and
 | :---  | :--- | :---
 | **Edit Firewall Rule **
 | Action | `Pass`
-| Disabled | `[]` disable this rule
+| Disabled | `☐` disable this rule
 | Interface | `OPT2`
 | Addresss Family | `IPv4`
 | Protocol | `UDP`
 | **Source**
 | Source 
-| | `[]` Invert match. 
+| | `☐` Invert match. 
 | | `OPT2 net` 
 | | Source Address - leave blank
 | **Destination**
 | Destination 
-| | `[]` Invert match.
+| | `☐` Invert match.
 | | `Single host or alias` 
 | | `224.0.0.251` | 
 | Destination Port Range
@@ -927,7 +1009,7 @@ Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and
 | | To `Other`
 | | Custom `5353`
 | **Extra Options**
-| Log | `[]` Log packets that are handled by this rule
+| Log | `☐` Log packets that are handled by this rule
 | Description | `Allow OPT2 (VPNGate-local) Port 5353 to Chromecast`
 | Advanced Options | Leave Default
 
@@ -949,7 +1031,7 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 | **General DNS Resolver Options**
 | Enable | `☑ Enable DNS resolver` | 
 | Listen Port | Leave Default | 
-| Enable SSL/TLS Service | `[]` | 
+| Enable SSL/TLS Service | `☐` | 
 | SSL/TLS Certificate | Leave Default | 
 | SSL/TLS Listen Port | Leave Default | *Should be 853 by default*
 | Network Interfaces | `LAN` | *Select ONLY LAN, OPT1, OPT2 and Localhost - Use the Ctrl key to toggle selection*
@@ -963,23 +1045,23 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 || `VPNGATELOCAL03`
 | System Domain Local Zone Type | `Static` | 
 | DNSSEC | `☑ Enable DNSSEC Support` | 
-| DNS Query Forwarding | `[]` Enable Forwarding Mode | *Uncheck*
+| DNS Query Forwarding | `☐` Enable Forwarding Mode | *Uncheck*
 || `[]` Use SSL/TLS for outgoing DNS Queries to Forwarding Servers | *Uncheck*
-| DHCP Registration | `[]` Register DHCP leases in the DNS Resolver | *Uncheck*
-| Static DHCP | `[]` Register DHCP static mappings in the DNS Resolver | *Uncheck*
-| OpenVPN Clients | `[x]` Register connected OpenVPN clients in the DNS Resolver | *Check*
+| DHCP Registration | `☐` Register DHCP leases in the DNS Resolver | *Uncheck*
+| Static DHCP | `☐` Register DHCP static mappings in the DNS Resolver | *Uncheck*
+| OpenVPN Clients | `☑` Register connected OpenVPN clients in the DNS Resolver | *Check*
 | Display Custom Options | Click `Display Custom Options` | 
 | Custom options  | `server:include: /var/unbound/pfb_dnsbl.*conf`
 | ** Advanced Settings Tab**
 | **Advanced Pricvacy Options**
-| Hide Identity | `[x]` id.server and hostname.bind queries are refused
-| Hide Version | `[x]` version.server and version.bind queries are refused
-| Query Name Minimization | `[]` Send minimum amount of QNAME/QTYPE information to upstream servers to enhance privacy
-| Strict Query Name Minimization | `[]` Do not fall-back to sending full QNAME to potentially broken DNS servers
+| Hide Identity | `☑` id.server and hostname.bind queries are refused
+| Hide Version | `☑` version.server and version.bind queries are refused
+| Query Name Minimization | `☐` Send minimum amount of QNAME/QTYPE information to upstream servers to enhance privacy
+| Strict Query Name Minimization | `☐` Do not fall-back to sending full QNAME to potentially broken DNS servers
 | **Advanced Resolver Options**
-| Prefetch Support | `[]` Message cache elements are prefetched before they expire to help keep the cache up to date
-| Prefetch DNS Key Support | `[x]` DNSKEYs are fetched earlier in the validation process when a Delegation signer is encountered
-| Harden DNSSEC Data | `[x]` DNSSEC data is required for trust-anchored zones.
+| Prefetch Support | `☐` Message cache elements are prefetched before they expire to help keep the cache up to date
+| Prefetch DNS Key Support | `☐` DNSKEYs are fetched earlier in the validation process when a Delegation signer is encountered
+| Harden DNSSEC Data | `☐` DNSSEC data is required for trust-anchored zones.
 
 And click `Save`.
 
@@ -994,8 +1076,8 @@ Navigate to `System` > `General Settings` and fill up the necessary fields as fo
 | **DNS Server Settings**
 | DNS Servers | `1.1.1.1` | DNS Hostname - Leave Default | `none` | *Must choose none*
 | DNS Servers | `1.0.0.1` | DNS Hostname - Leave Default | `none` | *Must choose none*
-| DNS Server Override | `[]` Allow DNS server list to be overridden by DHCP/PPP on WAN
-| Disable DNS Forwarde | `[x]` Do not use the DNS Forwarder/DNS Resolver as a DNS server for the firewall
+| DNS Server Override | `☐` Allow DNS server list to be overridden by DHCP/PPP on WAN
+| Disable DNS Forwarde | `☑` Do not use the DNS Forwarder/DNS Resolver as a DNS server for the firewall
 | **Localisation**
 | Timezone | Select your region
 | Timeservers | 0.pfsense.pool.ntp.org
@@ -1020,11 +1102,11 @@ After installation of Avahi navigate to `Services` > `Avahi` and fill up the nec
 | Enable | `pfSense`
 | Interface Action | `Allow Interfaces`
 | Interfaces | `OPT2` | *We are only going to enable Avahi mdns on our VLAN40 or VPNGATE-LOCAL network*
-| Disable IPv4 | `[]` Disable support for IPv4
-| Disable IPv6 | `[]` Disable support for IPv6
-| Enable Reflection | `[x]` Repeat mdns packets across subnets
+| Disable IPv4 | `☐` Disable support for IPv4
+| Disable IPv6 | `☐` Disable support for IPv6
+| Enable Reflection | `☑` Repeat mdns packets across subnets
 | **Publishing**
-| Enable publishing | `[]` Enable publishing of information about the pfSense host
+| Enable publishing | `☐` Enable publishing of information about the pfSense host
 
 And click `Save`.
 
@@ -1050,9 +1132,9 @@ On your pfSense WebGUI navigate to `Diagnostics` > `Backup & Restore` then fill 
 | Backup Configuration | Value | Notes
 | :---  | :--- | :--- |
 | Backup area | `All` | *Select All*
-| Skip Packages | `[]` Do not backup package information | *Uncheck the box*
+| Skip Packages | `☐` Do not backup package information | *Uncheck the box*
 | Skip RRD data | `☑` Do not backup RRD data (NOTE: RRD Data can consume 4+ megabytes of config.xml space!)| *Check the box. RRD Data are your Graphs. Like the traffic Graph for example. I do not back them up because I do not need them*
-| Encyption | `[]` Encrypt this configuration file. | *If you check this box a password value box will appear. Dont forget your password otherwise you are truly stuffed if you need to perform a restore*
+| Encyption | `☐` Encrypt this configuration file. | *If you check this box a password value box will appear. Dont forget your password otherwise you are truly stuffed if you need to perform a restore*
 | Password (optional box) | `xxxxxxxx` | *See above*
 
 And then click the `Download configuration as XML` and `Save` the backup XML file to your NAS or a secure location. Note: If you are using the WebGUI on a Win10 PC the XML backup file will be saved in your users `Downloads` folder where you can then copy/move the file to a safer location. You should have a backup folder share on your NAS so why not store the XML file there `backup/pfsense/config-pfSense.localdomain-2019xxxxxxxxxx.xml`
