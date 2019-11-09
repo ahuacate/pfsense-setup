@@ -559,7 +559,9 @@ If you don't things might not work in the steps ahead.
 Aliases act as placeholders for real hosts, networks or ports. They can be used to minimize the number of changes that have to be made if a host, network or port changes. The name of an alias can be entered instead of the IP address, network or port in all fields that have a red background. In simple terms --- use them.
 
 ### 7.01 Create Firewall Alias - Chromecast IP List
-Here you list all your Chromecast and TV device IPs. So when you add a Chromecast IP assign it a static IP and enter it into the `Chromecast_IP_Addresses` alias list.
+Here you create entries for all your Chromecast and TV device IPs.
+
+But first you MUST assign your Chromecast & TV's IP a static IP address (do it in UniFi) and then enter the static IP address into the `Chromecast_IP_Addresses` alias list.
 
 Now create a new alias `Firewall` > `Aliases` > `IP Tab` > `Add` to open a new configuration form, then fill up the necessary fields as follows and adding your chromecast and TV devices:
 
