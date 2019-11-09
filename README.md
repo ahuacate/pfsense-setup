@@ -412,87 +412,8 @@ Your `Interfaces` > `Assignments` tab should now look like this:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_04.png)
 
-### 5.03 Setting up a Gateway for vpngate-world Interface(s)
-Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and create/edit the Gateways and fill out the necessary fields as follows:
-
-| Edit Gateway | Value | Notes
-| :---  | :---: | :--- |
-| Disabled | `[]` Disable this gateway 
-| Interface | `VPNGATEWORLD01`
-| Address Family | `IPv4`
-| Name | `VPNGATEWORLD01_VPNV4`
-| Gateway | dynamic
-| Gateway Monitoring | `☐` Disable Gateway Monitoring 
-| Gateway Action | `☐` Disable Gateway Monitoring
-| Monitor IP | `8.8.4.4` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `☐` Mark Gateway as Down
-| Description | `Interface VPNGATEWORLD01_VPNV4 Gateway`
-
-And click `Save`.
-
-| Edit Gateway | Value | Notes
-| :---  | :---: | :--- |
-| Disabled | `[]` Disable this gateway 
-| Interface | `VPNGATEWORLD02`
-| Address Family | `IPv4`
-| Name | `VPNGATEWORLD02_VPNV4`
-| Gateway | dynamic
-| Gateway Monitoring | `☐` Disable Gateway Monitoring 
-| Gateway Action | `☐` Disable Gateway Monitoring
-| Monitor IP | `8.8.8.8` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `☐` Mark Gateway as Down
-| Description | `Interface VPNGATEWORLD01_VPNV4 Gateway`
-
-And click `Save`.
-
-### 5.04 Setting up a Gateway for vpngate-local Interface(s)
-Now using the pfSense web interface go to `System` > `Routing` > `Gateways` and edit the necessary fields as follows:
-
-| Edit Gateway | Value | Notes
-| :---  | :---: | :--- |
-| Disabled | `☐` Disable this gateway 
-| Interface | `VPNGATELOCAL01`
-| Address Family | `IPv4`
-| Name | `VPNGATELOCAL01_VPNV4`
-| Gateway | dynamic
-| Gateway Monitoring | `☐` Disable Gateway Monitoring 
-| Gateway Action | `☐` Disable Gateway Monitoring
-| Monitor IP | `208.67.220.220` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `☐` Mark Gateway as Down
-| Description | `Interface VPNGATELOCAL01_VPNV4 Gateway`
-
-And click `Save`. 
-
-| Edit Gateway | Value | Notes
-| :---  | :---: | :--- |
-| Disabled | `☐` Disable this gateway 
-| Interface | `VPNGATELOCAL02`
-| Address Family | `IPv4`
-| Name | `VPNGATELOCAL02_VPNV4`
-| Gateway | dynamic
-| Gateway Monitoring | `☐` Disable Gateway Monitoring 
-| Gateway Action | `☐` Disable Gateway Monitoring
-| Monitor IP | `208.67.222.222` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `☐` Mark Gateway as Down
-| Description | `Interface VPNGATELOCAL02_VPNV4 Gateway`
-
-And click `Save`.
-| Edit Gateway | Value | Notes
-| :---  | :---: | :--- |
-| Disabled | `☐` Disable this gateway 
-| Interface | `VPNGATELOCAL03`
-| Address Family | `IPv4`
-| Name | `VPNGATELOCAL02_VPNV4`
-| Gateway | dynamic
-| Gateway Monitoring | `☐` Disable Gateway Monitoring 
-| Gateway Action | `☐` Disable Gateway Monitoring
-| Monitor IP | `9.9.9.9 ` | *Change to your VPN providers DNS, Google DNS or whoever you like - but best not your primary DNS provider (i.e Cloudfare)*
-| Force State | `☐` Mark Gateway as Down
-| Description | `Interface VPNGATELOCAL03_VPNV4 Gateway`
-
-And click `Save`.
-
-Your pfSense web interface go to `System` > `Routing` > `Gateways Tab` should look like:
+### 5.03 Check your Gateway Interface(s)
+Your Gateways should be automatically created after completing the above steps. To check go to your pfSense web interface `System` > `Routing` > `Gateways Tab` and it should look like:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_gateway_00.png)
 
@@ -582,7 +503,7 @@ If you have Automatic NAT enabled you want to enable Manual Outbound NAT and cli
 But first you must find any rules that allows the devices you wish to tunnel, with a `Source` value of `192.168.30.0/24` and `192.168.40.0/24` and delete them and click `Save` at the bottom right of the form page. **DO NOT DELETE** the `Mappings` with `Source` values like `127.0.0.0/8, ::1/128, 192.168.1.0/24`!
 
 ### 8.01 Create NAT Rule VLAN30 to vpngate-world01/02 - Outbound
-Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows to create two new entries:
+Now create new mappings by `Firewall` > `NAT` > `Outbound Tab` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows to create two new entries:
 
 | Edit Advanced Outbound NAT Entry | Value | Value
 | :---  | :--- | :--- |
@@ -717,6 +638,7 @@ Now your first two mappings for the new gateways show look like this (you may ne
 |[]|VPNGATEWORLD01|192.168.30.0/24|*|*|*|VPNGATEWORLD01 address|*|:heavy_check_mark:|VLAN30 to vpngate-world01
 |[]|VPNGATEWORLD02|192.168.30.0/24|*|*|*|VPNGATEWORLD02 address|*|:heavy_check_mark:|VLAN30 to vpngate-world02
 
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_03.png)
 
 ### 8.03 Create DNS (53) Port Forward Rule for vpngate-world - Port Forward
 Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
@@ -946,7 +868,7 @@ Click `Save` and `Apply`.
 ### 9.05 Allow OPT2 access to Chromecast and TV devices - vpngate-local
 By default VLAN40 (vpngate-local) has no access to any other other VLAN. For convenience we allow certain VLAN40 ports access to our Chromecast Alias IP address.
 
-Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
+Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
 
 | Firewall Rule / OPT2 | Value | Notes
 | :---  | :--- | :---
@@ -978,7 +900,7 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
 
 Click `Save`.
 
-Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
+Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
 
 | Firewall Rule / OPT2 | Value | Notes
 | :---  | :--- | :---
@@ -1010,7 +932,7 @@ Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and
 
 Click `Save`.
 
-Now we need to create another rule. Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow up)` a new rule:
+Now we need to create another rule. Go to  `Firewall` > `Rules` > `^ OPT2 tab` and `Add (arrow up)` a new rule:
 
 | Firewall Rule / OPT2 | Value | Notes
 | :---  | :--- | :---
@@ -1104,7 +1026,7 @@ Navigate to `System` > `General Settings` and fill up the necessary fields as fo
 | DNS Servers | `1.1.1.1` | DNS Hostname - Leave Default | `none` | *Must choose none*
 | DNS Servers | `1.0.0.1` | DNS Hostname - Leave Default | `none` | *Must choose none*
 | DNS Server Override | `☐` Allow DNS server list to be overridden by DHCP/PPP on WAN
-| Disable DNS Forwarde | `☑` Do not use the DNS Forwarder/DNS Resolver as a DNS server for the firewall
+| Disable DNS Forwarder | `☑` Do not use the DNS Forwarder/DNS Resolver as a DNS server for the firewall
 | **Localisation**
 | Timezone | Select your region
 | Timeservers | 0.pfsense.pool.ntp.org
