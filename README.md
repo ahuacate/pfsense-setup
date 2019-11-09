@@ -328,7 +328,7 @@ The first edit will be `OPT3`:
 | Interfaces/OPT3 (ovpnc1) | Value | Notes
 | :---  | :---: | :--- |
 | Enable | `☑` Enable interface | *Check the box*
-| Description | `vpngateworld-01`
+| Description | `vpngateworld01`
 | IPv4/IPv6 Configuration | This interface type does not support manual address configuration on this page.
 | MAC Address | `None`
 | MTU | Leave blank
@@ -345,7 +345,7 @@ Now edit `OPT4`:
 | Interfaces/OPT4 (ovpnc2) | Value | Notes
 | :---  | :---: | :--- |
 | Enable | `☑` Enable interface | *Check the box*
-| Description | `vpngateworld-02`
+| Description | `vpngateworld02`
 | IPv4/IPv6 Configuration | This interface type does not support manual address configuration on this page.
 | MAC Address | `None`
 | MTU | Leave blank
@@ -362,7 +362,7 @@ Now edit `OPT5`:
 | Interfaces/OPT5 ovpnc3) | Value | Notes
 | :---  | :---: | :--- |
 | Enable | `☑` Enable interface | *Check the box*
-| Description | `vpngatelocal-01`
+| Description | `vpngatelocal01`
 | IPv4/IPv6 Configuration | This interface type does not support manual address configuration on this page.
 | MAC Address | `None`
 | MTU | Leave blank
@@ -379,7 +379,7 @@ Now edit `OPT6`:
 | Interfaces/OPT6 (ovpnc4) | Value | Notes
 | :---  | :---: | :--- |
 | Enable | `☑` Enable interface | *Check the box*
-| Description | `vpngatelocal-02`
+| Description | `vpngatelocal02`
 | IPv4/IPv6 Configuration | This interface type does not support manual address configuration on this page.
 | MAC Address | `None`
 | MTU | Leave blank
@@ -396,7 +396,7 @@ Now edit `OPT7`:
 | Interfaces/OPT7 (ovpnc5) | Value | Notes
 | :---  | :---: | :--- |
 | Enable | `☑` Enable interface | *Check the box*
-| Description | `vpngatelocal-03`
+| Description | `vpngatelocal03`
 | IPv4/IPv6 Configuration | This interface type does not support manual address configuration on this page.
 | MAC Address | `None`
 | MTU | Leave blank
@@ -406,7 +406,7 @@ Now edit `OPT7`:
 | Block private networks and loopback addresses | `☐` | *Uncheck the box*
 | Block bogon networks | `☐` | *Uncheck the box*
 
-Click `Save`. 
+Click `Save` and `Apply`.
 
 Your `Interfaces` > `Assignments` tab should now look like this:
 
@@ -517,11 +517,11 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateway Groups
 | group Name | `VPNGATEWORLD_GROUP`
 | **Gateway Priority** |Gateway | Gateway | Tier | Virtual IP | Description 
 | | WANGW | Never | Interface Address | WAN/VPN Egress Gateway
-| | VPNGATEWORLD01_VPNV4 | Tier 1 | Interface Address | Interface VPNGATEWORLD01_VPNV4 Gateway
-| | VPNGATEWORLD02_VPNV4 | Tier 1 | Interface Address | Interface VPNGATEWORLD02_VPNV4 Gateway
 | | VPNGATELOCAL01_VPNV4 | Never | Interface Address | Interface VPNGATELOCAL01_VPNV4 Gateway
 | | VPNGATELOCAL02_VPNV4 | Never | Interface Address | Interface VPNGATELOCAL02_VPNV4 Gateway
 | | VPNGATELOCAL03_VPNV4 | Never | Interface Address | Interface VPNGATELOCAL03_VPNV4 Gateway
+| | VPNGATEWORLD01_VPNV4 | Tier 1 | Interface Address | Interface VPNGATEWORLD01_VPNV4 Gateway
+| | VPNGATEWORLD02_VPNV4 | Tier 1 | Interface Address | Interface VPNGATEWORLD02_VPNV4 Gateway
 | Trigger Level | `Packet Loss or High Latency`
 | Description | VPNGATEWORLD GROUP
 
@@ -539,11 +539,11 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateway Groups
 | group Name | `VPNGATELOCAL_GROUP`
 | **Gateway Priority** |Gateway | Gateway | Tier | Virtual IP | Description 
 | | WANGW | Never | Interface Address | WAN/VPN Egress Gateway
-| | VPNGATEWORLD01_VPNV4 | Never | Interface Address | Interface VPNGATEWORLD01_VPNV4 Gateway
-| | VPNGATEWORLD02_VPNV4 | Never | Interface Address | Interface VPNGATEWORLD02_VPNV4 Gateway
 | | VPNGATELOCAL01_VPNV4 | Tier 1 | Interface Address | Interface VPNGATELOCAL01_VPNV4 Gateway
 | | VPNGATELOCAL02_VPNV4 | Tier 1 | Interface Address | Interface VPNGATELOCAL02_VPNV4 Gateway
 | | VPNGATELOCAL03_VPNV4 | Tier 1 | Interface Address | Interface VPNGATELOCAL03_VPNV4 Gateway
+| | VPNGATEWORLD01_VPNV4 | Never | Interface Address | Interface VPNGATEWORLD01_VPNV4 Gateway
+| | VPNGATEWORLD02_VPNV4 | Never | Interface Address | Interface VPNGATEWORLD02_VPNV4 Gateway
 | Trigger Level | `Packet Loss or High Latency`
 | Description | VPNGATELOCAL GROUP
 
@@ -591,8 +591,14 @@ Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up
 | Interface | `VPNGATEWORLD01`
 | Address Family | `IPv4`
 | Protocol | `any`
-| Source | `Network` | `192.168.30.0/24`
-| Destination | `Any` | Leave blank
+| Protocol | `any`
+| Source
+| | `Network` | `192.168.30.0/24`
+| | Port or Range | Leave Blank
+| Destination 
+| | `Any` | Leave blank
+| | Port or Range | Leave Blank
+| | `☐` Not
 | **Translation**
 | Address | `Interface Address`
 | Port or Range | Leave blank
@@ -609,8 +615,13 @@ And click `Save`.
 | Interface | `VPNGATEWORLD02`
 | Address Family | `IPv4`
 | Protocol | `any`
-| Source | `Network` | `192.168.30.0/24`
-| Destination | `Any` | Leave blank
+| Source
+| | `Network` | `192.168.30.0/24`
+| | Port or Range | Leave Blank
+| Destination 
+| | `Any` | Leave blank
+| | Port or Range | Leave Blank
+| | `☐` Not
 | **Translation**
 | Address | `Interface Address`
 | Port or Range | Leave blank
@@ -632,8 +643,13 @@ Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up
 | Interface | `VPNGATELOCAL01`
 |Address Family | `IPv4`
 | Protocol | `any`
-| Source | `Network` | `192.168.40.0/24`
-| Destination | `Any` | Leave blank
+| Source 
+| | `Network` | `192.168.40.0/24`
+| | Port or Range | Leave Blank
+| Destination 
+| | `Any` | Leave blank
+| | Port or Range | Leave Blank
+| | `☐` Not
 | **Translation**
 | Address | `Interface Address`
 | Port or Range | Leave blank
@@ -650,8 +666,13 @@ And click `Save`.
 | Interface | `VPNGATELOCAL02`
 |Address Family | `IPv4`
 | Protocol | `any`
-| Source | `Network` | `192.168.40.0/24`
-| Destination | `Any` | Leave blank
+| Source 
+| | `Network` | `192.168.40.0/24`
+| | Port or Range | Leave Blank
+| Destination 
+| | `Any` | Leave blank
+| | Port or Range | Leave Blank
+| | `☐` Not
 | **Translation**
 | Address | `Interface Address`
 | Port or Range | Leave blank
@@ -668,8 +689,13 @@ And click `Save`.
 | Interface | `VPNGATELOCAL03`
 |Address Family | `IPv4`
 | Protocol | `any`
-| Source | `Network` | `192.168.40.0/24`
-| Destination | `Any` | Leave blank
+| Source 
+| | `Network` | `192.168.40.0/24`
+| | Port or Range | Leave Blank
+| Destination 
+| | `Any` | Leave blank
+| | Port or Range | Leave Blank
+| | `☐` Not
 | **Translation**
 | Address | `Interface Address`
 | Port or Range | Leave blank
@@ -691,7 +717,49 @@ Now your first two mappings for the new gateways show look like this (you may ne
 |[]|VPNGATEWORLD01|192.168.30.0/24|*|*|*|VPNGATEWORLD01 address|*|:heavy_check_mark:|VLAN30 to vpngate-world01
 |[]|VPNGATEWORLD02|192.168.30.0/24|*|*|*|VPNGATEWORLD02 address|*|:heavy_check_mark:|VLAN30 to vpngate-world02
 
-### 8.03 Create DNS (53) Port Forward Rule for vpngate-local - Port Forward
+
+### 8.03 Create DNS (53) Port Forward Rule for vpngate-world - Port Forward
+Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
+
+| Edit Redirect Entry / OPT1 | Value | Notes
+| :---  | :--- | :--- |
+| Disabled | `☐`
+| No RDR (NOT) | `☐`
+| Interface | `OPT1`
+| Addresss Family | `IPv4`
+| Protocol | `TCP/UDP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `OPT1 net` 
+| | Source Address - leave blank
+|Source Port Range
+| | From `Any`
+| | Custom `Leave Blank`
+| | To `Any`
+| | Custom `Leave Blank`
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `any` 
+| | Destination Address - leave blank
+| Destination Port Range
+| | From `DNS`
+| | Custom `Leave Blank`
+| | To `DNS`
+| | Custom `Leave Blank`
+| Redirect target IP | 85.203.37.1 | *This is ExpressVPN DNS - change to your providers*
+| Redirect target port
+| | Port `DNS`
+| | Custom `Leave Blank`
+| Description | Redirect DNS to vpngate-world
+| No XMLRPC Sync | `☐` Do not automatically sync to other CARP members
+| NAT reflection | Use System Default
+| Filter rule association | None
+
+And click `Save`
+
+### 8.04 Create DNS (53) Port Forward Rule for vpngate-local - Port Forward
 Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
 
 | Edit Redirect Entry / OPT2 | Value | Notes
@@ -730,47 +798,6 @@ Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow u
 | NAT reflection | Use System Default
 | Filter rule association | None
 
-And click `Save`
-
-### 8.04 Create DNS (53) Port Forward Rule for vpngate-world - Port Forward
-Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
-
-| Edit Redirect Entry / OPT1 | Value | Notes
-| :---  | :--- | :--- |
-| Disabled | `☐`
-| No RDR (NOT) | `☐`
-| Interface | `OPT1`
-| Addresss Family | `IPv4`
-| Protocol | `TCP/UDP`
-| **Source**
-| Source 
-| | `☐` Invert match. 
-| | `OPT1 net` 
-| | Source Address - leave blank
-|Source Port Range
-| | From `Any`
-| | Custom `Leave Blank`
-| | To `Any`
-| | Custom `Leave Blank`
-| **Destination**
-| Destination 
-| | `☐` Invert match.
-| | `any` 
-| | Destination Address - leave blank
-| Destination Port Range
-| | From `DNS`
-| | Custom `Leave Blank`
-| | To `DNS`
-| | Custom `Leave Blank`
-| Redirect target IP | 85.203.37.1 | *This is ExpressVPN DNS - change to your providers*
-| Rewdirect target port
-| | Port `DNS`
-| | Custom `Leave Blank`
-| Description | Redirect DNS to vpngate-world
-| No XMLRPC Sync | `☐` Do not automatically sync to other CARP members
-| NAT reflection | Use System Default
-| Filter rule association | None
-
 And click `Save` and `Apply Changes`
 
 ## 9.00 Adding Firewall Rules
@@ -800,7 +827,7 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `^Add` a new rule:
 | | Destination Address - leave blank
 | **Extra Options**
 | Log | `☐` Log packets that are handled by this rule
-| Description | `VLAN30 Traffic to vpngate-world`
+| Description | `VLAN30 Traffic to vpngateworld-group`
 | Advanced Options | Click `Display Advanced` | *This is a important step. You only want to edit one value in `Advanced`!!!!*
 | **Advanced Options**
 | Gateway | `VPNGATEWORLD_GROUP-VPNGATEWORLD GROUP` | *MUST Change to this gateway!*
@@ -829,7 +856,7 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add` a new rule:
 | | Destination Address - leave blank
 | **Extra Options**
 | Log | `☐` Log packets that are handled by this rule
-| Description | `VLAN40 Traffic to vpngate-local`
+| Description | `VLAN40 Traffic to vpngatelocal-group`
 | Advanced Options | Click `Display Advanced` | *This is a important step. You only want to edit one value in `Advanced`!!!!*
 | **Advanced Options**
 | Gateway | `VPNGATELOCAL_GROUP-VPNGATELOCAL GROUP` | *MUST Change to this gateway!*
