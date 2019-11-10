@@ -86,8 +86,8 @@ Navigate using the pfSense web interface to `System` > `Advanced` and `Miscellan
 | Miscellaneous Tab| Value | Notes
 | :---  | :---: | :--- |
 | **Gateway Monitoring**
-| State Killing on Gateway Failure | `[]` Flush all states when a gateway goes down
-| Skip rules when gateway is down | `[x]` Do not create rules when gateway is down
+| State Killing on Gateway Failure | `☐` Flush all states when a gateway goes down
+| Skip rules when gateway is down | `☑` Do not create rules when gateway is down
 
 And click `Save`
 
