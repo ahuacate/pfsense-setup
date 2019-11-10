@@ -28,22 +28,22 @@ Tasks to be performed are:
 - [5.00 Setting up a gateway for each OpenVPN Client](#500-setting-up-a-gateway-for-each-openvpn-client)
 	- [5.01 Add Network Interface Ports](#501-add-network-interface-ports)
 	- [5.02 Edit the new Interface Ports](#502-edit-the-new-interface-ports)
-	- [5.03 Setting up a Gateway for vpngate-world Interface(s)](#503-setting-up-a-gateway-for-vpngate-world-interfaces)
-	- [5.04 Setting up a Gateway for vpngate-local Interface(s)](#504-setting-up-a-gateway-for-vpngate-local-interfaces)
+	- [5.03 Check your Gateway Interface(s)](#503-check-your-gateway-interfaces)
 - [6.00 Create Gateway Groups](#600-create-gateway-groups)
 	- [6.01 Create VPNGATEWORLD Gateway Group](#601-create-vpngateworld-gateway-group)
 	- [6.02 Create VPNGATELOCAL Gateway Group](#602-create-vpngatelocal-gateway-group)
 - [7.00 Adding Firewall Aliases](#700-adding-firewall-aliases)
 	- [7.01 Create Firewall Alias - Chromecast IP List](#701-create-firewall-alias---chromecast-ip-list)
-- [8.00 Adding NAT Rules - Outbound](#800-adding-nat-rules---outbound)
-	- [8.01 Create NAT Rule VLAN30 to vpngate-world01/02](#801-create-nat-rule-vlan30-to-vpngate-world0102)
-	- [8.02 Create NAT Rule VLAN40 to vpngate-local](#802-create-nat-rule-vlan40-to-vpngate-local)
+- [8.00 Adding NAT Rules](#800-adding-nat-rules)
+	- [8.01 Create NAT Rule VLAN30 to vpngate-world01/02 - Outbound](#801-create-nat-rule-vlan30-to-vpngate-world0102---outbound)
+	- [8.02 Create NAT Rule VLAN40 to vpngate-local - Outbound](#802-create-nat-rule-vlan40-to-vpngate-local---outbound)
 - [9.00 Adding Firewall Rules](#900-adding-firewall-rules)
 	- [9.01 Allow Rule for OPT1 - VPNGATEWORLD_GROUP](#901-allow-rule-for-opt1---vpngateworld_group)
 	- [9.02 Allow Rule for OPT2 - VPNGATELOCAL_GROUP](#902-allow-rule-for-opt2---vpngatelocal_group)
-	- [9.03 Redirect DNS on OPT1 - vpngate-world](#903-redirect-dns-on-opt1---vpngate-world)
-	- [9.04 Redirect DNS on OPT2 - vpngate-local](#904-redirect-dns-on-opt2---vpngate-local)
-	- [9.05 Allow OPT2 access to Chromecast and TV devices - vpngate-local](#905-allow-opt2-access-to-chromecast-and-tv-devices---vpngate-local)
+	- [9.03 Allow OPT2 access to Chromecast and TV devices - vpngate-local](#903-allow-opt2-access-to-chromecast-and-tv-devices---vpngate-local)
+	- [9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge) - vpngate-world](#904-allow-wan-to-vlan30-devices-nzbget--deluge---vpngate-world)
+	- [9.05 DNS Allow and Block Rules on OPT1 - vpngate-world](#905-dns-allow-and-block-rules-on-opt1---vpngate-world)
+	- [9.06 DNS Allow and Block Rules on OPT2 - vpngate-local](#906-dns-allow-and-block-rules-on-opt2---vpngate-local)
 - [10.00 Setup pfSense DNS](#1000-setup-pfsense-dns)
 	- [10.01 Set Up DNS Resolver](#1001-set-up-dns-resolver)
 	- [10.02 Set Up General DNS](#1002-set-up-general-dns)
@@ -55,7 +55,6 @@ Tasks to be performed are:
 - [14.00 Create a pfSense Backup](#1400-create-a-pfsense-backup)
 - [00.00 Patches and Fixes](#0000-patches-and-fixes)
 	- [00.01 pfSense – disable firewall with pfctl -d](#0001-pfsense--disable-firewall-with-pfctl--d)
-
 
 
 
@@ -639,87 +638,6 @@ Now your first two mappings for the new gateways show look like this (you may ne
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_03.png)
 
-### 8.03 Create DNS (53) Port Forward Rule for vpngate-world - Port Forward
-Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
-
-| Edit Redirect Entry / OPT1 | Value | Notes
-| :---  | :--- | :--- |
-| Disabled | `☐`
-| No RDR (NOT) | `☐`
-| Interface | `OPT1`
-| Addresss Family | `IPv4`
-| Protocol | `TCP/UDP`
-| **Source**
-| Source 
-| | `☐` Invert match. 
-| | `OPT1 net` 
-| | Source Address - leave blank
-|Source Port Range
-| | From `Any`
-| | Custom `Leave Blank`
-| | To `Any`
-| | Custom `Leave Blank`
-| **Destination**
-| Destination 
-| | `☐` Invert match.
-| | `any` 
-| | Destination Address - leave blank
-| Destination Port Range
-| | From `DNS`
-| | Custom `Leave Blank`
-| | To `DNS`
-| | Custom `Leave Blank`
-| Redirect target IP | 85.203.37.1 | *This is ExpressVPN DNS - change to your providers*
-| Redirect target port
-| | Port `DNS`
-| | Custom `Leave Blank`
-| Description | Redirect DNS to vpngate-world
-| No XMLRPC Sync | `☐` Do not automatically sync to other CARP members
-| NAT reflection | Use System Default
-| Filter rule association | None
-
-And click `Save`
-
-### 8.04 Create DNS (53) Port Forward Rule for vpngate-local - Port Forward
-Now create new mappings by `Firewall` > `NAT` > `Port Forward` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows:
-
-| Edit Redirect Entry / OPT2 | Value | Notes
-| :---  | :--- | :--- |
-| Disabled | `☐`
-| No RDR (NOT) | `☐`
-| Interface | `OPT2`
-| Addresss Family | `IPv4`
-| Protocol | `TCP/UDP`
-| **Source**
-| Source 
-| | `☐` Invert match. 
-| | `OPT2 net` 
-| | Source Address - leave blank
-|Source Port Range
-| | From `Any`
-| | Custom `Leave Blank`
-| | To `Any`
-| | Custom `Leave Blank`
-| **Destination**
-| Destination 
-| | `☐` Invert match.
-| | `any` 
-| | Destination Address - leave blank
-| Destination Port Range
-| | From `DNS`
-| | Custom `Leave Blank`
-| | To `DNS`
-| | Custom `Leave Blank`
-| Redirect target IP | 85.203.37.1 | *This is ExpressVPN DNS - change to your providers*
-| Rewdirect target port
-| | Port `DNS`
-| | Custom `Leave Blank`
-| Description | Redirect DNS to vpngate-local
-| No XMLRPC Sync | `☐` Do not automatically sync to other CARP members
-| NAT reflection | Use System Default
-| Filter rule association | None
-
-And click `Save` and `Apply Changes`
 
 ## 9.00 Adding Firewall Rules
 This is simple because we are going to send all the traffic in a subnet(s) (VLAN30 >> VPNGATEWORLD_GROUP / VLAN40 >> VPNGATELOCAL_GROUP ) through the openVPN tunnels. 
@@ -956,21 +874,23 @@ Click `Save` and `Apply`.
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_03.png)
 
-### 9.0X Redirect DNS on OPT1 - vpngate-world
+### 9.05 DNS Allow and Block Rules on OPT1 - vpngate-world
 When your computer needs to know an IP Address of a host it will use a DNS server and by default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
 
-To fix this problem we’re going to create a basic port forward rule which will take traffic destined for UDP port 53 (the DNS server port) and forward it to a different DNS server that is operated by your VPN provider. In this example we will redirect DNS 53 to ExpressVPN DNS server IP address.
+To fix this problem we’re going to create a basic firewall rule which will pass traffic destined for UDP port 53 (the DNS server port) on each VLAN to its own VLAN DNS server which will be operated by your VPN provider. Next we add a rule where if the traffic destined for UDP port 53 is'nt on its own VLAN we block it.
 
-Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
+You need both rules (Pass & Block) for pfBlockerNG addon to work with DNSBL lists.
+
+Go to  `Firewall` > `Rules` > `OPT1 tab` and `^ Add (arrow up)` a new rule:
 
 | Firewall Rule / OPT1 | Value | Notes
 | :---  | :--- | :---
 | **Edit Firewall Rule **
-| Action | `Pass`
+| Action | `Block`
 | Disabled | `☐` disable this rule
 | Interface | `OPT1`
 | Addresss Family | `IPv4`
-| Protocol | `TCP/UDP`
+| Protocol | `UDP`
 | **Source**
 | Source 
 | | `☐` Invert match. 
@@ -979,8 +899,8 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
 | **Destination**
 | Destination 
 | | `☐` Invert match.
-| | `Single host or alias` 
-| | `85.203.37.1` | *Change to your VPN providers DNS*
+| | `any` 
+| | Destination Address - Leave Blank
 | Destination Port Range
 | | From `DNS (53)`
 | | Custom `Leave Blank`
@@ -988,28 +908,62 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `Add (arrow down)` a new rule:
 | | Custom `Leave Blank`
 | **Extra Options**
 | Log | `☐` Log packets that are handled by this rule
-| Description | `VLAN40 Traffic to vpngate-world`
+| Description | `Block OPT1 all other DNS`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+Go to  `Firewall` > `Rules` > `OPT1 tab` and `^ Add (arrow up)` a new rule:
+
+| Firewall Rule / OPT1 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `☐` disable this rule
+| Interface | `OPT1`
+| Addresss Family | `IPv4`
+| Protocol | `UDP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `any` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `OPT1 net` 
+| | Destination Address - Leave Blank
+| Destination Port Range
+| | From `DNS (53)`
+| | Custom `Leave Blank`
+| | To `DNS (53)`
+| | Custom `Leave Blank`
+| **Extra Options**
+| Log | `☐` Log packets that are handled by this rule
+| Description | `Allow OPT1 DNS to pfSense Resolver`
 | Advanced Options | Leave Default
 
 Click `Save` and `Apply`.
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_01.png)
 
-### 9.0X Redirect DNS on OPT2 - vpngate-local
+### 9.06 DNS Allow and Block Rules on OPT2 - vpngate-local
 When your computer needs to know an IP Address of a host it will use a DNS server and by default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
 
-To fix this problem we’re going to create a basic port forward rule which will take traffic destined for UDP port 53 (the DNS server port) and forward it to a different DNS server that is operated by your VPN provider. In this example we will redirect DNS 53 to ExpressVPN DNS server IP address.
+To fix this problem we’re going to create a basic firewall rule which will pass traffic destined for UDP port 53 (the DNS server port) on each VLAN to its own VLAN DNS server which will be operated by your VPN provider. Next we add a rule where if the traffic destined for UDP port 53 is'nt on its own VLAN we block it.
 
-Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
+You need both rules (Pass & Block) for pfBlockerNG addon to work with DNSBL lists.
+
+Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
 
 | Firewall Rule / OPT2 | Value | Notes
 | :---  | :--- | :---
 | **Edit Firewall Rule **
-| Action | `Pass`
+| Action | `Block`
 | Disabled | `☐` disable this rule
 | Interface | `OPT2`
 | Addresss Family | `IPv4`
-| Protocol | `TCP/UDP`
+| Protocol | `UDP`
 | **Source**
 | Source 
 | | `☐` Invert match. 
@@ -1018,8 +972,8 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
 | **Destination**
 | Destination 
 | | `☐` Invert match.
-| | `Single host or alias` 
-| | `85.203.37.1` | *Change to your VPN providers DNS*
+| | `any` 
+| | Destination Address - Leave Blank
 | Destination Port Range
 | | From `DNS (53)`
 | | Custom `Leave Blank`
@@ -1027,7 +981,39 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `Add (arrow down)` a new rule:
 | | Custom `Leave Blank`
 | **Extra Options**
 | Log | `☐` Log packets that are handled by this rule
-| Description | `VLAN40 Traffic to vpngate-local`
+| Description | `Block OPT2 all other DNS`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
+
+| Firewall Rule / OPT1 | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `☐` disable this rule
+| Interface | `OPT2`
+| Addresss Family | `IPv4`
+| Protocol | `UDP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `any` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `OPT2 net` 
+| | Destination Address - Leave Blank
+| Destination Port Range
+| | From `DNS (53)`
+| | Custom `Leave Blank`
+| | To `DNS (53)`
+| | Custom `Leave Blank`
+| **Extra Options**
+| Log | `☐` Log packets that are handled by this rule
+| Description | `Allow OPT2 DNS to pfSense Resolver`
 | Advanced Options | Leave Default
 
 Click `Save` and `Apply`.
@@ -1076,7 +1062,7 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 | **Advanced Resolver Options**
 | Prefetch Support | `☐` Message cache elements are prefetched before they expire to help keep the cache up to date
 | Prefetch DNS Key Support | `☐` DNSKEYs are fetched earlier in the validation process when a Delegation signer is encountered
-| Harden DNSSEC Data | `☐` DNSSEC data is required for trust-anchored zones.
+| Harden DNSSEC Data | `☑` DNSSEC data is required for trust-anchored zones.
 
 And click `Save`.
 
@@ -1109,7 +1095,7 @@ In the pfSense WebGUI go to System > Package Manager > Available Packages and ty
 Make sure you click `+ Install` and then Confirm on the next page. Installation may take a short while as it downloads and updates certain packages.
 
 ### 11.02 Setup Avahi
-When choosing your interfaces you must have at least two interface selected: one interface to listen on (i.e LAN) for mdns packets and another pfSenbse interfaces to repeat the mdns packets to (i.e OPT2). 
+When choosing your interfaces you must have at least two interface selected: one interface to listen on (i.e LAN) for mdns packets and another pfSense interfaces to repeat the mdns packets to (i.e OPT2).
 
 After installation of Avahi navigate to `Services` > `Avahi` and fill up the necessary fields as follows:
 
