@@ -1043,6 +1043,8 @@ In the pfSense WebGUI go to System > Package Manager > Available Packages and ty
 Make sure you click `+ Install` and then Confirm on the next page. Installation may take a short while as it downloads and updates certain packages.
 
 ### 11.02 Setup Avahi
+When choosing your interfaces you must have at least two interface selected: one interface to listen on (i.e LAN) for mdns packets and another pfSenbse interfaces to repeat the mdns packets to (i.e OPT2). 
+
 After installation of Avahi navigate to `Services` > `Avahi` and fill up the necessary fields as follows:
 
 | Avahi Setup | Value | Notes
@@ -1050,19 +1052,23 @@ After installation of Avahi navigate to `Services` > `Avahi` and fill up the nec
 | **General Settings**
 | Enable | `pfSense`
 | Interface Action | `Allow Interfaces`
-| Interfaces | `OPT2` | *We are only going to enable Avahi mdns on our VLAN40 or VPNGATE-LOCAL network*
+| Interfaces 
+| | `LAN` | *Avahi listens in this interface for mdns packets*
+| | `OPT2`| *Avahi repeats mdns packets to VLAN40 or VPNGATE-LOCAL network*
 | Disable IPv4 | `☐` Disable support for IPv4
 | Disable IPv6 | `☐` Disable support for IPv6
-| Enable Reflection | `☑` Repeat mdns packets across subnets
+| Enable Reflection | `☑` Repeat mdns packets across subnets | *Must enable!*
 | **Publishing**
 | Enable publishing | `☐` Enable publishing of information about the pfSense host
 
 And click `Save`.
 
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_ntp_01.png)
+
 ## 12.00 Setup NTP
 This is easy. Navigate to `Services` > `NTP` >`Settings` and fill up the necessary fields as follows:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_ntp_01.png)
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_avahi_01.png)
 
 ## 13.00 Finish Up
 After all the above is in place head over to `Diagnostics` > `States` > `Reset States Tab` > and tick `Reset the firewall state table` click `Reset`. After doing any firewall changes that involve a gateway change its best doing a state reset before checking if anything has worked (odds are it will not work if you dont). PfSense WebGUI may hang for period but dont despair because it will return in a few seconds for routing to come back and up to a minute, don’t panic.
