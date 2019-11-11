@@ -44,6 +44,7 @@ Tasks to be performed are:
 	- [9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge) - vpngate-world](#904-allow-wan-to-vlan30-devices-nzbget--deluge---vpngate-world)
 	- [9.05 DNS Allow and Block Rules on OPT1 - vpngate-world](#905-dns-allow-and-block-rules-on-opt1---vpngate-world)
 	- [9.06 DNS Allow and Block Rules on OPT2 - vpngate-local](#906-dns-allow-and-block-rules-on-opt2---vpngate-local)
+	- [9.07 HAProxy Allow Rule on WAN - HAProxy](#907-haproxy-allow-rule-on-wan---haproxy)
 - [10.00 Setup pfSense DNS](#1000-setup-pfsense-dns)
 	- [10.01 Set Up DNS Resolver](#1001-set-up-dns-resolver)
 	- [10.02 Set Up General DNS](#1002-set-up-general-dns)
@@ -55,7 +56,6 @@ Tasks to be performed are:
 - [14.00 Create a pfSense Backup](#1400-create-a-pfsense-backup)
 - [00.00 Patches and Fixes](#0000-patches-and-fixes)
 	- [00.01 pfSense – disable firewall with pfctl -d](#0001-pfsense--disable-firewall-with-pfctl--d)
-
 
 
 ## 1.00 Setup pfSense
@@ -1019,6 +1019,43 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
 Click `Save` and `Apply`.
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_02.png)
+
+### 9.07 HAProxy Allow Rule on WAN - HAProxy
+All incoming traffic enters HAProxy on the pfSense WAN interface. Because we are using HTTPS we must allow TCP/443 through the firewall on the WAN interface. 
+
+Now using the pfSense web interface go to `Firewall` > `Rules` > `WAN Tab` > `Add (Arrow Down)` and create a new allow rule that look like the following:
+
+| Firewall Rule / WAN | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `☐` disable this rule
+| Interface | `WAN`
+| Addresss Family | `IPv4`
+| Protocol | `TCP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `any` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `This firewall (self)` 
+| | Destination Address - Leave Blank
+| Destination Port Range
+| | From `HTTPS(443)`
+| | Custom `Leave Blank`
+| | To `HTTPS(443)`
+| | Custom `Leave Blank`
+| **Extra Options**
+| Log | `☐` Log packets that are handled by this rule
+| Description | `Allow Wan Any HTTPS inbound to HAProxy`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_04.png)
 
 ## 10.00 Setup pfSense DNS
 Here will setup two DNS services.
