@@ -808,7 +808,7 @@ Your `Firewall` > `Rules` > `OPT2 tab` should now look like:
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_00.png)
 
 ### 9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge & Jackett) - vpngate-world
-NZBGet and Deluge are on the VLAN30 vpngate-world network. We need to allow access from other VLANs to VLAN30.
+NZBGet, Deluge and Jackett are on the VLAN30 vpngate-world network. We need to allow access from other VLANs to VLAN30 vpngate-world.
 
 Go to  `Firewall` > `Rules` > `WAN tab` and `^Add` two new rules:
 
