@@ -41,7 +41,7 @@ Tasks to be performed are:
 	- [9.01 Allow Rule for OPT1 - VPNGATEWORLD_GROUP](#901-allow-rule-for-opt1---vpngateworld_group)
 	- [9.02 Allow Rule for OPT2 - VPNGATELOCAL_GROUP](#902-allow-rule-for-opt2---vpngatelocal_group)
 	- [9.03 Allow OPT2 access to Chromecast and TV devices - vpngate-local](#903-allow-opt2-access-to-chromecast-and-tv-devices---vpngate-local)
-	- [9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge) - vpngate-world](#904-allow-wan-to-vlan30-devices-nzbget--deluge---vpngate-world)
+	- [9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge & Jackett) - vpngate-world](#904-allow-wan-to-vlan30-devices-nzbget--deluge---vpngate-world)
 	- [9.05 DNS Allow and Block Rules on OPT1 - vpngate-world](#905-dns-allow-and-block-rules-on-opt1---vpngate-world)
 	- [9.06 DNS Allow and Block Rules on OPT2 - vpngate-local](#906-dns-allow-and-block-rules-on-opt2---vpngate-local)
 	- [9.07 HAProxy Allow Rule on WAN - HAProxy](#907-haproxy-allow-rule-on-wan---haproxy)
@@ -807,7 +807,7 @@ Your `Firewall` > `Rules` > `OPT2 tab` should now look like:
 
 ![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_00.png)
 
-### 9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge) - vpngate-world
+### 9.04 Allow WAN to VLAN30 devices (NZBGet & Deluge & Jackett) - vpngate-world
 NZBGet and Deluge are on the VLAN30 vpngate-world network. We need to allow access from other VLANs to VLAN30.
 
 Go to  `Firewall` > `Rules` > `WAN tab` and `^Add` two new rules:
@@ -868,6 +868,37 @@ Click `Save`.
 | **Extra Options**
 | Log | `☐` Log packets that are handled by this rule
 | Description | `Allow WAN net to VLAN30 Deluge`
+| Advanced Options | Leave Default
+
+Click `Save` and `Apply`.
+
+
+| Firewall Rule / WAN | Value | Notes
+| :---  | :--- | :---
+| **Edit Firewall Rule **
+| Action | `Pass`
+| Disabled | `☐` disable this rule
+| Interface | `WAN`
+| Addresss Family | `IPv4`
+| Protocol | `TCP`
+| **Source**
+| Source 
+| | `☐` Invert match. 
+| | `any` 
+| | Source Address - leave blank
+| **Destination**
+| Destination 
+| | `☐` Invert match.
+| | `Single host or alias` 
+| | `192.168.30.113` | *Change to your VPN providers DNS*
+| Destination Port Range
+| | From `Other`
+| | Custom `9117`
+| | To `Other`
+| | Custom `9117`
+| **Extra Options**
+| Log | `☐` Log packets that are handled by this rule
+| Description | `Allow WAN net to VLAN30 Jackett`
 | Advanced Options | Leave Default
 
 Click `Save` and `Apply`.
