@@ -1233,7 +1233,7 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 | DNS Query Forwarding | `☐` Enable Forwarding Mode | *Uncheck*
 || `[]` Use SSL/TLS for outgoing DNS Queries to Forwarding Servers | *Uncheck*
 | DHCP Registration | `☐` Register DHCP leases in the DNS Resolver | *Uncheck*
-| Static DHCP | `☐` Register DHCP static mappings in the DNS Resolver | *Uncheck*
+| Static DHCP | `☑` Register DHCP static mappings in the DNS Resolver | *Check*
 | OpenVPN Clients | `☑` Register connected OpenVPN clients in the DNS Resolver | *Check*
 | Display Custom Options | Click `Display Custom Options` | 
 | Custom options  | `server:include: /var/unbound/pfb_dnsbl.*conf`
