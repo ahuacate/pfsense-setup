@@ -81,7 +81,7 @@ Other Prerequisites are:
 Our pfSense is hosted on Proxmox. You could also install pfSense on any x86 hardmetal machine.
 
 ## 1.1. Download the latest pfSense ISO
-Use the Proxmox web gui to add the latest Proxmox installation ISO which is available from [HERE](https://www.pfsense.org/download/).
+Use the Proxmox web gui to add the latest pfSense installation ISO which is available from [HERE](https://www.pfsense.org/download/).
 
 ## 1.2. Create a pfSense VM
 Go to the Proxmox web interface of pve-01 (should be https://192.168.1.101:8006/ ) `pve-01` > `Create VM` and fill out the details as shown below (whats not shown below leave as default)
