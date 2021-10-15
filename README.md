@@ -1,12 +1,12 @@
 <h1>pfSense Setup</h1>
 
-This guide is for installing and configuring pfSense.
+This guide is for installing and configuring a PVE pfSense VM.
 
-Our guide will create two OpenVPN Gateways for your whole network using pfSense.
+Our guide will create one or two OpenVPN Gateways, subject to your hosts networking hardware, for your whole network using pfSense. 
 
 The two OpenVPN Gateways are separated by VLAN's:
-   * `vpngate-world` - VLAN30 - This VPN client (used as a gateway) randomly connects to servers from a user determined safe list which should be outside of your country or union. A safe zone.
-   * `vpngate-local` - VLAN40 - This VPN client (used as a gateway) connects to servers which are either local, in-country or within your union and should provide a faster connection speed. 
+   * `vpngate-world` - VLAN30 - This VPN client (used as a gateway) randomly connects to servers from a user-determined safe list which should be outside of your country or union. A safe zone.
+   * `vpngate-local` - VLAN40 - This VPN client (used as a gateway) connects to servers that are either local, in-country, or within your union and should provide a faster connection speed. 
 
 **Prerequisites**
 
@@ -17,7 +17,7 @@ Network prerequisites are:
 - [x] Network DHCP server is `192.168.1.5`
 
 Other Prerequisites are:
-- [ ] Proxmox node fully configured as per [PROXMOX-NODE BUILDING](https://github.com/ahuacate/proxmox-node/blob/master/README.md#proxmox-node-building)
+- [ ] Proxmox node is configured as per [PVE-HOST-SETUP](https://github.com/ahuacate/pve-host-setup) with 3 or more LAN NICs.
 
 <hr>
 
@@ -65,6 +65,7 @@ Other Prerequisites are:
     - [10.7. HAProxy Allow Rule on WAN - HAProxy](#107-haproxy-allow-rule-on-wan---haproxy)
 - [11. Setup pfSense DNS](#11-setup-pfsense-dns)
     - [11.1. Set Up DNS Resolver](#111-set-up-dns-resolver)
+    - [Create pfSense DNS Resolver Host Overrides](#create-pfsense-dns-resolver-host-overrides)
     - [11.2. Set Up General DNS](#112-set-up-general-dns)
 - [12. Install Avahi for mdns](#12-install-avahi-for-mdns)
     - [12.1. Install Avahi Package](#121-install-avahi-package)
@@ -78,10 +79,10 @@ Other Prerequisites are:
 <!-- /TOC -->
 
 # 1. Create a Proxmox pfSense VM
-Our pfSense is hosted on Proxmox. You could also install pfSense on any x86 hardmetal machine.
+Our pfSense is hosted on Proxmox. You could also install pfSense on any x86 hard metal machine.
 
 ## 1.1. Download the latest pfSense ISO
-Use the Proxmox web gui to add the latest pfSense installation ISO which is available from [HERE](https://www.pfsense.org/download/).
+Use the Proxmox WebGUI to add the latest pfSense installation ISO which is available from [HERE](https://www.pfsense.org/download/).
 
 ## 1.2. Create a pfSense VM
 Go to the Proxmox web interface of pve-01 (should be https://192.168.1.101:8006/ ) `pve-01` > `Create VM` and fill out the details as shown below (whats not shown below leave as default)
@@ -94,7 +95,7 @@ Go to the Proxmox web interface of pve-01 (should be https://192.168.1.101:8006/
 | Start at Boot | `Enabled` |
 | Start/Shutdown order | `1` |
 | Resource Pool | Leave blank |
-| Use CD/DVD disc image file (ISO) | `pfSense-CE-2.5.x-RELEASE-amd64.iso` |
+| Use CD/DVD disc image file (ISO) | `pfSense-CE-2.x.x-RELEASE-amd64.iso` |
 | Guest OS | `Other` |
 | Graphic card | `Default` |
 | Qemu Agent | `Disabled` |
@@ -164,7 +165,7 @@ Go to Proxmox web interface of pve-01 (should be https://192.168.1.101:8006/ ) `
 You can now access the pfSense webConfigurator by opening the following URL in your web browser: http://192.168.1.253/
 
 # 2. Setup pfSense
-You can now access pfSense webConfigurator by opening the following URL in your web browser: http://192.168.1.253/ . In the pfSense webConfigurator we are going to setup two OpenVPN Gateways, namely vpngate-world and vpngate-local. Your default login details are User > admin | Pwd > pfsense
+You can now access pfSense webConfigurator by opening the following URL in your web browser: http://192.168.1.253/ . In the pfSense web configurator we are going to setup two OpenVPN Gateways, namely vpngate-world and vpngate-local. Your default login details are User > admin | Pwd > pfsense
 
 ## 2.1. Change Your pfSense Password
 Now using the pfSense web interface `System` > `User Manager` > `click on the admin pencil icon` and change your password to something more secure.
@@ -178,7 +179,7 @@ Now using the pfSense web interface `System` > `Advanced` > `Miscellaneous Tab` 
 
 | Cryptographic & Thermal Hardware | Value | Notes
 | :---  | :---: | :--- |
-| Cryptographic Hardware | `AES-NI CPU-based Accelleration` | *This works for the Qotom Mini PC Q500G6-S05 series and modern hardware*
+| Cryptographic Hardware | `AES-NI CPU-based Acceleration` | *This works for the Qotom Mini PC Q500G6-S05 series and modern hardware*
 | Thermal Sensors | None/ACPI | *Will not work because Proxmox virtualization host will NOT forward CPU temperature data to it's pfSense guest*
 
 Remember to hit the `Save` button at the bottom of the page.
@@ -221,7 +222,7 @@ Now using the pfSense web interface `Interfaces` > `OPT1` to open a configuratio
 
 And click `Save`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_01.png)
+![alt text](./images/pfsense_interfaces_01.png)
 
 ## 3.2. Edit Interface OPT2
 Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuration form, then fill up the necessary fields as follows:
@@ -245,7 +246,7 @@ Now using the pfSense web interface `Interfaces` > `OPT2` to open a configuratio
 
 And click `Save`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_02.png)
+![alt text](./images/pfsense_interfaces_02.png)
 
 ## 3.3. Edit Interface WAN
 Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration form, then edit the necessary fields to match the following:
@@ -274,7 +275,7 @@ Now using the pfSense web interface `Interfaces` > `WAN` to open a configuration
 
 And click `Save`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_03.png)
+![alt text](./images/pfsense_interfaces_03.png)
 
 # 4. Add DHCP Servers to OPT1 and OPT2
 Because in UniFi we have configured VLAN30 and VLAN40 as `VLAN Only` status we must configure a pfSense DHCP Server for both these VLANs.
@@ -306,7 +307,7 @@ Remember to hit the `Save` button at the bottom of the page.
 # 5. Setup OpenVPN Client Server
 Now this guide presumes you’re subscribing to a VPN service provider. This guide uses ExpressVPN where a standard subscription includes 5x user accounts. So we are going to create 5x OpenVPN clients: 2x vpngate-world-0(x) and 3x vpngate-local-0(x).
 
-Now you will need to fill out many of these boxes with information from your chosen VPN provider and you will need to duplicate it for each server you want to connect with.
+Now you will need to fill out many of these boxes with information from your chosen VPN provider and you will need to duplicate it for each server you want to connect to.
 
 It is important also that you give each OpenVPN Client you setup a descriptive name. I create mine like this:
 
@@ -320,7 +321,7 @@ It is important also that you give each OpenVPN Client you setup a descriptive n
 | vpngate-local-02
 | vpngate-local-03
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_openvpn_01.png)
+![alt text](./images/pfsense_openvpn_01.png)
 
 For the end part of this guide we will be enabling load balancing across two (vpngate-world) and three (vpngate-local) separate VPN servers. Also you can configure only one OpenVPN client or more, it’s completely your choice.
 
@@ -406,7 +407,7 @@ Click `Save`.
 
 Then to check whether the connection works navigate `Status` > `OpenVPN` and Status field for vpngate-world-01/02 and vpngate-local-01/02/03 should show `up`. This means you are connected to your provider.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_openvpn_02.png)
+![alt text](./images/pfsense_openvpn_02.png)
 
 # 6. Setting up a gateway for each OpenVPN Client
 Gateways act just like the WAN or LAN does, it’s almost like a physical port on your firewall except in this case it’s for your VPN and not a physical port on the device. Creating a gateway allows us to specify traffic that should utilise the specific VPN Client the gateway is for.
@@ -513,17 +514,17 @@ Click `Save` and `Apply`.
 
 Your `Interfaces` > `Assignments` tab should now look like this:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_interfaces_04.png)
+![alt text](./images/pfsense_interfaces_04.png)
 
 ## 6.3. Check your Gateway Interface(s)
 Your Gateways should be automatically created after completing the above steps. To check go to your pfSense web interface `System` > `Routing` > `Gateways Tab` and it should look like:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_gateway_00.png)
+![alt text](./images/pfsense_gateway_00.png)
 
 # 7. Create Gateway Groups
-Now this is something very few people setup because they either aren’t aware it can be done or it seems too complicated to setup but it’s actually very easy. You should've already created multiple OpenVPN clients and Gateways and now you simply setup 2 or more (there really is no limit) OpenVPN Clients to utilise within a load balancing group.
+This is something very few people set up because they either aren’t aware it can be done or it seems too complicated to set up but it’s very easy. You should've already created multiple OpenVPN clients and Gateways and now you simply set up 2 or more (there is no limit) OpenVPN Clients to utilize within a load balancing group.
 
-The way this load balancing works is round-robin. For example if you load a website you’re not making one single connection to it, you’re actually downloading many different files at once which your browser is then combining together. Such as Images, HTML, CSS, JavaScript and other included but separate files.
+The way this load balancing works is round-robin. For example, if you load a website you’re not making one single connection to it, you’re downloading many different files at once which your browser is then combining together.
 
 It’s a similar situation with BitTorrent. You don’t make a single connection to download a file instead you connect to multiple peers and request different pieces which the BitTorrent client then combines into one final file or folder of files.
 
@@ -551,7 +552,7 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateway Groups
 
 And click `Save`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_gatewaygrp_01.png)
+![alt text](./images/pfsense_gatewaygrp_01.png)
 
 ## 7.2. Create VPNGATELOCAL Gateway Group
 Here we will create a new Gateway comprising of `VPNGATELOCAL01_VPNV4`, `VPNGATELOCAL02_VPNV4` and `VPNGATELOCAL03_VPNV4`Gateways.
@@ -573,7 +574,7 @@ Now using the pfSense web interface go to `System` > `Routing` > `Gateway Groups
 
 And click `Save`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_gatewaygrp_02.png)
+![alt text](./images/pfsense_gatewaygrp_02.png)
 
 ## 7.3. Disable Gateway monitoring
 Since version pfSense 2.5.1 I must disable Gateway Monitoring on each newly created OpenVPN Gateway `System` > `Routing` > `Gateways`. This bug first appeared in pfSense 2.5.0 to my knowledge.
@@ -660,7 +661,7 @@ And click `Save`.
 
 And click `Save`. A example for the `VLAN30 to vpngate-world01` is shown here:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_01.png)
+![alt text](./images/pfsense_nat_01.png)
 
 ## 9.2. Create NAT Rule VLAN40 to vpngate-local - Outbound
 Now create new mappings by `Firewall` > `NAT` > `Outband Tab` > `^Add` (arrow up) to open a new configuration form, then fill up the necessary fields as follows to create 3 new entries:
@@ -734,7 +735,7 @@ And click `Save`.
 
 And click `Save`. A example for the `VLAN40 to vpngate-local01` is shown here:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_02.png)
+![alt text](./images/pfsense_nat_02.png)
 
 Now your first two mappings for the new gateways show look like this (you may need to rearrange them):
 
@@ -746,7 +747,7 @@ Now your first two mappings for the new gateways show look like this (you may ne
 |[]|VPNGATEWORLD01|192.168.30.0/24|*|*|*|VPNGATEWORLD01 address|*|:heavy_check_mark:|VLAN30 to vpngate-world01
 |[]|VPNGATEWORLD02|192.168.30.0/24|*|*|*|VPNGATEWORLD02 address|*|:heavy_check_mark:|VLAN30 to vpngate-world02
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_nat_03.png)
+![alt text](./images/pfsense_nat_03.png)
 
 
 # 10. Adding Firewall Rules
@@ -815,7 +816,7 @@ Click `Save` and `Apply`.
 The above two rules will send all traffic on each interface into the respective VPN tunnel. You must ensure the ‘gateway’ setting option is set to your VPN gateway and that this rule is above any other rule that allows hosts to go out to the internet. pfSense needs to be able to catch this rule before any others.
 
 ## 10.3. Allow OPT2 access to Chromecast and TV devices - vpngate-local
-By default VLAN40 (vpngate-local) has no access to any other other VLAN. For convenience we allow certain VLAN40 ports access to our Chromecast Alias IP address.
+By default VLAN40 (vpngate-local) has no access to any other VLAN. For convenience, we allow certain VLAN40 ports access to our Chromecast Alias IP address.
 
 Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
 
@@ -915,7 +916,7 @@ Click `Save` and `Apply`.
 
 Your `Firewall` > `Rules` > `OPT2 tab` should now look like:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_00.png)
+![alt text](./images/pfsense_rules_00.png)
 
 ## 10.4. Allow WAN to VLAN30 devices (NZBGet & Deluge & Jackett) - vpngate-world
 NZBGet, Deluge and Jackett are on the VLAN30 vpngate-world network. We need to allow access from other VLANs to VLAN30 vpngate-world.
@@ -1013,12 +1014,12 @@ Click `Save` and `Apply`.
 
 Click `Save` and `Apply`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_03.png)
+![alt text](./images/pfsense_rules_03.png)
 
 ## 10.5. DNS Allow and Block Rules on OPT1 - vpngate-world
-When your computer needs to know an IP Address of a host it will use a DNS server and by default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
+When your computer needs to know an IP Address of a host it will use a DNS server. By default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
 
-To fix this problem we’re going to create a basic firewall rule which will pass traffic destined for UDP port 53 (the DNS server port) on each VLAN to its own VLAN DNS server which will be operated by your VPN provider. Next we add a rule where if the traffic destined for UDP port 53 is'nt on its own VLAN we block it.
+To fix this problem, we’re going to create a basic firewall rule which will pass traffic destined for UDP port 53 (the DNS server port) on each VLAN to its own VLAN DNS server. This DNS server is operated by your VPN provider. Next, we add a rule where traffic destined for UDP port 53 isn't on its VLAN we block it.
 
 You need both rules (Pass & Block) for pfBlockerNG addon to work with DNSBL lists.
 
@@ -1086,12 +1087,12 @@ Go to  `Firewall` > `Rules` > `OPT1 tab` and `^ Add (arrow up)` a new rule:
 
 Click `Save` and `Apply`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_01.png)
+![alt text](./images/pfsense_rules_01.png)
 
 ## 10.6. DNS Allow and Block Rules on OPT2 - vpngate-local
-When your computer needs to know an IP Address of a host it will use a DNS server and by default it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
+When your computer needs to know an IP Address of a host it will use a DNS server and by default, it will use your internet service providers or the DNS resolver built into pfSense. This is bad when using a VPN because performing a DNS lookup can reveal your origin IP Address.
 
-To fix this problem we’re going to create a basic firewall rule which will pass traffic destined for UDP port 53 (the DNS server port) on each VLAN to its own VLAN DNS server which will be operated by your VPN provider. Next we add a rule where if the traffic destined for UDP port 53 is'nt on its own VLAN we block it.
+To fix this problem, we’re going to create a basic firewall rule which will pass traffic destined for UDP port 53 (the DNS server port) on each VLAN to its own VLAN DNS server. This DNS server is operated by your VPN provider. Next, we add a rule where if the traffic destined for UDP port 53 isn't on its VLAN we block it.
 
 You need both rules (Pass & Block) for pfBlockerNG addon to work with DNSBL lists.
 
@@ -1159,12 +1160,12 @@ Go to  `Firewall` > `Rules` > `OPT2 tab` and `^ Add (arrow up)` a new rule:
 
 Click `Save` and `Apply`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_02.png)
+![alt text](./images/pfsense_rules_02.png)
 
 ## 10.7. HAProxy Allow Rule on WAN - HAProxy
 All incoming traffic enters HAProxy on the pfSense WAN interface. Because we are using HTTPS we must allow TCP/443 through the firewall on the WAN interface. 
 
-Now using the pfSense web interface go to `Firewall` > `Rules` > `WAN Tab` > `Add (Arrow Down)` and create a new allow rule that look like the following:
+Now using the pfSense web interface go to `Firewall` > `Rules` > `WAN Tab` > `Add (Arrow Down)` and create a new allow rule that looks like the following:
 
 | Firewall Rule / WAN | Value | Notes
 | :---  | :--- | :---
@@ -1196,7 +1197,7 @@ Now using the pfSense web interface go to `Firewall` > `Rules` > `WAN Tab` > `Ad
 
 Click `Save` and `Apply`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_rules_04.png)
+![alt text](./images/pfsense_rules_04.png)
 
 # 11. Setup pfSense DNS
 Here will setup two DNS services.
@@ -1222,7 +1223,7 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 || `VPNGATELOCAL01`
 || `VPNGATELOCAL02`
 || `VPNGATELOCAL03`
-| System Domain Local Zone Type | `Static` | 
+| System Domain Local Zone Type | `Transparent` | 
 | DNSSEC | `☑ Enable DNSSEC Support` | 
 | DNS Query Forwarding | `☐` Enable Forwarding Mode | *Uncheck*
 || `[]` Use SSL/TLS for outgoing DNS Queries to Forwarding Servers | *Uncheck*
@@ -1245,6 +1246,17 @@ To configure the pfSense DNS resolver navigate to `Services` > `DNS Resolver` an
 
 And click `Save`.
 
+## Create pfSense DNS Resolver Host Overrides
+This section is needed if you intend to use pfSense HAProxy.
+
+Enter individual HAProxy backend servers for which the pfSense DNS resolvers standard DNS should be overridden by specific IPv4/v6 addresses. This is mostly for SSLH backend servers.
+
+Now using the pfSense web interface go to `Services` > `DNS Resolver` > `General Settings` and scroll down to the section labeled `Host Overrides` and create a new DNS rule that looks like the following example:
+
+| Host | Parent domain of host | IP to return for host | Description
+| :---:  | :---: | :---: | :---:
+| kodirsync | localdomain | 192.168.50.121 | Kodi-Rsync server
+
 ## 11.2. Set Up General DNS
 Navigate to `System` > `General Settings` and fill up the necessary fields as follows:
 
@@ -1266,7 +1278,7 @@ Navigate to `System` > `General Settings` and fill up the necessary fields as fo
 And click `Save`. Your pfSense appliance is now configured for DNS servers.
 
 # 12. Install Avahi for mdns
-The Avahi package used in pfSense software is a system which facilitates service discovery on a local network. This means that a laptop or computer may be connected into a network and instantly be able to view other people to chat with, locate chromecast devices and find printers to print to or find files being shared.
+The Avahi package used in pfSense software is a system that facilitates service discovery on a local network. This means that a laptop or computer may be connected to a network and instantly be able to view other people to chat with, locate chromecast devices and find printers to print to or find files being shared.
 
 ## 12.1. Install Avahi Package
 In the pfSense WebGUI go to System > Package Manager > Available Packages and type ‘avahi’ into the search criteria and then click Search.
@@ -1298,24 +1310,24 @@ After installation of Avahi navigate to `Services` > `Avahi` and fill up the nec
 
 And click `Save`.
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_avahi_01.png)
+![alt text](./images/pfsense_avahi_01.png)
 
 # 13. Setup NTP
 This is easy. Navigate to `Services` > `NTP` >`Settings` and fill up the necessary fields as follows:
 
-![alt text](https://raw.githubusercontent.com/ahuacate/pfsense-setup/master/images/pfsense_ntp_01.png)
+![alt text](./images/pfsense_ntp_01.png)
 
 # 14. Finish Up
-After all the above is in place head over to `Diagnostics` > `States` > `Reset States Tab` > and tick `Reset the firewall state table` click `Reset`. After doing any firewall changes that involve a gateway change its best doing a state reset before checking if anything has worked (odds are it will not work if you dont). PfSense WebGUI may hang for period but dont despair because it will return in a few seconds for routing to come back and up to a minute, don’t panic.
+After all the above is in place head over to `Diagnostics` > `States` > `Reset States Tab` > and tick `Reset the firewall state table` click `Reset`. After doing any firewall changes that involve a gateway change its best to do a state reset before checking if anything has worked (odds are it will not work if you don't). PfSense WebGUI may hang for a period but don't despair because it will return in a few seconds for routing to come back and up to a minute, don’t panic.
 
-And finally navigate to `Diagnostics` > `Reboot` and reboot your pfSense machine.
+And finally, navigate to `Diagnostics` > `Reboot` and reboot your pfSense machine.
 
-Once you’re done head over to any client PC on the network or mobile on the WiFi SSID on either `vpngate-world` VLAN30 or `vpngate-local` VLAN40 networks and use IP checker to if its all working https://wtfismyip.com with NO DNS Leaks https://www.dnsleaktest.com/ (use the extended option on dnsleaktest).
+Once you’re done go to any client PC on the network or mobile on the WiFi SSID on either `vpngate-world` VLAN30 or `vpngate-local` VLAN40 networks and use IP checker to if its all working https://wtfismyip.com with NO DNS Leaks https://www.dnsleaktest.com/ (use the extended option on dnsleaktest).
 
 Success! (hopefully)
 
 # 15. Create a pfSense Backup
-If all is working its best to make a backup of your pfsense configuration. Also if you experiment around a lot, it’s an easy way to restore back to a working configuration. Also, do a backup each and every time before upgrading to a newer version of your firewall or pfSense OS. So in the event you have to rebuild pfSense you can skip Steps 7.0 onwards by using the backup restore feature which will save you a lot of time.
+If it's working its best to make a backup of your pfsense configuration. WE recommend performing a backup before upgrading to a newer version of your firewall or pfSense OS. So in the event, you have to rebuild pfSense you can skip Steps 7.0 onwards by using the backup restore feature saving you a lot of time.
 
 On your pfSense WebGUI navigate to `Diagnostics` > `Backup & Restore` then fill up the necessary fields as follows:
 
@@ -1338,4 +1350,4 @@ If for whatever reason you have lost access to the pfSense web management consol
 
 Then type and execute `pfctl -d` where the -d will temporally disable the firewall (you should see the confirmation in the shell `pf disabled`, where pf is the packet filter = FIREWALL)
 
-Now you can log into the WAN side IP address (192.168.2.1) and govern the pfsense again to fix the problem causing pfSense web management console to cease working on 192.168.1.253.
+Now you can log into the WAN side IP address (192.168.2.1) and govern the pfSense again to fix the problem causing pfSense web management console to cease working on 192.168.1.253.
