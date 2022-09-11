@@ -1585,11 +1585,13 @@ On your pfSense WebGUI navigate to `Diagnostics` > `Backup & Restore` then fill 
 
 | Backup Configuration | Value | Notes
 | :---  | :--- | :--- |
-| Backup area | `All` | *Select All*
-| Skip Packages | `☐` Do not backup package information | *Uncheck the box*
-| Skip RRD data | `☑` Do not backup RRD data (NOTE: RRD Data can consume 4+ megabytes of config.xml space!)| *Check the box. RRD Data are your Graphs. Like the traffic Graph for example. I do not back them up because I do not need them*
-| Encyption | `☐` Encrypt this configuration file. | *If you check this box a password value box will appear. Dont forget your password otherwise you are truly stuffed if you need to perform a restore*
-| Password (optional box) | `xxxxxxxx` | *See above*
+| Backup area | `All`
+| Skip Packages | `☑` Do not backup package information
+| Skip RRD data | `☑` Do not backup RRD data (NOTE: RRD Data can consume 4+ megabytes of config.xml space!)| Check the box. RRD Data are your Graphs. Like the traffic Graph for example. I do not back them up because I do not need them.
+| Include extra data | `☑` Backup extra data.
+| Backup SSH keys | `☑` Backup SSH keys
+| Encyption | `☐` Encrypt this configuration file. | If you check this box a password value box will appear. Dont forget your password otherwise you are truly stuffed if you need to perform a restore.
+| Password (optional box) | `xxxxxxxx` |
 
 And then click the `Download configuration as XML` and `Save` the backup XML file to your NAS or a secure location. If you are using the WebGUI on a Windows PC the XML backup file will be saved in your users `Downloads` folder where you can then copy/move the file to a safer location. You should have a backup folder share on your NAS so why not store the XML file there `backup/pfsense/config-pfSense.localdomain-2019xxxxxxxxxx.xml`
 
