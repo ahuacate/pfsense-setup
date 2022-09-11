@@ -1,0 +1,1198 @@
+
+<filter>
+	<rule>
+		<id></id>
+		<tracker>1662357034</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<direction>any</direction>
+		<quick>yes</quick>
+		<floating>yes</floating>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<network>(self)</network>
+		</source>
+		<destination>
+			<address>HAProxy_Backend_Hosts</address>
+			<port>HAProxy_Backend_Ports</port>
+		</destination>
+		<descr><![CDATA[LAN_TRANSIT - Allow HAProxy to backend hosts]]></descr>
+		<created>
+			<time>1662357034</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662359326</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662357368</tracker>
+		<type>block</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet46</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<direction>any</direction>
+		<floating>yes</floating>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[LAN_TRANSIT - Block LAN any rule]]></descr>
+		<created>
+			<time>1662357368</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662359962</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661848233</tracker>
+		<type>pass</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>icmp</protocol>
+		<icmptype>echoreq</icmptype>
+		<source>
+			<network>wan</network>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Allow ICMP rule]]></descr>
+		<created>
+			<time>1661848233</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662189103</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662106387</tracker>
+		<type>pass</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<network>wan</network>
+			<port>VPN_Ports_client</port>
+		</source>
+		<destination>
+			<network>wan</network>
+			<port>VPN_Ports_client</port>
+		</destination>
+		<descr><![CDATA[Allow VPN ports in]]></descr>
+		<created>
+			<time>1662106387</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662106436</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1573443708</tracker>
+		<type>pass</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>(self)</network>
+			<port>443</port>
+		</destination>
+		<descr><![CDATA[Allow Wan Any HTTPS inbound to HAProxy]]></descr>
+		<created>
+			<time>1573443708</time>
+			<username><![CDATA[Easy Rule]]></username>
+		</created>
+		<updated>
+			<time>1573480712</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661870810</tracker>
+		<type>pass</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>wan</network>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Allow WAN to pfSense Resolver]]></descr>
+		<updated>
+			<time>1661870810</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1661870810</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661870739</tracker>
+		<type>block</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<network>wan</network>
+		</source>
+		<destination>
+			<any></any>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Block WAN to all other DNS]]></descr>
+		<updated>
+			<time>1661870739</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1661870739</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662105280</tracker>
+		<type>block</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<log></log>
+		<descr><![CDATA[Block IPv4 to any rule]]></descr>
+		<created>
+			<time>1662105280</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662105293</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662105253</tracker>
+		<type>block</type>
+		<interface>wan</interface>
+		<ipprotocol>inet6</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Block IPv6 to any rule]]></descr>
+		<updated>
+			<time>1662105253</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662105253</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662115458</tracker>
+		<type>reject</type>
+		<interface>lan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<network>opt1</network>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Allow LAN traffic to local subnets]]></descr>
+		<created>
+			<time>1662115458</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662368865</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662115230</tracker>
+		<type>pass</type>
+		<interface>lan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>icmp</protocol>
+		<icmptype>echoreq</icmptype>
+		<source>
+			<address>LAN_User_Subnets</address>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Allow ICMP rule]]></descr>
+		<created>
+			<time>1662115230</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662115311</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662048447</tracker>
+		<type>pass</type>
+		<interface>lan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<address>PiHole_Hosts</address>
+		</source>
+		<destination>
+			<address>Local_DNS_Servers</address>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Allow PiHole in]]></descr>
+		<updated>
+			<time>1662048447</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662048447</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<type>pass</type>
+		<ipprotocol>inet</ipprotocol>
+		<descr><![CDATA[Default allow LAN to any rule]]></descr>
+		<interface>lan</interface>
+		<tracker>0100000101</tracker>
+		<source>
+			<network>lan</network>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662358043</tracker>
+		<type>block</type>
+		<interface>lan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Default block LAN to any rule]]></descr>
+		<updated>
+			<time>1662358043</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662358043</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>0100000102</tracker>
+		<type>block</type>
+		<interface>lan</interface>
+		<ipprotocol>inet6</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Default block LAN IPv6 to any rule]]></descr>
+		<updated>
+			<time>1662358119</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661264096</tracker>
+		<type>pass</type>
+		<interface>opt1</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>opt1</network>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Allow LAN_VPNGATE_WORLD DNS to pfSense Resolver]]></descr>
+		<updated>
+			<time>1661264096</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1661264096</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1573359780</tracker>
+		<type>block</type>
+		<interface>opt1</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<network>opt1</network>
+		</source>
+		<destination>
+			<any></any>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Block LAN_VPNGATE_WORLD to all other DNS]]></descr>
+		<created>
+			<time>1573359780</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1661870551</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1573289598</tracker>
+		<type>pass</type>
+		<interface>opt1</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<network>opt1</network>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Default allow LAN_VPNGATE_WORLD to any rule]]></descr>
+		<gateway>Gateway_VPN_World_Group</gateway>
+		<created>
+			<time>1573289598</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1660983526</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661407745</tracker>
+		<type>pass</type>
+		<interface>opt2</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<network>opt2</network>
+		</source>
+		<destination>
+			<address>Printer_Hosts</address>
+			<port>Printer_Ports</port>
+		</destination>
+		<descr><![CDATA[Allow LAN_VPNGATE_LOCAL to printers]]></descr>
+		<created>
+			<time>1661407745</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1661495379</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661010096</tracker>
+		<type>pass</type>
+		<interface>opt2</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>opt2</network>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Allow LAN_VPNGATE_LOCAL DNS to pfSense Resolver]]></descr>
+		<created>
+			<time>1661010096</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1661010354</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1573356437</tracker>
+		<type>block</type>
+		<interface>opt2</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<network>opt2</network>
+		</source>
+		<destination>
+			<any></any>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Block LAN_VPNGATE_LOCAL to all other DNS]]></descr>
+		<created>
+			<time>1573356437</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1661870583</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1661009933</tracker>
+		<type>pass</type>
+		<interface>opt2</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<network>opt2</network>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Default allow LAN_VPNGATE_LOCAL to any rule]]></descr>
+		<gateway>Gateway_VPN_Local_Group</gateway>
+		<updated>
+			<time>1661009933</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1661009933</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662049290</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>icmp</protocol>
+		<icmptype>echoreq</icmptype>
+		<source>
+			<address>LAN_User_Subnets</address>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Allow ICMP rule]]></descr>
+		<created>
+			<time>1662049290</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662182327</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662049242</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<address>LAN_User_Subnets</address>
+		</source>
+		<destination>
+			<address>Medialab_Hosts_vpn</address>
+			<port>Medialab_Ports_vpn</port>
+		</destination>
+		<descr><![CDATA[Allow LAN_VPNGATE_WORLD hosts to LAN users (WebGUI access)]]></descr>
+		<updated>
+			<time>1662049242</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662049242</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662049266</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<address>Medialab_Hosts_std</address>
+		</source>
+		<destination>
+			<address>Medialab_Hosts_vpn</address>
+			<port>Medialab_Ports_vpn</port>
+		</destination>
+		<descr><![CDATA[Allow LAN_VPNGATE_WORLD hosts to LAN-medialab hosts]]></descr>
+		<created>
+			<time>1662049266</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662193154</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662048646</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<address>PiHole_Hosts</address>
+		</source>
+		<destination>
+			<address>Local_DNS_Servers</address>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Allow PiHole in]]></descr>
+		<updated>
+			<time>1662048646</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662048646</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662049544</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>opt7</network>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Allow LAN to pfSense Resolver]]></descr>
+		<updated>
+			<time>1662049544</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662049544</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662049433</tracker>
+		<type>block</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>udp</protocol>
+		<source>
+			<network>opt7</network>
+		</source>
+		<destination>
+			<any></any>
+			<port>53</port>
+		</destination>
+		<descr><![CDATA[Block LAN to all other DNS]]></descr>
+		<updated>
+			<time>1662049433</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+		<created>
+			<time>1662049433</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662048202</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<network>opt7</network>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Default allow LAN to any rule]]></descr>
+		<gateway>LAN_TRANSIT_DHCP</gateway>
+		<created>
+			<time>1662048202</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662278641</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662092084</tracker>
+		<type>block</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<address>RFC_1918_Subnets</address>
+			<not></not>
+		</destination>
+		<descr><![CDATA[Block all not RFC 1918]]></descr>
+		<created>
+			<time>1662092084</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662092896</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1662048126</tracker>
+		<type>block</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Default block LAN  to any rule]]></descr>
+		<created>
+			<time>1662048126</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1662095297</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<separator>
+		<opt1>
+			<sep0>
+				<row>fr0</row>
+				<text><![CDATA[Test bench rules]]></text>
+				<color>bg-warning</color>
+				<if>opt1</if>
+			</sep0>
+			<sep1>
+				<row>fr0</row>
+				<text><![CDATA[DNS rules]]></text>
+				<color>bg-success</color>
+				<if>opt1</if>
+			</sep1>
+			<sep2>
+				<row>fr2</row>
+				<text><![CDATA[Allow any rules]]></text>
+				<color>bg-info</color>
+				<if>opt1</if>
+			</sep2>
+			<sep3>
+				<row>fr3</row>
+				<text><![CDATA[Default reject rules]]></text>
+				<color>bg-danger</color>
+				<if>opt1</if>
+			</sep3>
+		</opt1>
+		<opt2>
+			<sep0>
+				<row>fr0</row>
+				<text><![CDATA[Test bench rules]]></text>
+				<color>bg-warning</color>
+				<if>opt2</if>
+			</sep0>
+			<sep1>
+				<row>fr0</row>
+				<text><![CDATA[Printer rules]]></text>
+				<color>bg-success</color>
+				<if>opt2</if>
+			</sep1>
+			<sep2>
+				<row>fr1</row>
+				<text><![CDATA[DNS rules]]></text>
+				<color>bg-success</color>
+				<if>opt2</if>
+			</sep2>
+			<sep3>
+				<row>fr3</row>
+				<text><![CDATA[Allow any rules]]></text>
+				<color>bg-info</color>
+				<if>opt2</if>
+			</sep3>
+			<sep4>
+				<row>fr4</row>
+				<text><![CDATA[Default reject rules]]></text>
+				<color>bg-danger</color>
+				<if>opt2</if>
+			</sep4>
+		</opt2>
+		<wan>
+			<sep0>
+				<row>fr0</row>
+				<text><![CDATA[Test bench rules]]></text>
+				<color>bg-warning</color>
+				<if>wan</if>
+			</sep0>
+			<sep1>
+				<row>fr0</row>
+				<text><![CDATA[Allow ICMP rule]]></text>
+				<color>bg-success</color>
+				<if>wan</if>
+			</sep1>
+			<sep2>
+				<row>fr1</row>
+				<text><![CDATA[Allow VPN client ports]]></text>
+				<color>bg-success</color>
+				<if>wan</if>
+			</sep2>
+			<sep3>
+				<row>fr2</row>
+				<text><![CDATA[Allow HAProxy WAN ingress]]></text>
+				<color>bg-success</color>
+				<if>wan</if>
+			</sep3>
+			<sep4>
+				<row>fr3</row>
+				<text><![CDATA[DNS rules]]></text>
+				<color>bg-info</color>
+				<if>wan</if>
+			</sep4>
+			<sep5>
+				<row>fr5</row>
+				<text><![CDATA[Default reject rules]]></text>
+				<color>bg-danger</color>
+				<if>wan</if>
+			</sep5>
+		</wan>
+		<lan>
+			<sep0>
+				<row>fr0</row>
+				<text><![CDATA[Test bench rules]]></text>
+				<color>bg-warning</color>
+				<if>lan</if>
+			</sep0>
+			<sep1>
+				<row>fr1</row>
+				<text><![CDATA[Allow ICMP rule]]></text>
+				<color>bg-success</color>
+				<if>lan</if>
+			</sep1>
+			<sep2>
+				<row>fr2</row>
+				<text><![CDATA[Allow PiHole rules]]></text>
+				<color>bg-info</color>
+				<if>lan</if>
+			</sep2>
+			<sep3>
+				<row>fr3</row>
+				<text><![CDATA[Allow any rules]]></text>
+				<color>bg-info</color>
+				<if>lan</if>
+			</sep3>
+			<sep4>
+				<row>fr4</row>
+				<text><![CDATA[Permit traffic rules]]></text>
+				<color>bg-success</color>
+				<if>lan</if>
+			</sep4>
+			<sep5>
+				<row>fr4</row>
+				<text><![CDATA[Default reject rules]]></text>
+				<color>bg-danger</color>
+				<if>lan</if>
+			</sep5>
+		</lan>
+		<floatingrules>
+			<sep0>
+				<row>fr0</row>
+				<text><![CDATA[Test bench rules]]></text>
+				<color>bg-warning</color>
+				<if>floatingrules</if>
+			</sep0>
+			<sep1>
+				<row>fr0</row>
+				<text><![CDATA[Allow HAProxy rules]]></text>
+				<color>bg-success</color>
+				<if>floatingrules</if>
+			</sep1>
+			<sep2>
+				<row>fr1</row>
+				<text><![CDATA[Default block rules]]></text>
+				<color>bg-danger</color>
+				<if>floatingrules</if>
+			</sep2>
+		</floatingrules>
+		<opt7>
+			<sep0>
+				<row>fr0</row>
+				<text><![CDATA[Test bench rules]]></text>
+				<color>bg-warning</color>
+				<if>opt7</if>
+			</sep0>
+			<sep1>
+				<row>fr0</row>
+				<text><![CDATA[Allow ICMP rule]]></text>
+				<color>bg-success</color>
+				<if>opt7</if>
+			</sep1>
+			<sep2>
+				<row>fr1</row>
+				<text><![CDATA[Allow HAProxy rules]]></text>
+				<color>bg-success</color>
+				<if>opt7</if>
+			</sep2>
+			<sep3>
+				<row>fr1</row>
+				<text><![CDATA[Allow Medialab rules]]></text>
+				<color>bg-success</color>
+				<if>opt7</if>
+			</sep3>
+			<sep4>
+				<row>fr3</row>
+				<text><![CDATA[Allow PiHole rules]]></text>
+				<color>bg-success</color>
+				<if>opt7</if>
+			</sep4>
+			<sep5>
+				<row>fr4</row>
+				<text><![CDATA[DNS rules]]></text>
+				<color>bg-info</color>
+				<if>opt7</if>
+			</sep5>
+			<sep6>
+				<row>fr6</row>
+				<text><![CDATA[Allow any rules]]></text>
+				<color>bg-info</color>
+				<if>opt7</if>
+			</sep6>
+			<sep7>
+				<row>fr7</row>
+				<text><![CDATA[Default reject rules]]></text>
+				<color>bg-danger</color>
+				<if>opt7</if>
+			</sep7>
+		</opt7>
+		<opt8></opt8>
+	</separator>
+</filter>

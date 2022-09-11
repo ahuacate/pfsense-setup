@@ -1,0 +1,129 @@
+
+<aliases>
+	<alias>
+		<name>pfB_DNSBL_Ports</name>
+		<address>8081 8443</address>
+		<descr><![CDATA[pfBlockerNG DNSBL VIP Ports]]></descr>
+		<type>port</type>
+		<detail><![CDATA[DO NOT EDIT THIS PORT||DO NOT EDIT THIS PORT]]></detail>
+	</alias>
+	<alias>
+		<name>Default_allowed_OUT_Ports_LAN</name>
+		<type>port</type>
+		<address>53 5353:5354 123 21 22 161 80 443 8080:8081 8880 8843 10001 5001 5900 9000 3389 49152:65535</address>
+		<descr><![CDATA[Default ports permitted LAN egress]]></descr>
+		<detail><![CDATA[DNS||MDNS||NTP||FTP||SSH||SNMP||HTTP||HTTPS||UniFi||Unifi redirect||Unifi redirect||UBNT broadcast||iperf||IPMI||VNC||Remote desktop||Ephemeral ports]]></detail>
+	</alias>
+	<alias>
+		<name>Default_allowed_OUT_Ports_WAN</name>
+		<type>port</type>
+		<address>21 22 80 443 587 993 5222 8080 465 119 143 6667 6697 8443 8843 49152:65535</address>
+		<descr><![CDATA[Default ports permitted WAN egress]]></descr>
+		<detail><![CDATA[FTP||SSH||HTTP||HTTPS||SMTPS||IMAPS||XMPP||HTTP||SMTPS||NNTP||IMAP||IRC||IRCS||CalDAV||CardDAV||Ephemeral ports]]></detail>
+	</alias>
+	<alias>
+		<name>HAProxy_Backend_Hosts</name>
+		<type>host</type>
+		<address>jellyfin.local</address>
+		<descr><![CDATA[HA-Proxy backend hosts]]></descr>
+		<detail><![CDATA[Jellyfin host server]]></detail>
+	</alias>
+	<alias>
+		<name>HAProxy_Backend_Ports</name>
+		<type>port</type>
+		<address>8920 8096</address>
+		<descr><![CDATA[HA-Proxy backend ports]]></descr>
+		<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port]]></detail>
+	</alias>
+	<alias>
+		<name>LAN_User_Subnets</name>
+		<type>network</type>
+		<address>192.168.1.0/24 192.168.10.0/24 192.168.30.0/24</address>
+		<descr><![CDATA[All LAN user subnets]]></descr>
+		<detail><![CDATA[LAN default||LAN-open (vlan10)||LAN-vpngate-local (vlan40)]]></detail>
+	</alias>
+	<alias>
+		<name>Local_DNS_Servers</name>
+		<type>host</type>
+		<address>192.168.30.5 192.168.40.5</address>
+		<descr><![CDATA[Local PfSense DNS servers]]></descr>
+		<detail><![CDATA[LAN-vpngate-world dns||LAN-vpngate-local dns]]></detail>
+	</alias>
+	<alias>
+		<name>Local_Subnets</name>
+		<type>network</type>
+		<address>192.168.0.0/16</address>
+		<descr><![CDATA[All the LAN network subnets ]]></descr>
+		<detail><![CDATA[Subnet 192.168.0.0/24]]></detail>
+	</alias>
+	<alias>
+		<name>Medialab_Hosts_std</name>
+		<type>host</type>
+		<address>flexget.local sonarr.local radarr.local lidarr.local readarr.local ahuabooks.local whisparr.local prowlarr.local jackett.local</address>
+		<descr><![CDATA[Medialab App hosts (LAN-medialab)]]></descr>
+		<detail><![CDATA[Flexget||Sonarr||Radarr||Lidarr||Readarr||Ahuabooks||Whisparr||Prowlarr||Jackett]]></detail>
+	</alias>
+	<alias>
+		<name>Medialab_Hosts_vpn</name>
+		<type>host</type>
+		<address>nzbget.local deluge.local</address>
+		<descr><![CDATA[Medialab App hosts (LAN-vpngate-world)]]></descr>
+		<detail><![CDATA[NZBGet||Deluge]]></detail>
+	</alias>
+	<alias>
+		<name>Medialab_Ports_std</name>
+		<type>port</type>
+		<address>7878 8787 8989 8686 9696 9117 5299 4040 5050 6969</address>
+		<descr><![CDATA[Medialab App Ports (LAN-medialab)]]></descr>
+		<detail><![CDATA[Radarr port||Readarr port||Sonarr port||Lidarr port||Prowlarr port||Jackett port||Ahuabooks / LazyLibrarian port||Ahuabooks /Booksonic port||Flexget port||Whisparr port]]></detail>
+	</alias>
+	<alias>
+		<name>Medialab_Ports_vpn</name>
+		<type>port</type>
+		<address>6789 6791 8112 58846</address>
+		<descr><![CDATA[Medialab App Ports (LAN-vpngate-world)]]></descr>
+		<detail><![CDATA[NzbGet control port||NzbGet secure port||Deluge web port||Deluge daemon port]]></detail>
+	</alias>
+	<alias>
+		<name>PiHole_Hosts</name>
+		<type>host</type>
+		<address>192.168.1.254</address>
+		<descr><![CDATA[PiHole host server Ipv4 addresses]]></descr>
+		<detail><![CDATA[pihole.local]]></detail>
+	</alias>
+	<alias>
+		<name>PiHole_Ports</name>
+		<type>port</type>
+		<address>53</address>
+		<descr><![CDATA[PiHole host server ports]]></descr>
+		<detail><![CDATA[DNS 53]]></detail>
+	</alias>
+	<alias>
+		<name>Printer_Hosts</name>
+		<type>host</type>
+		<address>192.168.1.91</address>
+		<descr><![CDATA[Network Printer hosts]]></descr>
+		<detail><![CDATA[Brother Laser Printer (HL-L2360D)]]></detail>
+	</alias>
+	<alias>
+		<name>Printer_Ports</name>
+		<type>port</type>
+		<address>631 137 427 515</address>
+		<descr><![CDATA[Printer Ports]]></descr>
+		<detail><![CDATA[IPP (Generic printer)||Brother Laser Printer||SLP (Printer &amp; Scanner)|| LPD (Generic printer)]]></detail>
+	</alias>
+	<alias>
+		<name>RFC_1918_Subnets</name>
+		<type>network</type>
+		<address>10.0.0.0/8 172.16.0.0/12 192.168.0.0/16</address>
+		<descr><![CDATA[RFC 1918 Private Networks]]></descr>
+		<detail><![CDATA[RFC 1918 subnet||RFC 1918 subnet||RFC 1918 subnet]]></detail>
+	</alias>
+	<alias>
+		<name>VPN_Ports_client</name>
+		<type>port</type>
+		<address>1195</address>
+		<descr><![CDATA[VPN client provider ports]]></descr>
+		<detail><![CDATA[ExpressVPN SSL port]]></detail>
+	</alias>
+</aliases>
