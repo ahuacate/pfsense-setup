@@ -1445,13 +1445,13 @@ Here we create pfSense DHCP servers named `LAN_VPNGATE_WORLD` (vlan30) and `LAN_
 Navigate using the pfSense web interface to `Services` > `DHCP Server` > `LAN_VPNGATE_WORLD` or `LAN_VPNGATE_LOCAL` tab to open a configuration form, then fill up the necessary fields for both networks as follows:
 
 | General Options | LAN_VPNGATE_WORLD | LAN_VPNGATE_LOCAL
-| :---  | :---: | :---: | :---
-| Enable | `☑` Enable DHCP server on LAN_VPNGATE_WORLD interface | `☑` Enable DHCP server on LAN_VPNGATE_LOCAL interface|
-| BOOTP | `☑` | `☑` |
-| Deny unknown clients | `Allow all clients` | `Allow all clients` |
-| Ignore denied clients | `☐` Denied clients will be ignored rather than rejected | `☐` Denied clients will be ignored rather than rejected |
-| Ignore client identifiers | `☐` If a client includes a unique identifier in its DHCP request, that UID will not be recorded in its lease | `☐` If a client includes a unique identifier in its DHCP request, that UID will not be recorded in its lease |
-| Range | `192.168.30.150 - 192.168.30.250` | `192.168.40.150 - 192.168.40.250` |
+| :---  | :--- | :---
+| Enable | `☑` Enable DHCP server on LAN_VPNGATE_WORLD interface | `☑` Enable DHCP server on LAN_VPNGATE_LOCAL interface
+| BOOTP | `☑` | `☑`
+| Deny unknown clients | `Allow all clients` | `Allow all clients`
+| Ignore denied clients | `☐` Denied clients will be ignored rather than rejected | `☐` Denied clients will be ignored rather than rejected
+| Ignore client identifiers | `☐` If a client includes a unique identifier in its DHCP request, that UID will not be recorded in its lease | `☐` If a client includes a unique identifier in its DHCP request, that UID will not be recorded in its lease
+| Range | `192.168.30.150 - 192.168.30.250` | `192.168.40.150 - 192.168.40.250`
 | **Servers**
 | WINS servers | Leave blank | Leave blank
 | DNS servers | `192.168.30.5` | `192.168.40.5`
