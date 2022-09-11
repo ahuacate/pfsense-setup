@@ -27,8 +27,8 @@ This installation utilizes the pfSense inbuilt `Backup & Restore` function. You 
 - [x] PVE host 2x physical LAN Nics available (LAN & WAN)
 - [x] PVE host has internet access
 
-**Must Read - Local DNS Records**
-It's important you read about network DNS and how PiHole is a must.
+**Must Read - Local DNS Records*
+You must read about network DNS and why PiHole is required.
 * Click <a href="https://github.com/ahuacate/common/tree/master/pve/src/local_dns_records.md" target="_blank">HERE</a> before proceeding any further.
 
 > Note: The network Local Domain or Search domain must be set. We recommend only top-level domain (spTLD) names for residential and small networks names because they cannot be resolved across the internet. Routers and DNS servers know, in theory, not to forward ARPA requests they do not understand onto the public internet. It is best to choose one of our listed names: local, home.arpa, localdomain or lan only. Do NOT use made-up names.
