@@ -1241,7 +1241,7 @@ Here we create a new pfSense LAN_TRANSIT Gateway to and from UniFi networks. Cre
 Navigate using the pfSense web interface to `System` > `Routing` > `Gateways` > `Edit` to open the WAN configuration form, then fill up the necessary fields as follows.
 
 | Edit Gateway | Value
-| :---  | :--- | :---
+| :---  | :---
 | Disabled | `☐` Disable this gateway
 | Interface | `WAN`
 | Address Family | `IPv4`
@@ -1259,7 +1259,7 @@ And click `Save`.
 Navigate using the pfSense web interface to `System` > `Routing` > `Gateways` > `Edit` to open the LAN_TRANSIT_DHCP configuration form, then fill up the necessary fields as follows.
 
 | Edit Gateway | Value
-| :---  | :--- | :---
+| :---  | :---
 | Disabled | `☐` Disable this gateway
 | Interface | `LAN_TRANSIT`
 | Address Family | `IPv4`
@@ -1290,10 +1290,11 @@ You can even tell pfSense to only make requests through the gateways that have n
 ## 15.1. Create Gateway_VPN_World_Group
 Navigate using the pfSense web interface to `System` > `Routing` > `Gateway Groups` > `+Add` and fill out the necessary fields as follows.
 
-| Edit Gateway  Entry | | | |
-| :---  | :--- | :--- | :--- | :--- |
+| Edit Gateway  Entry | | | | |
+| :---  | :--- | :--- | :--- | :----
 | Group Name | `Gateway_VPN_World_Group`
 | **Gateway Priority** 
+| | **Gateway** | **Tier** | **Virtual IP** | **Description**
 | | WANGW | Never | Interface Address | WAN/VPN Egress Gateway
 | | VPN_CLIENT_LOCAL_01_VPNV4 | Never | Interface Address | Interface VPNGATELOCAL01_VPNV4 Gateway
 | | VPN_CLIENT_LOCAL_02_VPNV4 | Never | Interface Address | Interface VPNGATELOCAL02_VPNV4 Gateway
@@ -1309,10 +1310,11 @@ And click `Save`.
 ## 15.2. Create Gateway_VPN_World_Local
 Navigate using the pfSense web interface to `System` > `Routing` > `Gateway Groups` > `+Add` and fill out the necessary fields as follows.
 
-| Edit Gateway Entry | | | |
-| :---  | :--- | :--- | :--- | :--- |
+| Edit Gateway  Entry | | | | |
+| :---  | :--- | :--- | :--- | :----
 | Group Name | `Gateway_VPN_Local_Group`
-| **Gateway Priority** 
+| **Gateway Priority**
+| | **Gateway** | **Tier** | **Virtual IP** | **Description**
 | | WANGW | Never | Interface Address | WAN/VPN Egress Gateway
 | | VPN_CLIENT_LOCAL_01_VPNV4 | `Tier 1` | Interface Address | Interface VPNGATELOCAL01_VPNV4 Gateway
 | | VPN_CLIENT_LOCAL_02_VPNV4 | `Tier 1` | Interface Address | Interface VPNGATELOCAL02_VPNV4 Gateway
