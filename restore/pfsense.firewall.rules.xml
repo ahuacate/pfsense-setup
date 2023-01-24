@@ -560,8 +560,8 @@
 			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 		</created>
 		<updated>
-			<time>1660983526</time>
-			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+			<time>1670304240</time>
+			<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
 		</updated>
 	</rule>
 	<rule>
@@ -1132,16 +1132,22 @@
 			</sep0>
 			<sep1>
 				<row>fr0</row>
-				<text><![CDATA[Allow HAProxy rules]]></text>
+				<text><![CDATA[pfBlockerNG rules]]></text>
 				<color>bg-success</color>
 				<if>floatingrules</if>
 			</sep1>
 			<sep2>
-				<row>fr1</row>
+				<row>fr2</row>
+				<text><![CDATA[Allow HAProxy rules]]></text>
+				<color>bg-success</color>
+				<if>floatingrules</if>
+			</sep2>
+			<sep3>
+				<row>fr3</row>
 				<text><![CDATA[Default block rules]]></text>
 				<color>bg-danger</color>
 				<if>floatingrules</if>
-			</sep2>
+			</sep3>
 		</floatingrules>
 		<opt7>
 			<sep0>

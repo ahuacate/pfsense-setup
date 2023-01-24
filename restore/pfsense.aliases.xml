@@ -24,16 +24,16 @@
 	<alias>
 		<name>HAProxy_Backend_Hosts</name>
 		<type>host</type>
-		<address>jellyfin.local</address>
+		<address>jellyfin.local guacamole.local</address>
 		<descr><![CDATA[HA-Proxy backend hosts]]></descr>
-		<detail><![CDATA[Jellyfin host server]]></detail>
+		<detail><![CDATA[Jellyfin host server||Guacamole host server]]></detail>
 	</alias>
 	<alias>
 		<name>HAProxy_Backend_Ports</name>
 		<type>port</type>
-		<address>8920 8096</address>
+		<address>8920 8096 8080</address>
 		<descr><![CDATA[HA-Proxy backend ports]]></descr>
-		<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port]]></detail>
+		<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port||Guacamole HTTP port]]></detail>
 	</alias>
 	<alias>
 		<name>LAN_User_Subnets</name>
@@ -87,7 +87,7 @@
 	<alias>
 		<name>PiHole_Hosts</name>
 		<type>host</type>
-		<address>192.168.1.254</address>
+		<address>192.168.1.6</address>
 		<descr><![CDATA[PiHole host server Ipv4 addresses]]></descr>
 		<detail><![CDATA[pihole.local]]></detail>
 	</alias>
@@ -122,8 +122,8 @@
 	<alias>
 		<name>VPN_Ports_client</name>
 		<type>port</type>
-		<address>1195</address>
+		<address>1195 1194 51820 53</address>
 		<descr><![CDATA[VPN client provider ports]]></descr>
-		<detail><![CDATA[ExpressVPN SSL port]]></detail>
+		<detail><![CDATA[ExpressVPN SSL port||PureVPN port||WireGuard port||PureVPN SSL port]]></detail>
 	</alias>
 </aliases>
