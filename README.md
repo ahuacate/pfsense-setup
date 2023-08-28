@@ -1,11 +1,13 @@
 <h1>PVE pfSense VM</h1>
 
-This guide is for installing and configuring a PVE pfSense VM with OpenVPN or WireGuard VLAN Gateways in a UniFi network environment. A Layer 3 LAN network is required.
+This guide provides instructions for setting up and configuring a PVE pfSense VM with OpenVPN or WireGuard VLAN Gateways in a UniFi network environment. To implement this setup, you will need a Layer 3 LAN network.
 
-* `LAN-vpngate-world` - VLAN30 - A OpenVPN gateway pool to your chosen VPN provider exit points. The gateway can be configured with single or multiple OpenVPN tunnels for redundancy and improved data speed. All "LAN-vpngate-world" clients should be outside of your country or union - a safe zone outside of your jurisdiction.
-* `LAN-vpngate-local` - VLAN40 - A OpenVPN gateway pool to your chosen VPN provider exit points. The gateway can be configured with single or multiple OpenVPN tunnels for redundancy and improved data speed. This VPN gateway connects to servers that are either local, in-country, or within your union and should provide a faster connection speed than "LAN-vpngate-world".
+Here are the two VLANs that you will be configuring:
 
-This installation utilizes the pfSense inbuilt `Backup & Restore` function. You simply import our pfSense configuration XML file and your pfSense device is fully configured with our default settings.
+* `LAN-vpngate-world` (VLAN30): This VLAN will serve as an OpenVPN gateway pool to your preferred VPN provider's exit points. You can configure the gateway with single or multiple OpenVPN tunnels for redundancy and improved data speed. This gateway is recommended for clients located outside your country or union, providing a safe zone outside your jurisdiction.
+* `LAN-vpngate-local` (VLAN40): This VLAN will also function as an OpenVPN gateway pool to your preferred VPN provider's exit points. The gateway can be configured with single or multiple OpenVPN tunnels for redundancy and improved data speed. However, this VPN gateway connects to servers that are local, in-country, or within your union and should provide a faster connection speed than "LAN-vpngate-world".
+
+To configure this installation, you will utilize the pfSense inbuilt `Backup & Restore` function. This process involves importing our pfSense configuration XML file, which will automatically configure your pfSense device with our default settings.
 
 <h2>Prerequisites</h2>
 
@@ -33,9 +35,9 @@ This installation utilizes the pfSense inbuilt `Backup & Restore` function. You 
 
 <h2>Local DNS Records</h2>
 
-We recommend <span style="color:red">you read</span> about network Local DNS and why a PiHole server is a necessity. Click <a href="https://github.com/ahuacate/common/tree/main/pve/src/local_dns_records.md" target="_blank">here</a> to learn more before proceeding any further.
+Before proceeding, we <span style="color:red">strongly advise</span> that you familiarize yourself with network Local DNS and the importance of having a PiHole server. To learn more, click <a href="https://github.com/ahuacate/common/tree/main/pve/src/local_dns_records.md" target="_blank">here</a>.
 
-Your network Local Domain or Search domain must be also set. We recommend only top-level domain (spTLD) names for residential and small networks names because they cannot be resolved across the internet. Routers and DNS servers know, in theory, not to forward ARPA requests they do not understand onto the public internet. It is best to choose one of our listed names: local, home.arpa, localdomain or lan only. Do NOT use made-up names.
+It is essential to set your network's Local Domain or Search domain. For residential and small networks, we recommend using only top-level domain (spTLD) names because they cannot be resolved across the internet. Routers and DNS servers understand that ARPA requests they do not recognize should not be forwarded onto the public internet. It is best to select one of the following names: local, home.arpa, localdomain, or lan only. We strongly advise against using made-up names.
 
 <hr>
 
@@ -659,6 +661,8 @@ Navigate using the Proxmox PVE-01 web interface to  (should be https://192.168.1
 | Name | `pfsense` |
 | Start at Boot | `☑` Enabled
 | Start/Shutdown order | `1`
+| Startup delay | `120`
+| Startdown timeout | `60`
 | Resource Pool | Leave blank
 | **OS**
 | Use CD/DVD disc image file (ISO) | `pfSense-CE-2.x.x-RELEASE-amd64.iso`
