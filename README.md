@@ -46,47 +46,18 @@ It is essential to set your network's Local Domain or Search domain. For residen
 <!-- TOC -->
 
 - [1. Prepare your UniFi network](#1-prepare-your-unifi-network)
-    - [1.1. Configure UniFi Default WAN](#11-configure-unifi-default-wan)
-    - [1.2. Configure UniFi LAN networks](#12-configure-unifi-lan-networks)
+    - [1.2. Configure UniFi LAN networks for pfSense](#12-configure-unifi-lan-networks-for-pfsense)
         - [1.2.1. Configure UniFi default network](#121-configure-unifi-default-network)
         - [1.2.2. Configure UniFi WAN network (VLAN2)](#122-configure-unifi-wan-network-vlan2)
         - [1.2.3. Configure UniFi LAN-transit-pfsense network (VLAN3)](#123-configure-unifi-lan-transit-pfsense-network-vlan3)
         - [1.2.4. Configure UniFi LAN-medialab network (VLAN50)](#124-configure-unifi-lan-medialab-network-vlan50)
-        - [1.2.5. Configure UniFi LAN-smart network (VLAN20)](#125-configure-unifi-lan-smart-network-vlan20)
         - [1.2.6. Configure UniFi LAN-vpngate VLAN-only networks (VLAN30 & VLAN40 - pfSense hosted DHCP & DNS)](#126-configure-unifi-lan-vpngate-vlan-only-networks-vlan30--vlan40---pfsense-hosted-dhcp--dns)
+    - [1.4. Configure UniFi Static Routes](#14-configure-unifi-static-routes)
     - [1.3. Assign UniFi switch ports](#13-assign-unifi-switch-ports)
         - [1.3.1. Assign switch port to PVE-LAN](#131-assign-switch-port-to-pve-lan)
         - [1.3.2. Assign switch port to WAN VLAN2](#132-assign-switch-port-to-wan-vlan2)
-    - [1.4. Configure UniFi Static Routes](#14-configure-unifi-static-routes)
-    - [1.5. Create UniFi Profiles](#15-create-unifi-profiles)
-        - [1.5.1. All Chromecast broadcast IP addresses](#151-all-chromecast-broadcast-ip-addresses)
-        - [1.5.2. All Chromecast host IP addresses](#152-all-chromecast-host-ip-addresses)
-        - [1.5.3. All Chromecast ports](#153-all-chromecast-ports)
-        - [1.5.4. All DNS ports](#154-all-dns-ports)
-        - [1.5.5. All IP addresses](#155-all-ip-addresses)
-        - [1.5.6. All local addresses](#156-all-local-addresses)
-        - [1.5.7. All local user addresses](#157-all-local-user-addresses)
-        - [1.5.8. All not LAN-smart local addresses](#158-all-not-lan-smart-local-addresses)
-        - [1.5.9. All PiHole IP addresses](#159-all-pihole-ip-addresses)
-        - [1.5.10. All printer host IP addresses](#1510-all-printer-host-ip-addresses)
-        - [1.5.11. All printer ports](#1511-all-printer-ports)
-        - [1.5.12. Block DNS IP addresses](#1512-block-dns-ip-addresses)
-        - [1.5.13. CCTV host IP addresses](#1513-cctv-host-ip-addresses)
-        - [1.5.14. CCTV ports](#1514-cctv-ports)
-        - [1.5.15. Google DNS IP addresses](#1515-google-dns-ip-addresses)
-        - [1.5.16. Home Assistant host IP addresses](#1516-home-assistant-host-ip-addresses)
-        - [1.5.17. Jellyfin host IP addresses](#1517-jellyfin-host-ip-addresses)
-        - [1.5.18. Jellyfin ports](#1518-jellyfin-ports)
-        - [1.5.19. LAN-vpngate-world addresses](#1519-lan-vpngate-world-addresses)
-        - [1.5.20. LAN-vpngate-local addresses](#1520-lan-vpngate-local-addresses)
-        - [1.5.21. MQTT ports](#1521-mqtt-ports)
-        - [1.5.22. SSDP ports](#1522-ssdp-ports)
-    - [1.6. Configure UniFi Firewall Rules](#16-configure-unifi-firewall-rules)
-        - [1.6.1. Block DNS list from all local LAN (excluding LAN-smart)](#161-block-dns-list-from-all-local-lan-excluding-lan-smart)
-        - [1.6.2. Allow All Established And Related Sessions](#162-allow-all-established-and-related-sessions)
-        - [1.6.3. Accept All NTP Requests](#163-accept-all-ntp-requests)
-        - [1.6.4. Allow LAN-smart to Jellyfin Server](#164-allow-lan-smart-to-jellyfin-server)
-        - [1.6.5. Allow PiHole DNS in](#165-allow-pihole-dns-in)
+        - [UniFi Profiles - IP Groups](#unifi-profiles---ip-groups)
+        - [UniFi Firewall rules](#unifi-firewall-rules)
 - [2. Prepare your Proxmox host](#2-prepare-your-proxmox-host)
 - [3. Create a Proxmox pfSense VM](#3-create-a-proxmox-pfsense-vm)
     - [3.1. Download the latest pfSense ISO](#31-download-the-latest-pfsense-iso)
@@ -147,158 +118,127 @@ It is essential to set your network's Local Domain or Search domain. For residen
 # 1. Prepare your UniFi network
 Our pfSense build requires some network customization. This guide is based on UniFi switches and routers. The UniFi configurations should easily translate to other brands of network hardware.
 
-We recommend you first read our Github UniFi build guide to fully configure your network: [UniFi Build](https://github.com/ahuacate/unifibuild). This guide shows only the minimum network configuration which is required for a pfSense installation.
+You should first read our Github UniFi build guide to configure your network: [UniFi Build](https://github.com/ahuacate/unifibuild). This guide illustrates a complete network configuration that supports our pfSense installation.
 
-## 1.1. Configure UniFi Default WAN
-For those with a UniFi UGS/UDM heres my internet WAN configuration.
 
-![alt text](./images/UniFi-Internet.png)
-
-## 1.2. Configure UniFi LAN networks
-We use VLANs to separate networks for easier management and to apply security policies.
-
-![alt text](./images/UniFi-Networks.png)
+## 1.2. Configure UniFi LAN networks for pfSense
+We use VLANs to separate networks for easier management and to apply security policies. The following networks are the required minimum to support pfSense VPN Vlans.
 
 ### 1.2.1. Configure UniFi default network
 The first step is to edit your default LAN network configuration.
 
-1. Navigate to `Settings` > `Networks` > `Create New Network`:
--- Network Name: `Default`
--- GatewayIP/Subnet: `☐` Auto Scale Network, `192.168.1.5/24`
--- **Advanced Configuration**
--- Advanced Configuration: `manual`
--- Network Type: `☑` Standard `☐` Guest
--- IGMP Snooping: `☑` Enable
--- Multicast DNS: `☐` Enable
--- Network Group: `LAN`
--- **DHCP**
--- DHCP Mode: `DHCP Server`
--- DHCP Range: `192.168.1.150`-`192.168.1.250`
--- DHCP Service Management
--- DHCP DNS Server: `☑` Enabled, `192.168.1.6` (PiHole IP address)
--- DHCP Default Gateway: `☑` Auto
--- DHCP Lease Time: `86400`
--- Domain Name: `local`
--- **IPv6**
--- IPv6 Interface Type: `☑` None `☐` Static `☐` Prefix 
-
+1. Navigate to `Settings` > `Networks` > `Default`:
+-- Network name: default
+-- Gateway IP/Subnet: Host address `192.168.1.5`, Netmask `24`, 254 Usable hosts
+-- Advanced: Manual
+-- IGMP Snooping: enable
+-- Multicast DNS: disable
+-- DHCP Mode: DHCP Server
+-- DHCP Range: 192.168.1.150 - 192.168.1.250
+-- Default Gateway: Auto
+-- DNS Server: 192.168.1.6, 1.1.1.1 (Note: 192.168.1.6 is PiHole. If no PiHole use 192.168.1.5)
+-- Lease Time: 86400
+-- Domain Name: local
 
 ### 1.2.2. Configure UniFi WAN network (VLAN2)
 Create a dedicated VLAN2 network for pfSense WAN only (labeled VPN-egress). All pfSense VPN traffic will exit pfSense on WAN VLAN2. For added security, we assign VLAN2 Guest status.
 
-1. Navigate to `Settings` > `Networks` > `Create New Network`:
--- Network Name: `LAN-egress`
--- GatewayIP/Subnet: `☐` Auto Scale Network, `192.168.2.5/28`
--- **Advanced Configuration**
--- Advanced Configuration: `manual`
--- VLAN ID: `2`
--- Network Type: `☐` Standard `☑` Guest
--- IGMP Snooping: `☑` Enable
--- Multicast DNS: `☐` Enable
--- Network Group: `LAN`
--- **DHCP**
--- DHCP Mode: `DHCP Server`
--- DHCP Range: `192.168.2.1`-`192.168.2.14`
--- **IPv6**
--- IPv6 Interface Type: `☑` None `☐` Static `☐` Prefix 
+1. Navigate to `Settings` > `Networks` > `Default`:
+-- Network name: VPN-egress
+-- Gateway IP/Subnet: Host address `192.168.2.5`, Netmask `28`, 14 Usable hosts
+-- Advanced: Manual
+-- VLAN ID: 2
+-- Isolation: enable
+-- Network Group: LAN
+-- IGMP Snooping: enable
+-- Multicast DNS: disable
+-- DHCP Mode: DHCP Server
+-- DHCP Range: 192.168.2.1 - 192.168.2.14
+-- Default Gateway: Auto
+-- DNS Server: Auto
+-- Lease Time: 86400
+-- Domain Name: local
 
-![alt text](./images/UniFi-Network-VPN.egress.png)
 
 ### 1.2.3. Configure UniFi LAN-transit-pfsense network (VLAN3)
-Here we configure a uplink between the UniFi switch to the pfSense LAN interface. This can be referred to as a “Transit” network for traffic between the two devices.
+Here we configure an uplink between the UniFi switch to the pfSense LAN interface. This can be referred to as a “Transit” network for traffic between the two devices.
 
-1. Navigate to `Settings` > `Networks` > `Create New Network`:
--- Network Name: `LAN-transit-pfsense`
--- GatewayIP/Subnet: `☐` Auto Scale Network, `192.168.3.5/28`
--- **Advanced Configuration**
--- Advanced Configuration: `manual`
--- VLAN ID: `3`
--- Network Type: `☑` Standard `☐` Guest
--- IGMP Snooping: `☑` Enable
--- Multicast DNS: `☐` Enable
--- Network Group: `LAN`
--- **DHCP**
--- DHCP Mode: `DHCP Server`
--- DHCP Range: `192.168.3.1`-`192.168.3.14`
--- **IPv6**
--- IPv6 Interface Type: `☑` None `☐` Static `☐` Prefix 
-
-![alt text](./images/UniFi-Network-LAN.transit.pfsense.png)
+1. Navigate to `Settings` > `Networks` > `Default`:
+-- Network name: LAN-transit-pfsense
+-- Gateway IP/Subnet: Host address `192.168.3.5`, Netmask `28`, 14 Usable hosts
+-- Advanced: Manual
+-- VLAN ID: 3
+-- Isolation: disable
+-- Network Group: LAN
+-- IGMP Snooping: enable
+-- Multicast DNS: disable
+-- DHCP Mode: DHCP Server
+-- DHCP Range: 192.168.3.1 - 192.168.3.14
+-- Default Gateway: Auto
+-- DNS Server: Auto
+-- Lease Time: 86400
+-- Domain Name: local
 
 ### 1.2.4. Configure UniFi LAN-medialab network (VLAN50)
-LAN-medialab is vlan50 which is the network for all media-related clients and servers.
+LAN-medialab is vlan50 which is the network for all media-related clients and servers. We require this network because pfSense firewall rules must allow media management clients, such as Radarr and Sonarr, to communicate with download clients on the VPN gateway VLANs.
 
-1. Navigate to `Settings` > `Networks` > `Create New Network`:
--- Network Name: `LAN-medialab`
--- GatewayIP/Subnet: `☐` Auto Scale Network, `192.168.50.5/24`
--- **Advanced Configuration**
--- Advanced Configuration: `manual`
--- VLAN ID: `50`
--- Network Type: `☑` Standard `☐` Guest
--- IGMP Snooping: `☑` Enable
--- Multicast DNS: `☑` Enable
--- Network Group: `LAN`
--- **DHCP**
--- DHCP Mode: `DHCP Server`
--- DHCP Range: `192.168.50.150`-`192.168.50.254`
--- DHCP DNS Server: `☑` Enable, `192.168.1.6` (PiHole IPv4 address)
--- **IPv6**
--- IPv6 Interface Type: `☑` None `☐` Static `☐` Prefix 
-
-![alt text](./images/UniFi-Network-LAN.medialab.png)
-
-### 1.2.5. Configure UniFi LAN-smart network (VLAN20)
-LAN-smart is VLAN20 which is the network for all media player clients such TVs and media players. We separate these devices in order to use smart DNS services to bypass geo-restrictions or even allow Google DNS.
-
-All other networks use PiHole.
-
-1. Navigate to `Settings` > `Networks` > `Create New Network`:
--- Network Name: `LAN-smart`
--- GatewayIP/Subnet: `☐` Auto Scale Network, `192.168.20.5/24`
--- **Advanced Configuration**
--- Advanced Configuration: `manual`
--- VLAN ID: `20`
--- Network Type: `☑` Standard `☐` Guest
--- IGMP Snooping: `☑` Enable
--- Multicast DNS: `☐` Enable
--- Network Group: `LAN`
--- **DHCP**
--- DHCP Mode: `DHCP Server`
--- DHCP Range: `192.168.20.150`-`192.168.20.254`
--- DHCP DNS Server: `☑` Enable, `8.8.8.8`, `8.8.4.4` (SmartDNS proxy or Google)
--- **IPv6**
--- IPv6 Interface Type: `☑` None `☐` Static `☐` Prefix 
-
-![alt text](./images/UniFi-Network-LAN.smart.png)
+1. Navigate to `Settings` > `Networks` > `Default`:
+-- Network name: LAN-medialab
+-- Gateway IP/Subnet: Host address `192.168.50.5`, Netmask `24`, 254 Usable hosts
+-- Advanced: Manual
+-- VLAN ID: 50
+-- Isolation: disable
+-- Network Group: LAN
+-- IGMP Snooping: enable
+-- Multicast DNS: enable
+-- DHCP Mode: DHCP Server
+-- DHCP Range: 192.168.50.150 - 192.168.50.250
+-- Default Gateway: Auto
+-- DNS Server: Auto
+-- Lease Time: 86400
+-- Domain Name: local
 
 ### 1.2.6. Configure UniFi LAN-vpngate VLAN-only networks (VLAN30 & VLAN40 - pfSense hosted DHCP & DNS)
 Both new "LAN-vpngate-world" and "LAN-vpngate-local" networks are hosted on pfSense including DHCP and DNS. On UniFi you only need to create two matching VLAN-only networks.
 
-1. Navigate to `Settings` > `Networks` > `Create New Network`:
--- **vpngate-world**
--- Network Name: `LAN-vpngate-world`
--- Router: `☑` VLAN-only Network
--- VLAN ID: `30`
--- IGMP Snooping: `☐` Enable
--- DHCP Guarding: `☑` Enable
--- DHCP Server IP: `192.168.30.5`
-2. Navigate to `Settings` > `Networks` > `Create New Network`:
--- **vpngate-local**
--- Network Name: `LAN-vpngate-local`
--- Router: `☑` VLAN-only Network
--- VLAN ID: `40`
--- IGMP Snooping: `☐` Enable
--- DHCP Guarding: `☑` Enable
--- DHCP Server IP: `192.168.40.5`
+1. Navigate to `Settings` > `Networks` > `Default`:
+-- Network name: LAN-vpngate-world
+-- Router: Third-party Gateway
+-- VLAN ID: 30
+-- IGMP Snooping: enable
+-- DHCP Guarding: disable
+2. Navigate to `Settings` > `Networks` > `Default`:
+-- Network name: LAN-vpngate-local
+-- Router: Third-party Gateway
+-- VLAN ID: 40
+-- IGMP Snooping: enable
+-- DHCP Guarding: disable
 
-![alt text](./images/UniFi-Network-LAN.vpngate.world_vlan_only.png)
-![alt text](./images/UniFi-Network-LAN.vpngate.local_vlan_only.png)
+## 1.4. Configure UniFi Static Routes
+Create the following static routes for your two "vpngate" networks.
+
+1. Navigate to `Settings` > `Routes` > `Create Entry`:
+-- **vpngate-world**
+-- Name: Route access to VLAN30
+-- Distance: 1
+-- Destination Network: 192.168.30.0/24
+-- Type: `☑` Next Hop
+-- Next Hop: 192.168.3.1
+2. Navigate to `Settings` > `Routes` > `Create Entry`:
+-- **vpngate-local**
+-- Name: Route access to VLAN40
+-- Distance: 1
+-- Destination Network: 192.168.40.0/24
+-- Type: `☑` Next Hop
+-- Next Hop: 192.168.3.1
 
 ## 1.3. Assign UniFi switch ports
-In UniFi you must assign the 2x physical LAN cables connecting your UniFi switch to your Proxmox host or pfSense device with a UniFi Port Profile. Both LAN and WAN connections must be identified. For cable management I dedicate switch ports 1-6 to my Proxmox cluster.
+In UniFi you must assign the 2x physical LAN cables connecting your UniFi switch to your Proxmox host or pfSense device with a UniFi Port Profile. Both LAN and WAN connections must be identified.
+
+For cable management purposes, I dedicate switch ports 1-6 to my Proxmox cluster.
 
 ### 1.3.1. Assign switch port to PVE-LAN
-Navigate using the UniFi controller web interface to `Devices` > `Select switch device` > `Port Management` and then select the switch port which is physically connected and assigned to Proxmox host or pfSense as LAN.
+Navigate to `Ports` > `Ports Tab` and then select the switch port that is physically connected and assigned to Proxmox host or pfSense as LAN.
 
 My Proxmox and pfSense "LAN" is a port aggregate of UniFi NIC ports 1 & 2 which is not a requirement.
 
@@ -307,7 +247,7 @@ What important is the UniFi `Port Profile` of your selected NIC port must be ass
 ![alt text](./images/UniFi-Devices-Port_Management-pvelan.png)
 
 ### 1.3.2. Assign switch port to WAN VLAN2
-Navigate using the UniFi controller web interface to `Devices` > `Select switch device` > `Port Management` and then select the switch port which is physically connected and assigned to pfSense as WAN (vpn-egress).
+Navigate to `Ports` > `Ports Tab` and then select the switch port that is physically connected and assigned to pfSense as WAN (VPN-egress).
 
 My pfSense "WAN" is a port aggregate of UniFi NIC ports 3 & 4 which is not a requirement.
 
@@ -315,325 +255,11 @@ What important is the UniFi `Port Profile` of your selected NIC port must be ass
 
 ![alt text](./images/UniFi-Devices-Port_Management-vpnegress.png)
 
-## 1.4. Configure UniFi Static Routes
-Create the following static routes for your two "vpngate" networks.
+### UniFi Profiles - IP Groups
+You should create all your Profile `Groups` before creating firewall rules. Apply all the relevant profiles from our [UniFi Build](https://github.com/ahuacate/unifibuild) guide.
 
-1. Navigate to `Settings` > `Traffic Management` > `Static Routes` > `Create New Static Route`:
--- **vpngate-world**
--- Name: `Route access to VLAN30`
--- Distance: `1`
--- Destination Network: `192.168.30.0/24`
--- Type: `☑` Next Hop
--- Next Hop: `192.168.3.1`
-2. Navigate to `Settings` > `Traffic Management` > `Static Routes` > `Create New Static Route`:
--- **vpngate-local**
--- Name: `Route access to VLAN40`
--- Distance: `1`
--- Destination Network: `192.168.40.0/24`
--- Type: `☑` Next Hop
--- Next Hop: `192.168.3.1`
-
-![alt text](./images/UniFi-Traffic_Management-Static_Route.png)
-
-
-## 1.5. Create UniFi Profiles
-UniFi allows for the configuration of Profiles for ports and IP groups. Profiles are used to make parameter sets for quick building of Firewall Rules.
-
-![alt text](./images/UniFi-Profiles-Ports_and_Groups.png)
-
-### 1.5.1. All Chromecast broadcast IP addresses
-Here we allow Chromecast to pass traffic in on 2 networks:
-*  LAN-smart (vlan20)
-*  LAN-medialab (vlan50)
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All Chromecast broadcast IP addresses`
--- Type: `☑` IPv4 Addresses/subnet |
--- Address: `192.168.20.0/24` (LAN-smart)
--- Address: `192.168.50.0/24` (LAN-medialab)
-
-### 1.5.2. All Chromecast host IP addresses
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All Chromecast host IP addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `192.168.20.151` (i.e OLED TV)
-
-### 1.5.3. All Chromecast ports
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All Chromecast host IP addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `192.168.20.151` (i.e OLED TV)
-2. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All Chromecast ports`
--- Type: `☑` Port Group |
--- Port: `8008` Chromecast port range
--- Port: `8009` Chromecast port range
--- Port: `5353` Multicast mDNS port
--- Port: `1900` SSDP port
--- Port: `8443` Chromecast port (across vlans)
-
-### 1.5.4. All DNS ports
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All DNS ports`
--- Type: `☑` Port Group
--- Port: `53`
--- Port: `853`
-
-### 1.5.5. All IP addresses
-Amend to your subnet.
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All IP addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `0.0.0.0/1`
--- Address: `128.0.0.0/2`
--- Address: `192.0.0.0/3`
--- Address: `224.0.0.0/4`
-
-### 1.5.6. All local addresses
-Amend to your subnet.
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All IP addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `192.168.1.0/24` Default
--- Address: `192.168.3.0/24` LAN-transit-pfsense
--- Address: `192.168.10.0/24` LAN-open
--- Address: `192.168.20.0/24` LAN-smart
--- Address: `192.168.30.0/24` LAN-vpngate-world (VLAN-only)
--- Address: `192.168.40.0/24` LAN-vpngate-local (VLAN-only)
--- Address: `192.168.50.0/24` LAN-medialab
--- Address: `192.168.60.0/24` LAN-vpnserver
--- Address: `192.168.70.0/24` LAN-guest
--- Address: `192.168.80.0/24` LAN-homelab
--- Address: `192.168.110.0/24` LAN-IoT
--- Address: `192.168.120.0/24` LAN-NoT
-
-### 1.5.7. All local user addresses
-Amend to your subnet.
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All local user addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `192.168.1.0/24` Default
--- Address: `192.168.10.0/24` LAN-open
--- Address: `192.168.40.0/24` LAN-vpngate-local (VLAN-only)
-
-### 1.5.8. All not LAN-smart local addresses
-This profile of all non LAN-smart networks. Mostly used in DNS block rule. Amend to your subnet.
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All not LAN-smart local addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `192.168.1.0/24` Default
--- Address: `192.168.3.0/24` LAN-transit-pfsense
--- Address: `192.168.10.0/24` LAN-open
--- Address: `192.168.30.0/24` LAN-vpngate-world (VLAN-only)
--- Address: `192.168.40.0/24` LAN-vpngate-local (VLAN-only)
--- Address: `192.168.50.0/24` LAN-medialab
--- Address: `192.168.60.0/24` LAN-vpnserver
--- Address: `192.168.70.0/24` LAN-guest
--- Address: `192.168.80.0/24` LAN-homelab
--- Address: `192.168.110.0/24` LAN-IoT
--- Address: `192.168.120.0/24` LAN-NoT
-
-### 1.5.9. All PiHole IP addresses
-Amend to your subnet.
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All PiHole IP addresses`
--- Type: `☑` IPv4 Addresses/subnet
--- Address: `192.168.1.6`: PiHole IP address
-
-### 1.5.10. All printer host IP addresses
-Assign a dhcp static IP map to all printers. Add the IP address of all network printers. Amend to your subnet.
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All printer host IP addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `i.e 192.168.1.91` i.e Brother laser printer
-
-### 1.5.11. All printer ports
-Add the required printer tcp/udp ports. Add accordingly.
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `All printer ports`
--- Type: `Port Group`
--- Port: `137` Default generic SMB (works with Brother laser)
--- Port: `138` Default generic SMB
--- Port: `139` Default generic SMB
--- Port: `631` ASCII laser printer (works with Brother laser)
--- Port: `6310` ASCII laser printer
--- Port: `9100` ASCII laser printer - IBM, Ricoh, HP, Lexmark
--- Port: `9101` ASCII laser printer - Jetdirect, Marknet server
-
-### 1.5.12. Block DNS IP addresses
-Add any DNS service provider IP address you want block. We include hardcoded Google DNS in the list to stop circumvention of your UniFi or PiHole DNS settings.
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `Block DNS IP addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `8.8.8.8` Google DNS
--- Address: `8.8.4.4` Google DNS
-
-### 1.5.13. CCTV host IP addresses
-Amend to your subnet.
-
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `CCTV host IP addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: Add as required
-
-### 1.5.14. CCTV ports
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `CCTV ports`
--- Type: `Port Group`
--- Port: Add as required
-
-### 1.5.15. Google DNS IP addresses
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `Google DNS IP addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `8.8.8.8`
--- Address: `8.8.4.4`
-
-### 1.5.16. Home Assistant host IP addresses
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `Home Assistant host IP addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `192.168.110.131`
-
-### 1.5.17. Jellyfin host IP addresses
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `Jellyfin host IP addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `192.168.50.150`
-
-### 1.5.18. Jellyfin ports
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `Jellyfin ports`
--- Type: `Port Group`
--- Port: `8096` Default Jellyfin port
-
-### 1.5.19. LAN-vpngate-world addresses
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `LAN-vpngate-world addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `192.168.30.0/24`
-
-### 1.5.20. LAN-vpngate-local addresses
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `LAN-vpngate-local addresses`
--- Type: `IPv4 Addresses/subnet`
--- Address: `192.168.40.0/24`
-
-### 1.5.21. MQTT ports
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `MQTT ports`
--- Type: `Port Group`
--- Port: `1883`
--- Port: `8883`
-
-### 1.5.22. SSDP ports
-1. Navigate to `Settings` > `Profiles` > `Ports and IP Groups` > `Create New Group`:
--- Profile Name: `SSDP ports`
--- Type: `Port Group`
--- Port: `1900`
-
-
-## 1.6. Configure UniFi Firewall Rules
-
-### 1.6.1. Block DNS list from all local LAN (excluding LAN-smart)
-1. Navigate to `Settings` > `Firewall & Security` > `Firewall Rules` > `Create New Rule`:
--- Type: `Internet Out`
--- Description: `Block DNS list from all local LAN (excluding LAN-smart)`
--- Rule Applied: `Before Predefined Rules` |
--- Action: `☐` Accept `☐` Reject `☑` Drop
--- Ipv4 Protocol: `All`
--- **Source**
--- Source Type: `Port/IP Group`
--- IPv4 Address Group: `All not LAN-smart local addresses`
--- Port Group: `Any`
--- MAC Address: Leave blank
--- **Destination**
--- Destination Type: `Port/IP Group`
--- IPv4 Address Group: `Block DNS IP addresses`
--- Port Group: `Any`
--- **Advanced**: `Auto`
-
-### 1.6.2. Allow All Established And Related Sessions
-1. Navigate to `Settings` > `Firewall & Security` > `Firewall Rules` > `Create New Rule`:
--- Type: `LAN In`
--- Description: `Block DNS list from all local LAN (excluding LAN-smart)`
--- Rule Applied: `Before Predefined Rules`
--- Action: `☑` Accept `☐` Reject `☐` Drop
--- Ipv4 Protocol: `All`
--- **Source**
--- Source Type: `Port/IP Group`
--- IPv4 Address Group: `All local addresses`
--- Port Group: `Any`
--- MAC Address: Leave blank
--- **Destination**
--- Destination Type: `Port/IP Group`
--- IPv4 Address Group: `All local addresses`
--- Port Group: `Any`
--- **Advanced**: `Manual`
--- States: `☐` Match State New, `☑` Match State Established, `☐` Match State Invalid, `☑` Match State Related
--- IPsec: `Don't match on IPsec packets`
--- Logging: `☐` Enable
-
-### 1.6.3. Accept All NTP Requests
-1. Navigate to `Settings` > `Firewall & Security` > `Firewall Rules` > `Create New Rule`:
--- Type: `LAN In`
--- Description: `Accept All NTP Requests`
--- Rule Applied: `Before Predefined Rules`
--- Action: `☑` Accept `☐` Reject `☐` Drop
--- Ipv4 Protocol: `All`
--- **Source**
--- Source Type: `Port/IP Group`
--- IPv4 Address Group: `All local addresses`
--- Port Group: `Any`
--- MAC Address: Leave blank
--- **Destination**
--- Destination Type: `Port/IP Group`
--- IPv4 Address Group: `Any`
--- Port Group: `NTP ports`
--- **Advanced**: `Auto`
-
-### 1.6.4. Allow LAN-smart to Jellyfin Server
-1. Navigate to `Settings` > `Firewall & Security` > `Firewall Rules` > `Create New Rule`:
--- Type: `LAN In`
--- Description: `Allow LAN-smart to Jellyfin Server`
--- Rule Applied: `Before Predefined Rules`
--- Action: `☑` Accept `☐` Reject `☐` Drop
--- Ipv4 Protocol: `All`
--- **Source**
--- Source Type: `Network`
--- Network: `LAN-smart`
--- Network Type: `IPv4 subset`
--- MAC Address: Leave blank
--- **Destination**
--- Destination Type: `Port/IP Group`
--- IPv4 Address Group: `Jellyfin host IP addresses`
--- Port Group: `Jellyfin ports`
--- **Advanced**
--- Advanced: `Auto`
-
-### 1.6.5. Allow PiHole DNS in
-1. Navigate to `Settings` > `Firewall & Security` > `Firewall Rules` > `Create New Rule`:
--- Type: `Guest In`
--- Description: `Allow PiHole DNS in`
--- Rule Applied: `Before Predefined Rules`
--- Action: `☑` Accept `☐` Reject `☐` Drop
--- Ipv4 Protocol: `UDP`
--- **Source**
--- Source Type: `Port/IP Group`
--- IPv4 Address Group: `Any`
--- Port Group: `Any`
--- MAC Address: Leave blank
--- **Destination**
--- Destination Type: `Port/IP Group`
--- IPv4 Address Group: `All PiHole addresses`
--- Port Group: `Any`
--- **Advanced**
--- Advanced: `Auto`
+### UniFi Firewall rules
+Apply all the relevant firewall from our [UniFi Build](https://github.com/ahuacate/unifibuild) guide.
 
 # 2. Prepare your Proxmox host
 Your Proxmox hosts must have 2x configured Network Linux Bridges for pfSense to work. Amend the IP addresses to suit your network subnets.
