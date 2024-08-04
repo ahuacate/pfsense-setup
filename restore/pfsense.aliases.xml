@@ -1,13 +1,6 @@
 
 <aliases>
 	<alias>
-		<name>pfB_DNSBL_Ports</name>
-		<address>8081 8443</address>
-		<descr><![CDATA[pfBlockerNG DNSBL VIP Ports]]></descr>
-		<type>port</type>
-		<detail><![CDATA[DO NOT EDIT THIS PORT||DO NOT EDIT THIS PORT]]></detail>
-	</alias>
-	<alias>
 		<name>Default_allowed_OUT_Ports_LAN</name>
 		<type>port</type>
 		<address>53 5353:5354 123 21 22 161 80 443 8080:8081 8880 8843 10001 5001 5900 9000 3389 49152:65535</address>
@@ -24,16 +17,16 @@
 	<alias>
 		<name>HAProxy_Backend_Hosts</name>
 		<type>host</type>
-		<address>jellyfin.local guacamole.local</address>
+		<address>jellyfin.local guacamole.local notifiarr.local kodirsync.local testlab.local</address>
 		<descr><![CDATA[HA-Proxy backend hosts]]></descr>
-		<detail><![CDATA[Jellyfin host server||Guacamole host server]]></detail>
+		<detail><![CDATA[Jellyfin host server||Guacamole host server||Notifiarr client server||Kodirsync host server||Testlab host server]]></detail>
 	</alias>
 	<alias>
 		<name>HAProxy_Backend_Ports</name>
 		<type>port</type>
-		<address>8920 8096 8080</address>
+		<address>8920 8096 8080 5454 22</address>
 		<descr><![CDATA[HA-Proxy backend ports]]></descr>
-		<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port||Guacamole HTTP port]]></detail>
+		<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port||Guacamole HTTP port||Notifiarr HTTP port||Kodirsync SSH port]]></detail>
 	</alias>
 	<alias>
 		<name>LAN_User_Subnets</name>
@@ -59,23 +52,23 @@
 	<alias>
 		<name>Medialab_Hosts_std</name>
 		<type>host</type>
-		<address>flexget.local sonarr.local radarr.local lidarr.local readarr.local ahuabooks.local whisparr.local prowlarr.local jackett.local</address>
+		<address>flexget.local sonarr.local radarr.local lidarr.local readarr.local whisparr.local prowlarr.local jackett.local geterr.local notifiarr.local kodirsync.local</address>
 		<descr><![CDATA[Medialab App hosts (LAN-medialab)]]></descr>
-		<detail><![CDATA[Flexget||Sonarr||Radarr||Lidarr||Readarr||Ahuabooks||Whisparr||Prowlarr||Jackett]]></detail>
+		<detail><![CDATA[Flexget||Sonarr||Radarr||Lidarr||Readarr||Whisparr||Prowlarr||Jackett||Geterr||Notifiarr||Kodirsync]]></detail>
 	</alias>
 	<alias>
 		<name>Medialab_Hosts_vpn</name>
 		<type>host</type>
-		<address>nzbget.local deluge.local</address>
+		<address>nzbget.local deluge.local sabnzbd.local</address>
 		<descr><![CDATA[Medialab App hosts (LAN-vpngate-world)]]></descr>
-		<detail><![CDATA[NZBGet||Deluge]]></detail>
+		<detail><![CDATA[NZBGet||Deluge||SABnzbd]]></detail>
 	</alias>
 	<alias>
 		<name>Medialab_Ports_std</name>
 		<type>port</type>
-		<address>7878 8787 8989 8686 9696 9117 5299 4040 5050 6969</address>
+		<address>7878 8787 8989 8686 9696 9117 5299 4040 5050 6969 5454</address>
 		<descr><![CDATA[Medialab App Ports (LAN-medialab)]]></descr>
-		<detail><![CDATA[Radarr port||Readarr port||Sonarr port||Lidarr port||Prowlarr port||Jackett port||Ahuabooks / LazyLibrarian port||Ahuabooks /Booksonic port||Flexget port||Whisparr port]]></detail>
+		<detail><![CDATA[Radarr port||Readarr port||Sonarr port||Lidarr port||Prowlarr port||Jackett port||Ahuabooks / LazyLibrarian port||Ahuabooks /Booksonic port||Flexget port||Whisparr port||Notifiarr port]]></detail>
 	</alias>
 	<alias>
 		<name>Medialab_Ports_vpn</name>
@@ -120,10 +113,45 @@
 		<detail><![CDATA[RFC 1918 subnet||RFC 1918 subnet||RFC 1918 subnet]]></detail>
 	</alias>
 	<alias>
+		<name>Test_All_LAN_Subnets</name>
+		<type>network</type>
+		<address>192.168.1.0/24 192.168.10.0/24 192.168.30.0/24 192.168.40.0/24 192.168.50.0/24 192.168.20.0/24 192.168.60.0/24 192.168.70.0/24 192.168.80.0/32</address>
+		<descr><![CDATA[Testing only. All LAN subnets.]]></descr>
+		<detail><![CDATA[LAN default||LAN-open (vlan10)||LAN-vpngate-world (vlan40)||LAN-vpngate-local (vlan30)||LAN-medialab (vlan50)||LAN-smart (vlan20)||LAN-vpnserver (vlan60)||LAN-guest (vlan70)||LAN-homelab (vlan80)]]></detail>
+	</alias>
+	<alias>
+		<name>Test_All_VPN_Subnets</name>
+		<type>network</type>
+		<address>192.168.30.0/24 192.168.40.0/24</address>
+		<descr><![CDATA[Testing only. All VPN subnets (vlan30/40)]]></descr>
+		<detail><![CDATA[LAN-vpngate-world (vlan40)||LAN-vpngate-local (vlan30)]]></detail>
+	</alias>
+	<alias>
 		<name>VPN_Ports_client</name>
 		<type>port</type>
 		<address>1195 1194 51820 53</address>
 		<descr><![CDATA[VPN client provider ports]]></descr>
 		<detail><![CDATA[ExpressVPN SSL port||PureVPN port||WireGuard port||PureVPN SSL port]]></detail>
+	</alias>
+	<alias>
+		<name>HAProxy_Inbound_WAN_HTTPS_Ports</name>
+		<type>port</type>
+		<address>443 2053 2083 2087 2096 8443</address>
+		<descr><![CDATA[Allow WAN HTTPS Ports inbound to HAProxy]]></descr>
+		<detail><![CDATA[HTTPS 443||HTTPS 2043||HTTPS 2083||HTTPS 2087||HTTPS 2096||HTTPS 8443]]></detail>
+	</alias>
+	<alias>
+		<name>HAProxy_Inbound_WAN_HTTP_Ports</name>
+		<type>port</type>
+		<address>80 8080 8880 2052 2082 2086 2095</address>
+		<descr><![CDATA[Allow WAN HTTP Ports inbound to HAProxy]]></descr>
+		<detail><![CDATA[HTTP 80||HTTP 8080||HTTP 8880||HTTP 2052||HTTP 2082||HTTP 2086||HTTP 2095]]></detail>
+	</alias>
+	<alias>
+		<name>HAProxy_Inbound_WAN_Other_Ports</name>
+		<type>port</type>
+		<address>8096</address>
+		<descr><![CDATA[Allow WAN Other Ports inbound to HAProxy]]></descr>
+		<detail><![CDATA[Jellyfin Port]]></detail>
 	</alias>
 </aliases>

@@ -32,8 +32,8 @@
 			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
 		</created>
 		<updated>
-			<time>1662359326</time>
-			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+			<time>1722180187</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 		</updated>
 	</rule>
 	<rule>
@@ -157,7 +157,7 @@
 		</source>
 		<destination>
 			<network>(self)</network>
-			<port>443</port>
+			<port>HAProxy_Inbound_WAN_HTTPS_Ports</port>
 		</destination>
 		<descr><![CDATA[Allow Wan Any HTTPS inbound to HAProxy]]></descr>
 		<created>
@@ -165,7 +165,73 @@
 			<username><![CDATA[Easy Rule]]></username>
 		</created>
 		<updated>
-			<time>1573480712</time>
+			<time>1722603002</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1722250362</tracker>
+		<type>pass</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>(self)</network>
+			<port>HAProxy_Inbound_WAN_HTTP_Ports</port>
+		</destination>
+		<descr><![CDATA[Allow Wan Any HTTP inbound to HAProxy]]></descr>
+		<created>
+			<time>1722250362</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1722602980</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</updated>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1722310898</tracker>
+		<type>pass</type>
+		<interface>wan</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<protocol>tcp</protocol>
+		<source>
+			<any></any>
+		</source>
+		<destination>
+			<network>(self)</network>
+			<port>HAProxy_Inbound_WAN_Other_Ports</port>
+		</destination>
+		<descr><![CDATA[Allow Wan Port other inbound to HAProxy]]></descr>
+		<created>
+			<time>1722310898</time>
+			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1722318023</time>
 			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 		</updated>
 	</rule>
@@ -301,7 +367,7 @@
 	<rule>
 		<id></id>
 		<tracker>1662115458</tracker>
-		<type>reject</type>
+		<type>pass</type>
 		<interface>lan</interface>
 		<ipprotocol>inet</ipprotocol>
 		<tag></tag>
@@ -325,7 +391,7 @@
 			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
 		</created>
 		<updated>
-			<time>1662368865</time>
+			<time>1677725250</time>
 			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
 		</updated>
 	</rule>
@@ -694,6 +760,37 @@
 			<time>1661009933</time>
 			<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 		</created>
+	</rule>
+	<rule>
+		<id></id>
+		<tracker>1677726496</tracker>
+		<type>pass</type>
+		<interface>opt7</interface>
+		<ipprotocol>inet</ipprotocol>
+		<tag></tag>
+		<tagged></tagged>
+		<max></max>
+		<max-src-nodes></max-src-nodes>
+		<max-src-conn></max-src-conn>
+		<max-src-states></max-src-states>
+		<statetimeout></statetimeout>
+		<statetype><![CDATA[keep state]]></statetype>
+		<os></os>
+		<source>
+			<address>Test_All_LAN_Subnets</address>
+		</source>
+		<destination>
+			<any></any>
+		</destination>
+		<descr><![CDATA[Test - Allow ICMP rule. Allow all VLANs to VLAN30/40]]></descr>
+		<created>
+			<time>1677726496</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</created>
+		<updated>
+			<time>1677727244</time>
+			<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+		</updated>
 	</rule>
 	<rule>
 		<id></id>
@@ -1073,13 +1170,13 @@
 				<if>wan</if>
 			</sep3>
 			<sep4>
-				<row>fr3</row>
+				<row>fr5</row>
 				<text><![CDATA[DNS rules]]></text>
 				<color>bg-info</color>
 				<if>wan</if>
 			</sep4>
 			<sep5>
-				<row>fr5</row>
+				<row>fr7</row>
 				<text><![CDATA[Default reject rules]]></text>
 				<color>bg-danger</color>
 				<if>wan</if>
@@ -1157,43 +1254,43 @@
 				<if>opt7</if>
 			</sep0>
 			<sep1>
-				<row>fr0</row>
+				<row>fr1</row>
 				<text><![CDATA[Allow ICMP rule]]></text>
 				<color>bg-success</color>
 				<if>opt7</if>
 			</sep1>
 			<sep2>
-				<row>fr1</row>
+				<row>fr2</row>
 				<text><![CDATA[Allow HAProxy rules]]></text>
 				<color>bg-success</color>
 				<if>opt7</if>
 			</sep2>
 			<sep3>
-				<row>fr1</row>
+				<row>fr2</row>
 				<text><![CDATA[Allow Medialab rules]]></text>
 				<color>bg-success</color>
 				<if>opt7</if>
 			</sep3>
 			<sep4>
-				<row>fr3</row>
+				<row>fr4</row>
 				<text><![CDATA[Allow PiHole rules]]></text>
 				<color>bg-success</color>
 				<if>opt7</if>
 			</sep4>
 			<sep5>
-				<row>fr4</row>
+				<row>fr5</row>
 				<text><![CDATA[DNS rules]]></text>
 				<color>bg-info</color>
 				<if>opt7</if>
 			</sep5>
 			<sep6>
-				<row>fr6</row>
+				<row>fr7</row>
 				<text><![CDATA[Allow any rules]]></text>
 				<color>bg-info</color>
 				<if>opt7</if>
 			</sep6>
 			<sep7>
-				<row>fr7</row>
+				<row>fr8</row>
 				<text><![CDATA[Default reject rules]]></text>
 				<color>bg-danger</color>
 				<if>opt7</if>

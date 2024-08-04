@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <pfsense>
-	<version>22.2</version>
+	<version>23.3</version>
 	<lastchange></lastchange>
 	<system>
 		<optimization>normal</optimization>
@@ -32,7 +32,7 @@
 			<authorizedkeys></authorizedkeys>
 			<ipsecpsk></ipsecpsk>
 			<webguicss>pfSense.css</webguicss>
-			<sha512-hash>$6$30f5ed59857f3a47$juUf1FDVwp4ofCXs40s8GXPMDMkEDB3I9C8jSnkIp3WYDWuG7R14aNlvQtku1zWmFvAx4nZJaSZD8P7g3TGLG/</sha512-hash>
+			<bcrypt-hash>$2y$10$NVYEWmtF3WQ.zqHTt47aoeKz8iWY9HdRqmGssHybrSFaTYq8kOu32</bcrypt-hash>
 		</user>
 		<nextuid>2000</nextuid>
 		<nextgid>2000</nextgid>
@@ -44,15 +44,18 @@
 			<dashboardcolumns>2</dashboardcolumns>
 			<webguicss>pfSense.css</webguicss>
 			<logincss>1e3f75;</logincss>
+			<port>8080</port>
+			<max_procs>2</max_procs>
+			<roaming>enabled</roaming>
 		</webgui>
 		<disablenatreflection>yes</disablenatreflection>
 		<disablesegmentationoffloading></disablesegmentationoffloading>
 		<disablelargereceiveoffloading></disablelargereceiveoffloading>
 		<ipv6allow></ipv6allow>
 		<maximumtableentries>400000</maximumtableentries>
-		<powerd_ac_mode>hadp</powerd_ac_mode>
-		<powerd_battery_mode>hadp</powerd_battery_mode>
-		<powerd_normal_mode>hadp</powerd_normal_mode>
+		<powerd_ac_mode>min</powerd_ac_mode>
+		<powerd_battery_mode>min</powerd_battery_mode>
+		<powerd_normal_mode>min</powerd_normal_mode>
 		<bogons>
 			<interval>monthly</interval>
 		</bogons>
@@ -62,13 +65,13 @@
 		<use_mfs_var_size></use_mfs_var_size>
 		<skip_rules_gw_down></skip_rules_gw_down>
 		<language>en_US</language>
-		<timezone>Asia/Bangkok</timezone>
+		<timezone>Vienna/Austria</timezone>
 		<gitsync>
 			<repositoryurl></repositoryurl>
 			<branch></branch>
 		</gitsync>
 		<hn_altq_enable></hn_altq_enable>
-		<pkg_repo_conf_path>/usr/local/share/pfSense/pkg/repos/pfSense-repo.conf</pkg_repo_conf_path>
+		<pkg_repo_conf_path>/usr/local/etc/pfSense/pkg/repos/pfSense-repo-2.7.2.conf</pkg_repo_conf_path>
 		<acb></acb>
 		<dns1gw>none</dns1gw>
 		<dns2gw>none</dns2gw>
@@ -76,6 +79,11 @@
 		<aliasesresolveinterval>60</aliasesresolveinterval>
 		<maximumfrags></maximumfrags>
 		<reflectiontimeout></reflectiontimeout>
+		<powerd_enable></powerd_enable>
+		<mds_disable>0</mds_disable>
+		<gw_down_kill_states>none</gw_down_kill_states>
+		<serialspeed>115200</serialspeed>
+		<primaryconsole>video</primaryconsole>
 		<dnsserver>192.168.1.5</dnsserver>
 		<dnsserver>192.168.1.6</dnsserver>
 		<earlyshellcmd>service wireguardd start</earlyshellcmd>
@@ -171,12 +179,6 @@
 			<adv_dhcp_config_file_override_path></adv_dhcp_config_file_override_path>
 			<dhcpcvpt>bk</dhcpcvpt>
 		</opt7>
-		<opt8>
-			<descr><![CDATA[OVPN_client_world_03]]></descr>
-			<if>ovpnc10</if>
-			<enable></enable>
-			<spoofmac></spoofmac>
-		</opt8>
 	</interfaces>
 	<staticroutes>
 		<route>
@@ -264,10 +266,39 @@
 				<numberoptions></numberoptions>
 			</staticmap>
 			<staticmap>
-				<mac>92:4d:ae:e0:b8:d2</mac>
+				<mac>a6:10:e1:b3:09:0b</mac>
 				<cid></cid>
 				<ipaddr>192.168.30.113</ipaddr>
 				<hostname>deluge</hostname>
+				<descr></descr>
+				<filename></filename>
+				<rootpath></rootpath>
+				<defaultleasetime></defaultleasetime>
+				<maxleasetime></maxleasetime>
+				<gateway></gateway>
+				<domain></domain>
+				<domainsearchlist></domainsearchlist>
+				<ddnsdomain></ddnsdomain>
+				<ddnsdomainprimary></ddnsdomainprimary>
+				<ddnsdomainsecondary></ddnsdomainsecondary>
+				<ddnsdomainkeyname></ddnsdomainkeyname>
+				<ddnsdomainkeyalgorithm>hmac-md5</ddnsdomainkeyalgorithm>
+				<ddnsdomainkey></ddnsdomainkey>
+				<tftp></tftp>
+				<ldap></ldap>
+				<nextserver></nextserver>
+				<filename32></filename32>
+				<filename64></filename64>
+				<filename32arm></filename32arm>
+				<filename64arm></filename64arm>
+				<uefihttpboot></uefihttpboot>
+				<numberoptions></numberoptions>
+			</staticmap>
+			<staticmap>
+				<mac>0e:b1:02:3d:0b:c3</mac>
+				<cid></cid>
+				<ipaddr>192.168.30.114</ipaddr>
+				<hostname>sabnzbd</hostname>
 				<descr></descr>
 				<filename></filename>
 				<rootpath></rootpath>
@@ -347,12 +378,21 @@
 		<rocommunity>public</rocommunity>
 	</snmpd>
 	<diag>
-		<ipv6nat>
-			<ipaddr></ipaddr>
-		</ipv6nat>
+		<ipv6nat></ipv6nat>
 	</diag>
 	<syslog>
 		<filterdescriptions>1</filterdescriptions>
+		<reverse></reverse>
+		<nentries>500</nentries>
+		<logcompressiontype>bzip2</logcompressiontype>
+		<format>rfc3164</format>
+		<rotatecount></rotatecount>
+		<remoteserver></remoteserver>
+		<remoteserver2></remoteserver2>
+		<remoteserver3></remoteserver3>
+		<sourceip></sourceip>
+		<ipproto>ipv4</ipproto>
+		<logconfigchanges>enabled</logconfigchanges>
 	</syslog>
 	<nat>
 		<outbound>
@@ -363,7 +403,7 @@
 					<network>127.0.0.0/8</network>
 				</source>
 				<dstport>500</dstport>
-				<target></target>
+				<target>wanip</target>
 				<destination>
 					<any></any>
 				</destination>
@@ -373,6 +413,7 @@
 					<time>1662276997</time>
 					<username><![CDATA[Manual Outbound NAT Switch]]></username>
 				</created>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<interface>wan</interface>
@@ -380,7 +421,7 @@
 					<network>127.0.0.0/8</network>
 				</source>
 				<sourceport></sourceport>
-				<target></target>
+				<target>wanip</target>
 				<destination>
 					<any></any>
 				</destination>
@@ -390,6 +431,7 @@
 					<time>1662276997</time>
 					<username><![CDATA[Manual Outbound NAT Switch]]></username>
 				</created>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<interface>wan</interface>
@@ -397,7 +439,7 @@
 					<network>::1/128</network>
 				</source>
 				<dstport>500</dstport>
-				<target></target>
+				<target>wanip</target>
 				<destination>
 					<any></any>
 				</destination>
@@ -407,6 +449,7 @@
 					<time>1662276997</time>
 					<username><![CDATA[Manual Outbound NAT Switch]]></username>
 				</created>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<interface>wan</interface>
@@ -414,7 +457,7 @@
 					<network>::1/128</network>
 				</source>
 				<sourceport></sourceport>
-				<target></target>
+				<target>wanip</target>
 				<destination>
 					<any></any>
 				</destination>
@@ -424,6 +467,7 @@
 					<time>1662276997</time>
 					<username><![CDATA[Manual Outbound NAT Switch]]></username>
 				</created>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<interface>wan</interface>
@@ -431,7 +475,7 @@
 					<network>192.168.1.0/24</network>
 				</source>
 				<dstport>500</dstport>
-				<target></target>
+				<target>wanip</target>
 				<destination>
 					<any></any>
 				</destination>
@@ -441,6 +485,7 @@
 					<time>1662276997</time>
 					<username><![CDATA[Manual Outbound NAT Switch]]></username>
 				</created>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<interface>wan</interface>
@@ -448,7 +493,7 @@
 					<network>192.168.1.0/24</network>
 				</source>
 				<sourceport></sourceport>
-				<target></target>
+				<target>wanip</target>
 				<destination>
 					<any></any>
 				</destination>
@@ -458,6 +503,7 @@
 					<time>1662276997</time>
 					<username><![CDATA[Manual Outbound NAT Switch]]></username>
 				</created>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<source>
@@ -465,9 +511,7 @@
 				</source>
 				<sourceport></sourceport>
 				<descr><![CDATA[Manual rule for ISAKMP - LAN_VPNGATE_WORLD to VPN_world_grp]]></descr>
-				<target></target>
-				<targetip></targetip>
-				<targetip_subnet></targetip_subnet>
+				<target>VPN_world_grpip</target>
 				<interface>VPN_world_grp</interface>
 				<poolopts></poolopts>
 				<source_hash_key></source_hash_key>
@@ -484,6 +528,7 @@
 					<time>1662277370</time>
 					<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
 				</updated>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<source>
@@ -491,9 +536,7 @@
 				</source>
 				<sourceport></sourceport>
 				<descr><![CDATA[Manual rule - LAN_VPNGATE_WORLD to VPN_world_grp]]></descr>
-				<target></target>
-				<targetip></targetip>
-				<targetip_subnet></targetip_subnet>
+				<target>VPN_world_grpip</target>
 				<interface>VPN_world_grp</interface>
 				<poolopts></poolopts>
 				<source_hash_key></source_hash_key>
@@ -508,6 +551,7 @@
 					<time>1662277419</time>
 					<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
 				</updated>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<source>
@@ -515,9 +559,7 @@
 				</source>
 				<sourceport></sourceport>
 				<descr><![CDATA[Manual rule for ISAKMP - LAN_VPNGATE_LOCAL to VPN_local_grp]]></descr>
-				<target></target>
-				<targetip></targetip>
-				<targetip_subnet></targetip_subnet>
+				<target>VPN_local_grpip</target>
 				<interface>VPN_local_grp</interface>
 				<poolopts></poolopts>
 				<source_hash_key></source_hash_key>
@@ -534,6 +576,7 @@
 					<time>1662277401</time>
 					<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
 				</updated>
+				<target_subnet></target_subnet>
 			</rule>
 			<rule>
 				<source>
@@ -541,9 +584,7 @@
 				</source>
 				<sourceport></sourceport>
 				<descr><![CDATA[Manual rule - LAN_VPNGATE_LOCAL to VPN_local_grp]]></descr>
-				<target></target>
-				<targetip></targetip>
-				<targetip_subnet></targetip_subnet>
+				<target>VPN_local_grpip</target>
 				<interface>VPN_local_grp</interface>
 				<poolopts></poolopts>
 				<source_hash_key></source_hash_key>
@@ -558,6 +599,7 @@
 					<time>1662277433</time>
 					<username><![CDATA[admin@192.168.1.218 (Local Database)]]></username>
 				</updated>
+				<target_subnet></target_subnet>
 			</rule>
 		</outbound>
 		<separator></separator>
@@ -595,8 +637,8 @@
 				<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
 			</created>
 			<updated>
-				<time>1662359326</time>
-				<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+				<time>1722180187</time>
+				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 			</updated>
 		</rule>
 		<rule>
@@ -720,7 +762,7 @@
 			</source>
 			<destination>
 				<network>(self)</network>
-				<port>443</port>
+				<port>HAProxy_Inbound_WAN_HTTPS_Ports</port>
 			</destination>
 			<descr><![CDATA[Allow Wan Any HTTPS inbound to HAProxy]]></descr>
 			<created>
@@ -728,7 +770,73 @@
 				<username><![CDATA[Easy Rule]]></username>
 			</created>
 			<updated>
-				<time>1573480712</time>
+				<time>1722603002</time>
+				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+			</updated>
+		</rule>
+		<rule>
+			<id></id>
+			<tracker>1722250362</tracker>
+			<type>pass</type>
+			<interface>wan</interface>
+			<ipprotocol>inet</ipprotocol>
+			<tag></tag>
+			<tagged></tagged>
+			<max></max>
+			<max-src-nodes></max-src-nodes>
+			<max-src-conn></max-src-conn>
+			<max-src-states></max-src-states>
+			<statetimeout></statetimeout>
+			<statetype><![CDATA[keep state]]></statetype>
+			<os></os>
+			<protocol>tcp</protocol>
+			<source>
+				<any></any>
+			</source>
+			<destination>
+				<network>(self)</network>
+				<port>HAProxy_Inbound_WAN_HTTP_Ports</port>
+			</destination>
+			<descr><![CDATA[Allow Wan Any HTTP inbound to HAProxy]]></descr>
+			<created>
+				<time>1722250362</time>
+				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+			</created>
+			<updated>
+				<time>1722602980</time>
+				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+			</updated>
+		</rule>
+		<rule>
+			<id></id>
+			<tracker>1722310898</tracker>
+			<type>pass</type>
+			<interface>wan</interface>
+			<ipprotocol>inet</ipprotocol>
+			<tag></tag>
+			<tagged></tagged>
+			<max></max>
+			<max-src-nodes></max-src-nodes>
+			<max-src-conn></max-src-conn>
+			<max-src-states></max-src-states>
+			<statetimeout></statetimeout>
+			<statetype><![CDATA[keep state]]></statetype>
+			<os></os>
+			<protocol>tcp</protocol>
+			<source>
+				<any></any>
+			</source>
+			<destination>
+				<network>(self)</network>
+				<port>HAProxy_Inbound_WAN_Other_Ports</port>
+			</destination>
+			<descr><![CDATA[Allow Wan Port other inbound to HAProxy]]></descr>
+			<created>
+				<time>1722310898</time>
+				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
+			</created>
+			<updated>
+				<time>1722318023</time>
 				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 			</updated>
 		</rule>
@@ -864,7 +972,7 @@
 		<rule>
 			<id></id>
 			<tracker>1662115458</tracker>
-			<type>reject</type>
+			<type>pass</type>
 			<interface>lan</interface>
 			<ipprotocol>inet</ipprotocol>
 			<tag></tag>
@@ -888,7 +996,7 @@
 				<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
 			</created>
 			<updated>
-				<time>1662368865</time>
+				<time>1677725250</time>
 				<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
 			</updated>
 		</rule>
@@ -1257,6 +1365,37 @@
 				<time>1661009933</time>
 				<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 			</created>
+		</rule>
+		<rule>
+			<id></id>
+			<tracker>1677726496</tracker>
+			<type>pass</type>
+			<interface>opt7</interface>
+			<ipprotocol>inet</ipprotocol>
+			<tag></tag>
+			<tagged></tagged>
+			<max></max>
+			<max-src-nodes></max-src-nodes>
+			<max-src-conn></max-src-conn>
+			<max-src-states></max-src-states>
+			<statetimeout></statetimeout>
+			<statetype><![CDATA[keep state]]></statetype>
+			<os></os>
+			<source>
+				<address>Test_All_LAN_Subnets</address>
+			</source>
+			<destination>
+				<any></any>
+			</destination>
+			<descr><![CDATA[Test - Allow ICMP rule. Allow all VLANs to VLAN30/40]]></descr>
+			<created>
+				<time>1677726496</time>
+				<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+			</created>
+			<updated>
+				<time>1677727244</time>
+				<username><![CDATA[admin@192.168.1.219 (Local Database)]]></username>
+			</updated>
 		</rule>
 		<rule>
 			<id></id>
@@ -1636,13 +1775,13 @@
 					<if>wan</if>
 				</sep3>
 				<sep4>
-					<row>fr3</row>
+					<row>fr5</row>
 					<text><![CDATA[DNS rules]]></text>
 					<color>bg-info</color>
 					<if>wan</if>
 				</sep4>
 				<sep5>
-					<row>fr5</row>
+					<row>fr7</row>
 					<text><![CDATA[Default reject rules]]></text>
 					<color>bg-danger</color>
 					<if>wan</if>
@@ -1720,43 +1859,43 @@
 					<if>opt7</if>
 				</sep0>
 				<sep1>
-					<row>fr0</row>
+					<row>fr1</row>
 					<text><![CDATA[Allow ICMP rule]]></text>
 					<color>bg-success</color>
 					<if>opt7</if>
 				</sep1>
 				<sep2>
-					<row>fr1</row>
+					<row>fr2</row>
 					<text><![CDATA[Allow HAProxy rules]]></text>
 					<color>bg-success</color>
 					<if>opt7</if>
 				</sep2>
 				<sep3>
-					<row>fr1</row>
+					<row>fr2</row>
 					<text><![CDATA[Allow Medialab rules]]></text>
 					<color>bg-success</color>
 					<if>opt7</if>
 				</sep3>
 				<sep4>
-					<row>fr3</row>
+					<row>fr4</row>
 					<text><![CDATA[Allow PiHole rules]]></text>
 					<color>bg-success</color>
 					<if>opt7</if>
 				</sep4>
 				<sep5>
-					<row>fr4</row>
+					<row>fr5</row>
 					<text><![CDATA[DNS rules]]></text>
 					<color>bg-info</color>
 					<if>opt7</if>
 				</sep5>
 				<sep6>
-					<row>fr6</row>
+					<row>fr7</row>
 					<text><![CDATA[Allow any rules]]></text>
 					<color>bg-info</color>
 					<if>opt7</if>
 				</sep6>
 				<sep7>
-					<row>fr7</row>
+					<row>fr8</row>
 					<text><![CDATA[Default reject rules]]></text>
 					<color>bg-danger</color>
 					<if>opt7</if>
@@ -1770,13 +1909,6 @@
 		<vtimaps></vtimaps>
 	</ipsec>
 	<aliases>
-		<alias>
-			<name>pfB_DNSBL_Ports</name>
-			<address>8081 8443</address>
-			<descr><![CDATA[pfBlockerNG DNSBL VIP Ports]]></descr>
-			<type>port</type>
-			<detail><![CDATA[DO NOT EDIT THIS PORT||DO NOT EDIT THIS PORT]]></detail>
-		</alias>
 		<alias>
 			<name>Default_allowed_OUT_Ports_LAN</name>
 			<type>port</type>
@@ -1794,16 +1926,16 @@
 		<alias>
 			<name>HAProxy_Backend_Hosts</name>
 			<type>host</type>
-			<address>jellyfin.local guacamole.local</address>
+			<address>jellyfin.local guacamole.local notifiarr.local kodirsync.local testlab.local</address>
 			<descr><![CDATA[HA-Proxy backend hosts]]></descr>
-			<detail><![CDATA[Jellyfin host server||Guacamole host server]]></detail>
+			<detail><![CDATA[Jellyfin host server||Guacamole host server||Notifiarr client server||Kodirsync host server||Testlab host server]]></detail>
 		</alias>
 		<alias>
 			<name>HAProxy_Backend_Ports</name>
 			<type>port</type>
-			<address>8920 8096 8080</address>
+			<address>8920 8096 8080 5454 22</address>
 			<descr><![CDATA[HA-Proxy backend ports]]></descr>
-			<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port||Guacamole HTTP port]]></detail>
+			<detail><![CDATA[Jellyfin HTTPS port||Jellyfin HTTP port||Guacamole HTTP port||Notifiarr HTTP port||Kodirsync SSH port]]></detail>
 		</alias>
 		<alias>
 			<name>LAN_User_Subnets</name>
@@ -1829,23 +1961,23 @@
 		<alias>
 			<name>Medialab_Hosts_std</name>
 			<type>host</type>
-			<address>flexget.local sonarr.local radarr.local lidarr.local readarr.local ahuabooks.local whisparr.local prowlarr.local jackett.local</address>
+			<address>flexget.local sonarr.local radarr.local lidarr.local readarr.local whisparr.local prowlarr.local jackett.local geterr.local notifiarr.local kodirsync.local</address>
 			<descr><![CDATA[Medialab App hosts (LAN-medialab)]]></descr>
-			<detail><![CDATA[Flexget||Sonarr||Radarr||Lidarr||Readarr||Ahuabooks||Whisparr||Prowlarr||Jackett]]></detail>
+			<detail><![CDATA[Flexget||Sonarr||Radarr||Lidarr||Readarr||Whisparr||Prowlarr||Jackett||Geterr||Notifiarr||Kodirsync]]></detail>
 		</alias>
 		<alias>
 			<name>Medialab_Hosts_vpn</name>
 			<type>host</type>
-			<address>nzbget.local deluge.local</address>
+			<address>nzbget.local deluge.local sabnzbd.local</address>
 			<descr><![CDATA[Medialab App hosts (LAN-vpngate-world)]]></descr>
-			<detail><![CDATA[NZBGet||Deluge]]></detail>
+			<detail><![CDATA[NZBGet||Deluge||SABnzbd]]></detail>
 		</alias>
 		<alias>
 			<name>Medialab_Ports_std</name>
 			<type>port</type>
-			<address>7878 8787 8989 8686 9696 9117 5299 4040 5050 6969</address>
+			<address>7878 8787 8989 8686 9696 9117 5299 4040 5050 6969 5454</address>
 			<descr><![CDATA[Medialab App Ports (LAN-medialab)]]></descr>
-			<detail><![CDATA[Radarr port||Readarr port||Sonarr port||Lidarr port||Prowlarr port||Jackett port||Ahuabooks / LazyLibrarian port||Ahuabooks /Booksonic port||Flexget port||Whisparr port]]></detail>
+			<detail><![CDATA[Radarr port||Readarr port||Sonarr port||Lidarr port||Prowlarr port||Jackett port||Ahuabooks / LazyLibrarian port||Ahuabooks /Booksonic port||Flexget port||Whisparr port||Notifiarr port]]></detail>
 		</alias>
 		<alias>
 			<name>Medialab_Ports_vpn</name>
@@ -1890,11 +2022,46 @@
 			<detail><![CDATA[RFC 1918 subnet||RFC 1918 subnet||RFC 1918 subnet]]></detail>
 		</alias>
 		<alias>
+			<name>Test_All_LAN_Subnets</name>
+			<type>network</type>
+			<address>192.168.1.0/24 192.168.10.0/24 192.168.30.0/24 192.168.40.0/24 192.168.50.0/24 192.168.20.0/24 192.168.60.0/24 192.168.70.0/24 192.168.80.0/32</address>
+			<descr><![CDATA[Testing only. All LAN subnets.]]></descr>
+			<detail><![CDATA[LAN default||LAN-open (vlan10)||LAN-vpngate-world (vlan40)||LAN-vpngate-local (vlan30)||LAN-medialab (vlan50)||LAN-smart (vlan20)||LAN-vpnserver (vlan60)||LAN-guest (vlan70)||LAN-homelab (vlan80)]]></detail>
+		</alias>
+		<alias>
+			<name>Test_All_VPN_Subnets</name>
+			<type>network</type>
+			<address>192.168.30.0/24 192.168.40.0/24</address>
+			<descr><![CDATA[Testing only. All VPN subnets (vlan30/40)]]></descr>
+			<detail><![CDATA[LAN-vpngate-world (vlan40)||LAN-vpngate-local (vlan30)]]></detail>
+		</alias>
+		<alias>
 			<name>VPN_Ports_client</name>
 			<type>port</type>
 			<address>1195 1194 51820 53</address>
 			<descr><![CDATA[VPN client provider ports]]></descr>
 			<detail><![CDATA[ExpressVPN SSL port||PureVPN port||WireGuard port||PureVPN SSL port]]></detail>
+		</alias>
+		<alias>
+			<name>HAProxy_Inbound_WAN_HTTPS_Ports</name>
+			<type>port</type>
+			<address>443 2053 2083 2087 2096 8443</address>
+			<descr><![CDATA[Allow WAN HTTPS Ports inbound to HAProxy]]></descr>
+			<detail><![CDATA[HTTPS 443||HTTPS 2043||HTTPS 2083||HTTPS 2087||HTTPS 2096||HTTPS 8443]]></detail>
+		</alias>
+		<alias>
+			<name>HAProxy_Inbound_WAN_HTTP_Ports</name>
+			<type>port</type>
+			<address>80 8080 8880 2052 2082 2086 2095</address>
+			<descr><![CDATA[Allow WAN HTTP Ports inbound to HAProxy]]></descr>
+			<detail><![CDATA[HTTP 80||HTTP 8080||HTTP 8880||HTTP 2052||HTTP 2082||HTTP 2086||HTTP 2095]]></detail>
+		</alias>
+		<alias>
+			<name>HAProxy_Inbound_WAN_Other_Ports</name>
+			<type>port</type>
+			<address>8096</address>
+			<descr><![CDATA[Allow WAN Other Ports inbound to HAProxy]]></descr>
+			<detail><![CDATA[Jellyfin Port]]></detail>
 		</alias>
 	</aliases>
 	<proxyarp></proxyarp>
@@ -1989,15 +2156,6 @@
 			<who>root</who>
 			<command>/etc/rc.periodic monthly</command>
 		</item>
-		<item>
-			<minute>16</minute>
-			<hour>3</hour>
-			<mday>*</mday>
-			<month>*</month>
-			<wday>*</wday>
-			<who>root</who>
-			<command>/usr/local/pkg/acme/acme_command.sh &quot;renewall&quot; | /usr/bin/logger -t ACME 2&gt;&amp;1</command>
-		</item>
 	</cron>
 	<wol></wol>
 	<rrd>
@@ -2019,13 +2177,13 @@
 			<backgroundupdate>true</backgroundupdate>
 			<smoothfactor>0</smoothfactor>
 			<size>1</size>
-			<filter>wan,lan,opt5,opt6,opt7</filter>
+			<filter>lan,opt5,opt6</filter>
 		</traffic_graphs>
 	</widgets>
 	<openvpn>
 		<openvpn-client>
-			<auth_user></auth_user>
-			<auth_pass></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>1</vpnid>
@@ -2082,8 +2240,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user></auth_user>
-			<auth_pass></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>2</vpnid>
@@ -2140,8 +2298,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user><![CDATA[user]]></auth_user>
-			<auth_pass><![CDATA[pwd]]></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>3</vpnid>
@@ -2197,8 +2355,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user></auth_user>
-			<auth_pass></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>4</vpnid>
@@ -2255,8 +2413,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user><![CDATA[user]]></auth_user>
-			<auth_pass><![CDATA[pwd]]></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>5</vpnid>
@@ -2265,8 +2423,8 @@
 			<interface>wan</interface>
 			<ipaddr></ipaddr>
 			<local_port></local_port>
-			<server_addr>se2-auto-udp.ptoserver.com</server_addr>
-			<server_port>53</server_port>
+			<server_addr>149.40.51.32</server_addr>
+			<server_port>15021</server_port>
 			<proxy_addr></proxy_addr>
 			<proxy_port></proxy_port>
 			<proxy_authtype>none</proxy_authtype>
@@ -2277,7 +2435,7 @@
 			<caref>638c706e6fda3</caref>
 			<certref></certref>
 			<crlref></crlref>
-			<tls>Iw0KIyAyMDQ4IGJpdCBPcGVuVlBOIHN0YXRpYyBrZXkNCiMNCi0tLS0tQkVHSU4gT3BlblZQTiBTdGF0aWMga2V5IFYxLS0tLS0NCmUzMGFmOTk1ZjU2ZDA3NDI2ZDliYTFmODI0NzMwNTIxDQpkNDI4M2RiNGI0ZDBjZGRhOWM2ZTg3NTlhMzc5OWRjYg0KNzkzOWI2YTU5ODkxNjBjOTY2MGRlMGY2MTI1Y2JiMWYNCjU4NWI0MWMwNzRiMmZlODhlY2ZjZjE3ZWFiOWEzM2JlDQoxMzUyMzc5Y2RmNzQ5NTJiNTg4ZmIxNjFhOTNlMTNkZg0KOTEzNWIyYjI5MDM4MjMxZTAyZDY1N2E2MjI1NzA1ZTYNCjg2OGNjYjBjMzg0ZWQxMTYxNDY5MGExODk0YmZiZWIyDQo3NGNlYmYxZmU5YzIzMjliZGQ1YzhhNDBmZTg4MjA2Mg0KNGQyZWE3NTQwY2Q3OWFiNzY4OTJkYjUxZmMzNzFhM2ENCmM1ZmM5NTczYWZlY2IzZmZmZTMyODFlNjFkNzJlOTE1DQo3OWQ5YjAzZDhjYmY3OTA5YjNhZWJmNGQ5MDg1MDMyMQ0KZWU2YjdkMGE3ODQ2ZDE1YzI3ZDgyOTBlMDMxZTk1MWUNCjE5NDM4YTQ2NTQ2NjNjYWQ5NzVlMTM4ZjViYzVhZjg5DQpjNzM3YWQ4MjJmMjdlMTkwNTc3MzFmNDFlMWUyNTRjYw0KOWM5NWI3MTc1YzYyMjQyMmNkZTlmMWYyY2ZkMzUxMGENCmRkOTQ0OThiNGQ3MTMzZDM3MjlkZDIxNGExNmIyN2ZiDQotLS0tLUVORCBPcGVuVlBOIFN0YXRpYyBrZXkgVjEtLS0tLQ0K</tls>
+			<tls>IyANCiMgMjA0OCBiaXQgT3BlblZQTiBzdGF0aWMga2V5IA0KIyANCi0tLS0tQkVHSU4gT3BlblZQTiBTdGF0aWMga2V5IFYxLS0tLS0NCmUzMGFmOTk1ZjU2ZDA3NDI2ZDliYTFmODI0NzMwNTIxDQpkNDI4M2RiNGI0ZDBjZGRhOWM2ZTg3NTlhMzc5OWRjYg0KNzkzOWI2YTU5ODkxNjBjOTY2MGRlMGY2MTI1Y2JiMWYNCjU4NWI0MWMwNzRiMmZlODhlY2ZjZjE3ZWFiOWEzM2JlDQoxMzUyMzc5Y2RmNzQ5NTJiNTg4ZmIxNjFhOTNlMTNkZg0KOTEzNWIyYjI5MDM4MjMxZTAyZDY1N2E2MjI1NzA1ZTYNCjg2OGNjYjBjMzg0ZWQxMTYxNDY5MGExODk0YmZiZWIyDQo3NGNlYmYxZmU5YzIzMjliZGQ1YzhhNDBmZTg4MjA2Mg0KNGQyZWE3NTQwY2Q3OWFiNzY4OTJkYjUxZmMzNzFhM2ENCmM1ZmM5NTczYWZlY2IzZmZmZTMyODFlNjFkNzJlOTE1DQo3OWQ5YjAzZDhjYmY3OTA5YjNhZWJmNGQ5MDg1MDMyMQ0KZWU2YjdkMGE3ODQ2ZDE1YzI3ZDgyOTBlMDMxZTk1MWUNCjE5NDM4YTQ2NTQ2NjNjYWQ5NzVlMTM4ZjViYzVhZjg5DQpjNzM3YWQ4MjJmMjdlMTkwNTc3MzFmNDFlMWUyNTRjYw0KOWM5NWI3MTc1YzYyMjQyMmNkZTlmMWYyY2ZkMzUxMGENCmRkOTQ0OThiNGQ3MTMzZDM3MjlkZDIxNGExNmIyN2ZiDQotLS0tLUVORCBPcGVuVlBOIFN0YXRpYyBrZXkgVjEtLS0tLQ==</tls>
 			<tls_type>auth</tls_type>
 			<tlsauth_keydir>default</tlsauth_keydir>
 			<remote_cert_tls></remote_cert_tls>
@@ -2302,7 +2460,6 @@
 			<verbosity_level>3</verbosity_level>
 			<create_gw>v4only</create_gw>
 			<data_ciphers>AES-256-CBC,AES-128-GCM</data_ciphers>
-			<ncp_enable>enabled</ncp_enable>
 			<ping_method>keepalive</ping_method>
 			<keepalive_interval>10</keepalive_interval>
 			<keepalive_timeout>60</keepalive_timeout>
@@ -2312,8 +2469,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user><![CDATA[user]]></auth_user>
-			<auth_pass><![CDATA[pwd]]></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>6</vpnid>
@@ -2322,8 +2479,8 @@
 			<interface>wan</interface>
 			<ipaddr></ipaddr>
 			<local_port></local_port>
-			<server_addr>de2-auto-udp.ptoserver.com</server_addr>
-			<server_port>53</server_port>
+			<server_addr>217.138.217.68</server_addr>
+			<server_port>15021</server_port>
 			<proxy_addr></proxy_addr>
 			<proxy_port></proxy_port>
 			<proxy_authtype>none</proxy_authtype>
@@ -2334,7 +2491,7 @@
 			<caref>638c706e6fda3</caref>
 			<certref></certref>
 			<crlref></crlref>
-			<tls>Iw0KIyAyMDQ4IGJpdCBPcGVuVlBOIHN0YXRpYyBrZXkNCiMNCi0tLS0tQkVHSU4gT3BlblZQTiBTdGF0aWMga2V5IFYxLS0tLS0NCmUzMGFmOTk1ZjU2ZDA3NDI2ZDliYTFmODI0NzMwNTIxDQpkNDI4M2RiNGI0ZDBjZGRhOWM2ZTg3NTlhMzc5OWRjYg0KNzkzOWI2YTU5ODkxNjBjOTY2MGRlMGY2MTI1Y2JiMWYNCjU4NWI0MWMwNzRiMmZlODhlY2ZjZjE3ZWFiOWEzM2JlDQoxMzUyMzc5Y2RmNzQ5NTJiNTg4ZmIxNjFhOTNlMTNkZg0KOTEzNWIyYjI5MDM4MjMxZTAyZDY1N2E2MjI1NzA1ZTYNCjg2OGNjYjBjMzg0ZWQxMTYxNDY5MGExODk0YmZiZWIyDQo3NGNlYmYxZmU5YzIzMjliZGQ1YzhhNDBmZTg4MjA2Mg0KNGQyZWE3NTQwY2Q3OWFiNzY4OTJkYjUxZmMzNzFhM2ENCmM1ZmM5NTczYWZlY2IzZmZmZTMyODFlNjFkNzJlOTE1DQo3OWQ5YjAzZDhjYmY3OTA5YjNhZWJmNGQ5MDg1MDMyMQ0KZWU2YjdkMGE3ODQ2ZDE1YzI3ZDgyOTBlMDMxZTk1MWUNCjE5NDM4YTQ2NTQ2NjNjYWQ5NzVlMTM4ZjViYzVhZjg5DQpjNzM3YWQ4MjJmMjdlMTkwNTc3MzFmNDFlMWUyNTRjYw0KOWM5NWI3MTc1YzYyMjQyMmNkZTlmMWYyY2ZkMzUxMGENCmRkOTQ0OThiNGQ3MTMzZDM3MjlkZDIxNGExNmIyN2ZiDQotLS0tLUVORCBPcGVuVlBOIFN0YXRpYyBrZXkgVjEtLS0tLQ0K</tls>
+			<tls>IyANCiMgMjA0OCBiaXQgT3BlblZQTiBzdGF0aWMga2V5IA0KIyANCi0tLS0tQkVHSU4gT3BlblZQTiBTdGF0aWMga2V5IFYxLS0tLS0NCmUzMGFmOTk1ZjU2ZDA3NDI2ZDliYTFmODI0NzMwNTIxDQpkNDI4M2RiNGI0ZDBjZGRhOWM2ZTg3NTlhMzc5OWRjYg0KNzkzOWI2YTU5ODkxNjBjOTY2MGRlMGY2MTI1Y2JiMWYNCjU4NWI0MWMwNzRiMmZlODhlY2ZjZjE3ZWFiOWEzM2JlDQoxMzUyMzc5Y2RmNzQ5NTJiNTg4ZmIxNjFhOTNlMTNkZg0KOTEzNWIyYjI5MDM4MjMxZTAyZDY1N2E2MjI1NzA1ZTYNCjg2OGNjYjBjMzg0ZWQxMTYxNDY5MGExODk0YmZiZWIyDQo3NGNlYmYxZmU5YzIzMjliZGQ1YzhhNDBmZTg4MjA2Mg0KNGQyZWE3NTQwY2Q3OWFiNzY4OTJkYjUxZmMzNzFhM2ENCmM1ZmM5NTczYWZlY2IzZmZmZTMyODFlNjFkNzJlOTE1DQo3OWQ5YjAzZDhjYmY3OTA5YjNhZWJmNGQ5MDg1MDMyMQ0KZWU2YjdkMGE3ODQ2ZDE1YzI3ZDgyOTBlMDMxZTk1MWUNCjE5NDM4YTQ2NTQ2NjNjYWQ5NzVlMTM4ZjViYzVhZjg5DQpjNzM3YWQ4MjJmMjdlMTkwNTc3MzFmNDFlMWUyNTRjYw0KOWM5NWI3MTc1YzYyMjQyMmNkZTlmMWYyY2ZkMzUxMGENCmRkOTQ0OThiNGQ3MTMzZDM3MjlkZDIxNGExNmIyN2ZiDQotLS0tLUVORCBPcGVuVlBOIFN0YXRpYyBrZXkgVjEtLS0tLQ==</tls>
 			<tls_type>auth</tls_type>
 			<tlsauth_keydir>default</tlsauth_keydir>
 			<remote_cert_tls></remote_cert_tls>
@@ -2359,7 +2516,6 @@
 			<verbosity_level>3</verbosity_level>
 			<create_gw>v4only</create_gw>
 			<data_ciphers>AES-256-CBC,AES-128-GCM</data_ciphers>
-			<ncp_enable>enabled</ncp_enable>
 			<ping_method>keepalive</ping_method>
 			<keepalive_interval>10</keepalive_interval>
 			<keepalive_timeout>60</keepalive_timeout>
@@ -2369,8 +2525,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user></auth_user>
-			<auth_pass></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>7</vpnid>
@@ -2427,8 +2583,8 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user><![CDATA[user]]></auth_user>
-			<auth_pass><![CDATA[pwd]]></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>8</vpnid>
@@ -2437,7 +2593,7 @@
 			<interface>wan</interface>
 			<ipaddr></ipaddr>
 			<local_port></local_port>
-			<server_addr>my2-auto-udp.ptoserver.com</server_addr>
+			<server_addr>kr2-udp.ptoserver.com</server_addr>
 			<server_port>53</server_port>
 			<proxy_addr></proxy_addr>
 			<proxy_port></proxy_port>
@@ -2484,18 +2640,19 @@
 			<inactive_seconds>0</inactive_seconds>
 		</openvpn-client>
 		<openvpn-client>
-			<auth_user><![CDATA[user]]></auth_user>
-			<auth_pass><![CDATA[pwd]]></auth_pass>
+			<auth_user><![CDATA[username]]></auth_user>
+			<auth_pass><![CDATA[password]]></auth_pass>
 			<proxy_user></proxy_user>
 			<proxy_passwd></proxy_passwd>
 			<vpnid>10</vpnid>
+			<disable></disable>
 			<protocol>UDP4</protocol>
 			<dev_mode>tun</dev_mode>
 			<interface>wan</interface>
 			<ipaddr></ipaddr>
 			<local_port></local_port>
-			<server_addr>be2-auto-udp.ptoserver.com</server_addr>
-			<server_port>53</server_port>
+			<server_addr>sk2-udp.ptoserver.com</server_addr>
+			<server_port>15021</server_port>
 			<proxy_addr></proxy_addr>
 			<proxy_port></proxy_port>
 			<proxy_authtype>none</proxy_authtype>
@@ -2506,7 +2663,7 @@
 			<caref>638c706e6fda3</caref>
 			<certref></certref>
 			<crlref></crlref>
-			<tls>Iw0KIyAyMDQ4IGJpdCBPcGVuVlBOIHN0YXRpYyBrZXkNCiMNCi0tLS0tQkVHSU4gT3BlblZQTiBTdGF0aWMga2V5IFYxLS0tLS0NCmUzMGFmOTk1ZjU2ZDA3NDI2ZDliYTFmODI0NzMwNTIxDQpkNDI4M2RiNGI0ZDBjZGRhOWM2ZTg3NTlhMzc5OWRjYg0KNzkzOWI2YTU5ODkxNjBjOTY2MGRlMGY2MTI1Y2JiMWYNCjU4NWI0MWMwNzRiMmZlODhlY2ZjZjE3ZWFiOWEzM2JlDQoxMzUyMzc5Y2RmNzQ5NTJiNTg4ZmIxNjFhOTNlMTNkZg0KOTEzNWIyYjI5MDM4MjMxZTAyZDY1N2E2MjI1NzA1ZTYNCjg2OGNjYjBjMzg0ZWQxMTYxNDY5MGExODk0YmZiZWIyDQo3NGNlYmYxZmU5YzIzMjliZGQ1YzhhNDBmZTg4MjA2Mg0KNGQyZWE3NTQwY2Q3OWFiNzY4OTJkYjUxZmMzNzFhM2ENCmM1ZmM5NTczYWZlY2IzZmZmZTMyODFlNjFkNzJlOTE1DQo3OWQ5YjAzZDhjYmY3OTA5YjNhZWJmNGQ5MDg1MDMyMQ0KZWU2YjdkMGE3ODQ2ZDE1YzI3ZDgyOTBlMDMxZTk1MWUNCjE5NDM4YTQ2NTQ2NjNjYWQ5NzVlMTM4ZjViYzVhZjg5DQpjNzM3YWQ4MjJmMjdlMTkwNTc3MzFmNDFlMWUyNTRjYw0KOWM5NWI3MTc1YzYyMjQyMmNkZTlmMWYyY2ZkMzUxMGENCmRkOTQ0OThiNGQ3MTMzZDM3MjlkZDIxNGExNmIyN2ZiDQotLS0tLUVORCBPcGVuVlBOIFN0YXRpYyBrZXkgVjEtLS0tLQ0K</tls>
+			<tls>Iw0KIyAyMDQ4IGJpdCBPcGVuVlBOIHN0YXRpYyBrZXkNCiMNCi0tLS0tQkVHSU4gT3BlblZQTiBTdGF0aWMga2V5IFYxLS0tLS0NCmUzMGFmOTk1ZjU2ZDA3NDI2ZDliYTFmODI0NzMwNTIxDQpkNDI4M2RiNGI0ZDBjZGRhOWM2ZTg3NTlhMzc5OWRjYg0KNzkzOWI2YTU5ODkxNjBjOTY2MGRlMGY2MTI1Y2JiMWYNCjU4NWI0MWMwNzRiMmZlODhlY2ZjZjE3ZWFiOWEzM2JlDQoxMzUyMzc5Y2RmNzQ5NTJiNTg4ZmIxNjFhOTNlMTNkZg0KOTEzNWIyYjI5MDM4MjMxZTAyZDY1N2E2MjI1NzA1ZTYNCjg2OGNjYjBjMzg0ZWQxMTYxNDY5MGExODk0YmZiZWIyDQo3NGNlYmYxZmU5YzIzMjliZGQ1YzhhNDBmZTg4MjA2Mg0KNGQyZWE3NTQwY2Q3OWFiNzY4OTJkYjUxZmMzNzFhM2ENCmM1ZmM5NTczYWZlY2IzZmZmZTMyODFlNjFkNzJlOTE1DQo3OWQ5YjAzZDhjYmY3OTA5YjNhZWJmNGQ5MDg1MDMyMQ0KZWU2YjdkMGE3ODQ2ZDE1YzI3ZDgyOTBlMDMxZTk1MWUNCjE5NDM4YTQ2NTQ2NjNjYWQ5NzVlMTM4ZjViYzVhZjg5DQpjNzM3YWQ4MjJmMjdlMTkwNTc3MzFmNDFlMWUyNTRjYw0KOWM5NWI3MTc1YzYyMjQyMmNkZTlmMWYyY2ZkMzUxMGENCmRkOTQ0OThiNGQ3MTMzZDM3MjlkZDIxNGExNmIyN2ZiDQotLS0tLUVORCBPcGVuVlBOIFN0YXRpYyBrZXkgVjEtLS0tLQ==</tls>
 			<tls_type>auth</tls_type>
 			<tlsauth_keydir>default</tlsauth_keydir>
 			<remote_cert_tls></remote_cert_tls>
@@ -2589,9 +2746,9 @@
 		<use_caps></use_caps>
 	</unbound>
 	<revision>
-		<time>1670425001</time>
-		<description><![CDATA[(system): [pfSense-pkg-WireGuard] Applied package default settings as necessary.]]></description>
-		<username><![CDATA[(system)]]></username>
+		<time>1722746735</time>
+		<description><![CDATA[admin@192.168.1.30 (Local Database): Disabled the default check IP service.]]></description>
+		<username><![CDATA[admin@192.168.1.30 (Local Database)]]></username>
 	</revision>
 	<cert>
 		<refid>5dc64bb30cbd3</refid>
@@ -2599,19 +2756,6 @@
 		<type>server</type>
 		<crt>LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVlakNDQTJLZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREJhTVRnd05nWURWUVFLRXk5d1psTmwKYm5ObElIZGxZa052Ym1acFozVnlZWFJ2Y2lCVFpXeG1MVk5wWjI1bFpDQkRaWEowYVdacFkyRjBaVEVlTUJ3RwpBMVVFQXhNVmNHWlRaVzV6WlMwMVpHTTJOR0ppTXpCalltUXpNQjRYRFRFNU1URXdPVEExTVRZek5Wb1hEVEkxCk1EVXdNVEExTVRZek5Wb3dXakU0TURZR0ExVUVDaE12Y0daVFpXNXpaU0IzWldKRGIyNW1hV2QxY21GMGIzSWcKVTJWc1ppMVRhV2R1WldRZ1EyVnlkR2xtYVdOaGRHVXhIakFjQmdOVkJBTVRGWEJtVTJWdWMyVXROV1JqTmpSaQpZak13WTJKa016Q0NBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ0VCQUwrNm0rckI2SzZrCnJTLzU2dTNyVWkxZnlSc2d1OWgxZ0xVSXQ2VUs2SEpPdlU0NlNlMEpWQVZ4am5ET21qU045Y2dEcVFDMkM2d1kKNkRSZGQxZTJPUnhRd1daRUNqMmdva0NTWjZ4WHpMYlp2eG9wSXRnZnl4VktLVXZzWnBRRlVWSXpYdGNtUi9jSwpoWDhLWlMvOWtzb3NwdFlmbjJKSkhQTGRqQzdXQU1ESmZMY1NxclV1MklzSDFUTVFLV2NPWmp4dXBTeGdYN1JPCjFjUTZydmZteUx3N3hKbTZORUo0YUl5YVBBT29WVlcramM4MmpJSW5PRmVjQ2VYQTk1aXBhazlvUlloaHJnN3QKWjhOcldHRWkzQmltUzFJU3phRDNRd3cvZnR3T1FyZ3AzdG45UGpPWGRzbU5YOSt2aG9mckh6L0ZqU29vaEZtMwpYVjROTUc3Y2NIMENBd0VBQWFPQ0FVa3dnZ0ZGTUFrR0ExVWRFd1FDTUFBd0VRWUpZSVpJQVliNFFnRUJCQVFECkFnWkFNQXNHQTFVZER3UUVBd0lGb0RBekJnbGdoa2dCaHZoQ0FRMEVKaFlrVDNCbGJsTlRUQ0JIWlc1bGNtRjAKWldRZ1UyVnlkbVZ5SUVObGNuUnBabWxqWVhSbE1CMEdBMVVkRGdRV0JCUVdPb1hxM1gwaWd2azZITGFFSzVFYgptOWg0QnpDQmdnWURWUjBqQkhzd2VZQVVGanFGNnQxOUlvTDVPaHkyaEN1Ukc1dlllQWVoWHFSY01Gb3hPREEyCkJnTlZCQW9UTDNCbVUyVnVjMlVnZDJWaVEyOXVabWxuZFhKaGRHOXlJRk5sYkdZdFUybG5ibVZrSUVObGNuUnAKWm1sallYUmxNUjR3SEFZRFZRUURFeFZ3WmxObGJuTmxMVFZrWXpZMFltSXpNR05pWkRPQ0FRQXdIUVlEVlIwbApCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQ0FJQ01DQUdBMVVkRVFRWk1CZUNGWEJtVTJWdWMyVXROV1JqCk5qUmlZak13WTJKa016QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFzTzFEY1RIYXdncXBCaDBEdTQraFlraXQKd2RCNVkvUm1xNWh0MUcwUm5SaGNpME5GUWFyNkR1VUdaK2tPMUcxTmNNZ0xVaHA3UloySGV3TlhSb3NHcUxBWQpuMi85NmdOMTFoaWdWZVM1alZUdXExZzVNRjVpTnI3NEdLbFczV2V5ZGJwMkR2dFY1VDFZeERMRm5ubmxDWGkrCmIzR2lrSkcrUXdDYjlLSklzUGh4K2ZIcVFjS2ppKzJPaGE2Mi9KT1htQ0d5SGdFRVFPUWp3bUJXNjF0Sld1QmQKeHpHT2luOEtqN3lhSnFQZkNBWUlHNitkMG9yTzJoVmVISlNueGhlNXpDME9kZldWOTI0cmxReHltQnFwZi9uago5OUhVUnd1Rm1jbkkwQ202dkpiK21ERW03VjNaQUEvdEtFak9TdmlDanlFeW5oVXdtQnR1WDBzMnRFUDNFQT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K</crt>
 		<prv>LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRQy91cHZxd2VpdXBLMHYKK2VydDYxSXRYOGtiSUx2WWRZQzFDTGVsQ3VoeVRyMU9Pa250Q1ZRRmNZNXd6cG8wamZYSUE2a0F0Z3VzR09nMApYWGRYdGprY1VNRm1SQW85b0tKQWttZXNWOHkyMmI4YUtTTFlIOHNWU2lsTDdHYVVCVkZTTTE3WEprZjNDb1YvCkNtVXYvWkxLTEtiV0g1OWlTUnp5M1l3dTFnREF5WHkzRXFxMUx0aUxCOVV6RUNsbkRtWThicVVzWUYrMFR0WEUKT3E3MzVzaThPOFNadWpSQ2VHaU1tandEcUZWVnZvM1BOb3lDSnpoWG5Bbmx3UGVZcVdwUGFFV0lZYTRPN1dmRAphMWhoSXR3WXBrdFNFczJnOTBNTVAzN2NEa0s0S2Q3Wi9UNHpsM2JKalYvZnI0YUg2eDgveFkwcUtJUlp0MTFlCkRUQnUzSEI5QWdNQkFBRUNnZ0VBRi9ROG5xdnpZajU0MU5Hb3BHa09MMVVVVHl0YnpNT0JmUnpGdFAwVDVaUW8KMnFrMXEwUExGNU1FZE51Yk1JMjc4MjFocEJFYWpEbmdhUXAwYXFUOXBhZ0JRY0dtZGVTbjRPRnB5b0o5dFNxbgpVYUZxRlE2RDFQa2JCNzFWWTVEMmhBcWZBc3BwbTFmWkxmSWlpa2hvR3BKUmxkY0Zsc1lEcytReUszZlpTRHlzCjFVWlZvdmVaT2hRc0RuK0FWdXhlZlp3OE5oVDZtaGFqcWY2KzhWZjRJNlMxU3dRYVhubzJSc2pxMWw1NllPWGcKV1Zvd29pWGpCRlVHK3NZZ21kV0pabmoxdDVqZ281MkRFdVdwZXBQT2M4Y1BmanBXUlVCQ2JoeFVmWXo1SVl6Swprd04rUDNSMHM2NWdKSEs1WnBUbk9rdDZiblJpK0VzUXBGOG9wQ1NWZ1FLQmdRRGlJRzByMkcvRi8rbzRrTjlqCno5bEZRWXdHdzdnMXJ2d3JNNWJsYXUva1plemJwVzBveHdqVEpyT29RYmE2WDFlZzNWMWtlSEUvZ3FRd3ZqMEIKT0cwZVNTNlhuVjlRdUxaT0txV04xOHFHTlQrTXpSQUdSVzUzZktqZEkwQXZ2UXlOelBLTzcxd0VSTVJQWUdQcgpVRENPZGFtVWptanVNVFpSVWJMRmU3TDgxUUtCZ1FEWkR0c3VTRUtoYjQ3NXVIY1hyaEpSVVJlV2RTQXpqZm5SCmNHeDdJbkpINWRvUzI3N09ueTluV0N0UFh4cTZIMG4vV2xIblB1aDEwdGM2bFVqVC9ENnljdlJqdlVma0l4K0IKSW5FYzhic1ovejRmUnN4Y2tYdE1iTHd4bTc2N25BSU1wZzFGZjIwM2ZFOWlzdnNpWGl6d25JQ2ZZU0czQnl5YQpBcHJLNUwzWkNRS0JnUURXbWptaHMrNFlObEVlVC9lQ0xYOGc2QjB4U2t3bnZxTVppUU43UlNyWVV4Y2dPWFpJCmplUkZLR1MybVc4R24zZDFkc0NzbWxXNEZZOG5wMVFVTlczeG9UaHpzV29GSE5mL2hSL0xadkdRdnpaSnRVK3cKOC9IcnVrWTBZTUVJelZ6OXNuUzh6Rk5DeGRTZEZIaWZtV0lMd1lVb05LTkc4ek4rcDQrSE5tZGU1UUtCZ0Z3SAp3NERGSEpNc0pMZldzWS8xdTBpRkZIWXpwUHFXNk9RWFFiZVhyRksxcnhldDJpSHJOb01mekFVME1yWFZqRjliCllUeWwzSlFRV0RjN2tveG0rQUpiWVNsazJMVnUrdTJhdDlEbzRVYXRoUjVudTBCSVlybk5wS0Y0QW8rekh0OVUKREc1NkQ4bWx5RmIxd2lzWk9QNnZySTFtOW8rTzJDZFlrVjhUU3pkWkFvR0FmNGhUUjRvcVZ2MERlZThmVXVCMgpjYmR3TTc5WjVheGlXWjM3VU1uVnZNSjRnSzhSbTF2Z1Aydk1wZDQ2MVFtL1dsSlZQOXhhVXdmUUdXSnNLS1F0CkhRYjZWTE55REY5SDFmSytNTlNTMHNsaTRZVmVWTjAvRXFSZzBaK0pQRS90MGZsZDlJYldOamhiOExTOWZGZTcKdndReDgvZmhXQVQvaGdJY09IWUdzMWc9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K</prv>
-	</cert>
-	<cert>
-		<refid>5dc6535e8d63a</refid>
-		<descr><![CDATA[ExpressVPN Cert]]></descr>
-		<crt>LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlEVGpDQ0FyZWdBd0lCQWdJREt6WnZNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1JR0ZNUXN3Q1FZRFZRUUdFd0pWDQpVekVMTUFrR0ExVUVDQk1DUTBFeEZUQVRCZ05WQkFjVERGTmhia1p5WVc1amFYTmpiekVWTUJNR0ExVUVDaE1NDQpSbTl5ZEMxR2RXNXpkRzl1TVJnd0ZnWURWUVFERXc5R2IzSjBMVVoxYm5OMGIyNGdRMEV4SVRBZkJna3Foa2lHDQo5dzBCQ1FFV0VtMWxRRzE1YUc5emRDNXRlV1J2YldGcGJqQWdGdzB4TmpFeE1ETXdNekEyTVRoYUdBOHlNRFkyDQpNVEV3TXpBek1EWXhPRm93Z1lveEN6QUpCZ05WQkFZVEFsWkhNUXd3Q2dZRFZRUUlEQU5DVmtreEV6QVJCZ05WDQpCQW9NQ2tWNGNISmxjM05XVUU0eEV6QVJCZ05WQkFzTUNrVjRjSEpsYzNOV1VFNHhIREFhQmdOVkJBTU1FMlY0DQpjSEpsYzNOMmNHNWZZM1Z6ZEc5dFpYSXhKVEFqQmdrcWhraUc5dzBCQ1FFV0ZuTjFjSEJ2Y25SQVpYaHdjbVZ6DQpjM1p3Ymk1amIyMHdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDck9ZdC9LT2kyDQp1TURHZXYzcFhnOGoxU080Si80RVZXREY3dkpjS3IyanJabHFEL3p1QUZ4MlcxWVd2d3VtUE82UEtINFBVOTYyDQoxYU5kaXVtYVVrdi9ScGxDZnpubm54cW9iaEp1VEUyb0ErclMxYk9xKzlPaEh3RjlqZ05YTlZrK1hYNGQwdG9TDQpUNXVHRTZaM09kbVBCdXI4bzVBbENmNzhQRFNBd3BGT3c1SHJnTHFPRVU0aFR3ZUMxL2N6WDJWc3ZzSHYyMkhSDQpJNkpNWmdQOGdHUWlpL3A5aXVrcWZhSnZHZFBjaUw1cDFRUkJVUUlpOFA4cE52RXAxcFZJcHhZajcvTE9VcWIyDQpEeEZ2Z21wMnYxSVEwWXU4OFNXc0ZrODQreEFZSHpma0x5UzMxU3FqNXVMUkJuSnF4M2ZJbE9paFE1MEdJNzJmDQp3UE13bytPaXBwdlZBZ01CQUFHalB6QTlNQXdHQTFVZEV3RUIvd1FDTUFBd0RnWURWUjBQQVFIL0JBUURBZ1N3DQpNQjBHQTFVZERnUVdCQlNrQk0xVENYOWtCZ0ZzdjJSbU96dWRNWGE5bmpBTkJna3Foa2lHOXcwQkFRc0ZBQU9CDQpnUUErMmU0YiszM3pGbUErMVpRNDZrV2tmaUIrZkVlRHlNd01MZVlZeURTMmQ4bVpoTlpLZE93N2R5NElmejlWDQpxenA0YUt1UTZqNjFjNmsxVWFRUUwwdHNrcVdWenNsU0Z2czlOWnlVQUpMTGRHVWM1VFQyTWlMd2lYUXdkNFV2DQpINmJHZWVQZGh2QjQrWmJXN1ZNRDdURThoWmhqaEFMNEY2eUFQMUVRdmczTERBPT0NCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0=</crt>
-		<prv>LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUlJRXBBSUJBQUtDQVFFQXF6bUxmeWpvdHJqQXhucjk2VjRQSTlVanVDZitCRlZneGU3eVhDcTlvNjJaYWcvOA0KN2dCY2RsdFdGcjhMcGp6dWp5aCtEMVBldHRXalhZcnBtbEpMLzBhWlFuODU1NThhcUc0U2JreE5xQVBxMHRXeg0KcXZ2VG9SOEJmWTREVnpWWlBsMStIZExhRWsrYmhoT21kem5aandicS9LT1FKUW4rL0R3MGdNS1JUc09SNjRDNg0KamhGT0lVOEhndGYzTTE5bGJMN0I3OXRoMFNPaVRHWUQvSUJrSW92NmZZcnBLbjJpYnhuVDNJaSthZFVFUVZFQw0KSXZEL0tUYnhLZGFWU0tjV0krL3l6bEttOWc4UmI0SnFkcjlTRU5HTHZQRWxyQlpQT1BzUUdCODM1QzhrdDlVcQ0KbytiaTBRWnlhc2QzeUpUb29VT2RCaU85bjhEek1LUGpvcWFiMVFJREFRQUJBb0lCQUhnc2VrQzBTS2krQU9jTg0KT1pxSjNweHFvcGhFMFY3ZlFYMktXR1hoeFpuVVpNRnhHVGM5MzZkZU1ZempaMXkwbFVhNng4Y2dPVWNmcUhvbA0KM2hEbXc5b1dCY2tMSEd2NVdpOXVtZGI2RE9Mb1pPNjIrRlFBVFNkZmFKOWpoZXEyVWIyWXhzUk4wYXBhWHpCNg0KS0RLejBvTTArc1o0VWRuOUt3NkRmdUlFTFJJV3dFeDR3MHYzZ0tXN1lMQzRKa2M0QXdMa1BLMDN4RUEvcUltZg0Ka0NtYU1QTGhyZ1ZRdCtJRmZQOGJYekw3Q0NDMDRyTlUvSVM4cHlqZXgraVVvbG5RWmxiWG50RjdCbTRWMm16MA0KODI3WlZxcmdBYi9oRVFSbHNUVzNyUmtWaCtycmRvVUU3QkNaUlRGbVJDYkxvU2hqTjZYdVNmNHNBdXM4Y2g0VQ0KRU4xMmdOMENnWUVBNG8vdFN2aWoxaVBhWExtdDRLT0V1eHFtU0dCOE1MS2hGZGU4bEJiTmRyRGd4aUlIOWJINw0Ka2hLeDE1WFJUWDBxTERiczhiMi9VSnlnWkcwQWExa0lCcVpUWFRnZU1BdXhQUlRlc0FMSlBkcVEvUk9uYkpjZA0KRmtJN2dsbHJBRzhWQjBmSDR3VFJzUmQwdldFQjZZbENkRTEwN3U2TEVzTEFIeE9qOVE1ODE5Y0NnWUVBd1hqeA0KOVJrUTJxSVRCeDVFd2liOFlzbHRBMG4zY21Sb21QaWNMbHNuS1Y1RGZ2eUNMcEZJc1oxaDNmOWRVcGZ4Ukx3eg0KcDh3Y29MaXE5Y0NvT0dkdTF1ZHcveUJUcW1oYVhXaFVLL2c3N2Y5WmUyWkIxT0VodXlLTFlKMXZXL2gvWi9hMQ0KYVBDTXhacXNEVFBDZVBzdU84Q2V6NWdxczhMak0zVzdFeXpSeERNQ2dZRUF2aEhyREZ0OTc1ZlNpTG9KZ28wTQ0KUElBR0FuQlhuKzhzTHd2M20vRnBXK3JXRjhMVEZLL0ZrdTEySDV3RHBOT2R2c3d4aWprYXVJRStHaUpNR01Mdg0KZGN5eDRXSEVDYUMxaDczcmVKUk55a09FSVowTWQ1QnJDWkoxSkV6cDlNbzhSUWhXVEVGdHZma2txZ0FwUDRnMA0KcFNlYU14MFN0YUdHMWt0KzRJYlArNjhDZ1lCclpkUUtscXVBY2svVnQ3dTdleURIUmNFNS9pbGFXdHFsYi94aQ0Keno3aCsrM0Q1Qy92NGI1VXVtVEZjeWcrM1JHVmNsUEtaY2ZPZ0RTR3p6ZVNkL2hUVzQ2aVVUT2dlT1VRelFWTQ0Ka3pQUlhkb3lZZ1ZSUXRnU3BZNXhSM08xdmpBYmFod3g4TFowU3ZRUE1CaFlTRGJWL0lzcitmQmFjV2psL0FpcA0KRUV3eGVRS0JnUURkckFFblZsT0ZvQ0x3NHNVanNQb3hrTGpoVEFnSTdDWWs1Tk54WDY3Um5qMHRwK1k0OStzRw0KVWhsNXNDR2ZNS2tMU2hpT041UDJveFphK0IwYVB0UWpzZG5zRlBhMXVhWmtLNGMrK1NTNkFldHpZUnBWRExtTA0KcDcvMUN1bEUwejNPMHNCZWtwd2l1YXFMSjlaY2NDODFnNCsyajhqNmM1MHJJQWN0M2h4SXh3PT0NCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0t</prv>
-	</cert>
-	<cert>
-		<refid>638c70d851b1f</refid>
-		<descr><![CDATA[PureVPN Cert]]></descr>
-		<crt>Q2VydGlmaWNhdGU6DQogICAgRGF0YToNCiAgICAgICAgVmVyc2lvbjogMyAoMHgyKQ0KICAgICAgICBTZXJpYWwgTnVtYmVyOiAyICgweDIpDQogICAgU2lnbmF0dXJlIEFsZ29yaXRobTogbWQ1V2l0aFJTQUVuY3J5cHRpb24NCiAgICAgICAgSXNzdWVyOiBDPUhLLCBTVD1ISywgTD1Ib25nS29uZywgTz1QdXJlVlBOLCBPVT1JVCwgQ049UHVyZVZQTi9uYW1lPVB1cmVWUE4vZW1haWxBZGRyZXNzPW1haWxAaG9zdC5kb21haW4NCiAgICAgICAgVmFsaWRpdHkNCiAgICAgICAgICAgIE5vdCBCZWZvcmU6IEFwciAxMCAwNzozNDo1OCAyMDE0IEdNVA0KICAgICAgICAgICAgTm90IEFmdGVyIDogQXByICA3IDA3OjM0OjU4IDIwMjQgR01UDQogICAgICAgIFN1YmplY3Q6IEM9SEssIFNUPUhLLCBMPUhvbmdLb25nLCBPPVB1cmVWUE4sIE9VPUlULCBDTj1pT1MtdXNlL25hbWU9UHVyZVZQTi9lbWFpbEFkZHJlc3M9bWFpbEBob3N0LmRvbWFpbg0KICAgICAgICBTdWJqZWN0IFB1YmxpYyBLZXkgSW5mbzoNCiAgICAgICAgICAgIFB1YmxpYyBLZXkgQWxnb3JpdGhtOiByc2FFbmNyeXB0aW9uDQogICAgICAgICAgICAgICAgUHVibGljLUtleTogKDIwNDggYml0KQ0KICAgICAgICAgICAgICAgIE1vZHVsdXM6DQogICAgICAgICAgICAgICAgICAgIDAwOmNkOjg5Ojk1OjY5OjVhOjE4OmM2OjNkOmQyOjJmOjFhOjFmOmJkOmNlOg0KICAgICAgICAgICAgICAgICAgICAxMDo0MTpmNjo1OTo3ZjpjZjphNTpjZTo0Nzo1OTo1YzowZTo0Mzo5Yzo4MzoNCiAgICAgICAgICAgICAgICAgICAgM2Q6N2Q6NDI6OTc6NDY6MWU6MmY6MGE6ODk6NWE6YzE6NmE6OTk6M2Q6ZmM6DQogICAgICAgICAgICAgICAgICAgIDc0OmNkOjJmOmUyOjI2OjJhOmY0OjRjOjQ3OjcyOmY0OjMwOmY5OjMzOjYyOg0KICAgICAgICAgICAgICAgICAgICBkZDo1MDoyMTplYjpmNDpiNzo4YzphMjo5NDo0NzoyNTpmNzpjZDoxZTplZjoNCiAgICAgICAgICAgICAgICAgICAgYmQ6ZDA6N2Q6Y2U6YmM6MWY6NTU6YjM6NjI6MjI6NGU6Zjk6MTM6Yjc6MzA6DQogICAgICAgICAgICAgICAgICAgIGI3OjAyOjdhOmYzOjdlOmU4OmVhOmIxOjZiOjQ3OmEwOjFiOmVhOmI4OjU2Og0KICAgICAgICAgICAgICAgICAgICBkMjoxYzoxNjplMzphZDo0Yjo5YTo2MTo0Zjo2MjoyOTo2ZTo1MTpiMTplYzoNCiAgICAgICAgICAgICAgICAgICAgNDA6NWM6N2I6N2I6YTk6MGM6ZmQ6Y2U6NGU6YWY6MzE6Yjk6Mjg6OTU6ZTM6DQogICAgICAgICAgICAgICAgICAgIGM2OjYzOjJmOjZlOmM0OmIxOjRkOjE5OmM1OmQwOmJiOjg3Ojk4OmE0OjQyOg0KICAgICAgICAgICAgICAgICAgICBhNjoyYjplMjpiYjo4MDpmMDozODpkMzowZToxNjowNjo5Njo2MzoyNzozNDoNCiAgICAgICAgICAgICAgICAgICAgNDI6OGU6Nzc6ZDU6ZTQ6NzI6YWM6NmM6MmM6OGM6NGQ6M2U6YWY6MzA6MDQ6DQogICAgICAgICAgICAgICAgICAgIGZjOjQ5OjQ0OmY5OmU1OmEzOmVmOjc4Ojc5OjYwOjA5OmFiOjMwOjcwOjU0Og0KICAgICAgICAgICAgICAgICAgICBlYjplYzozNjozYjpiOTpmMDoyYTplMjoyMzphZjoyYzo1YjplYTpjZTplODoNCiAgICAgICAgICAgICAgICAgICAgNDY6Y2Y6ODc6ZDY6MjE6ZTY6NTE6Y2E6OGE6OTI6NGI6YjU6Njg6ZGU6YTQ6DQogICAgICAgICAgICAgICAgICAgIDQyOmMyOmZlOjVjOjZmOjI5OmUzOjk5OmVmOmUxOjE2OjZiOjc3OjYwOmE0Og0KICAgICAgICAgICAgICAgICAgICA5YTpjNDo4Zjo3NjpjNDoxMjozMjplMToxODpiNjplMjphNDowZjoyYjpiNDoNCiAgICAgICAgICAgICAgICAgICAgNzc6NjMNCiAgICAgICAgICAgICAgICBFeHBvbmVudDogNjU1MzcgKDB4MTAwMDEpDQogICAgICAgIFg1MDl2MyBleHRlbnNpb25zOg0KICAgICAgICAgICAgWDUwOXYzIEJhc2ljIENvbnN0cmFpbnRzOiANCiAgICAgICAgICAgICAgICBDQTpGQUxTRQ0KICAgICAgICAgICAgTmV0c2NhcGUgQ29tbWVudDogDQogICAgICAgICAgICAgICAgRWFzeS1SU0EgR2VuZXJhdGVkIENlcnRpZmljYXRlDQogICAgICAgICAgICBYNTA5djMgU3ViamVjdCBLZXkgSWRlbnRpZmllcjogDQogICAgICAgICAgICAgICAgQTI6QTQ6MkU6MTc6OUE6QzA6Mzg6REQ6Q0M6MEU6RTk6NUQ6MjE6MEI6NzY6OTE6QUI6NzQ6QzU6RkMNCiAgICAgICAgICAgIFg1MDl2MyBBdXRob3JpdHkgS2V5IElkZW50aWZpZXI6IA0KICAgICAgICAgICAgICAgIGtleWlkOkI3OkVEOjZGOjI3OjY1OkY2Ojg2OjhEOjc2OjNEOjQwOkUxOjc2OjhEOjgyOkIxOjIxOkQ4OjVEOkI2DQogICAgICAgICAgICAgICAgRGlyTmFtZTovQz1ISy9TVD1ISy9MPUhvbmdLb25nL089UHVyZVZQTi9PVT1JVC9DTj1QdXJlVlBOL25hbWU9UHVyZVZQTi9lbWFpbEFkZHJlc3M9bWFpbEBob3N0LmRvbWFpbg0KICAgICAgICAgICAgICAgIHNlcmlhbDpEQzpBQzowNTpEMTo0MzpFOTo0RDpBOA0KDQogICAgICAgICAgICBYNTA5djMgRXh0ZW5kZWQgS2V5IFVzYWdlOiANCiAgICAgICAgICAgICAgICBUTFMgV2ViIENsaWVudCBBdXRoZW50aWNhdGlvbg0KICAgICAgICAgICAgWDUwOXYzIEtleSBVc2FnZTogDQogICAgICAgICAgICAgICAgRGlnaXRhbCBTaWduYXR1cmUNCiAgICBTaWduYXR1cmUgQWxnb3JpdGhtOiBtZDVXaXRoUlNBRW5jcnlwdGlvbg0KICAgICAgICAgOGQ6ZDk6Nzc6YWU6ODU6ZTI6MTA6ZWI6MDc6MDU6MTM6YzE6M2Y6MWQ6NzU6NGQ6MzQ6ODk6DQogICAgICAgICBiNzpkZDplNDo2MzozZjowNjo0MzoxMToxYTo5ZDo2NTo1NDpkNTpiYjo5MTpmNTowMzo1YzoNCiAgICAgICAgIDEwOmUwOjU5OmJjOjlhOmJiOjI4OjM5OmI5OjdmOmZiOmVlOjg1OmM4OjE5OjkwOmYzOmZkOg0KICAgICAgICAgYzI6NjI6OTU6ZjY6MzU6ZjI6ODE6MmQ6YTM6Yjk6NTI6MTU6YjA6ZGY6MGU6M2U6ZTU6ZWU6DQogICAgICAgICBlMzo3MDo5NTpmMzplMDoxYjpiNTozNDo1YjozMzozODoyMjo4Mjo0NToxODo0Yjo0ZTo3YjoNCiAgICAgICAgIDc5OmJkOjlkOjViOjZjOjAzOmRjOjk5OmU2OmU4OmEyOjVkOmM0OjE4OjY0OmU1OjYzOjEwOg0KICAgICAgICAgOGQ6M2M6NjA6MTE6N2E6YmU6ODc6N2E6Mjk6MDI6ZWU6ZGE6NjE6NDA6ZTc6YTQ6ZWE6Y2Y6DQogICAgICAgICBmMzozNDo4Mzo3MDo4YTo3YTo4ZjpmZDo0Nzo1ZDo3OTpiMzoxMjo2Yjo2ZDoyNToxNDo3ZjoNCiAgICAgICAgIDgxOmRhOjA1OmIzOjIxOjg1OjVjOjk1Ojg0OmVlOjZmOmIyOjFmOjI3OjQzOmRiOjAxOmE2Og0KICAgICAgICAgOTg6Yjg6YWY6OTk6OGU6MTM6YWU6NGQ6OTc6ZWY6NjQ6ODU6ZWE6ZjU6Y2E6ZWY6NmY6ZGY6DQogICAgICAgICBlMzpjYjpjYzpkZDoyMzo2MDpkYjoxNTo3ZTo0OTozMTplMjo0YzoxZDo1OTozMzo2ZjpmMToNCiAgICAgICAgIDkwOjI5OjQ1OmVjOmQ4OjRjOmM2OjYxOjhjOjMxOjA5OjU0OjY2OjgwOjI5OjViOjdiOmVhOg0KICAgICAgICAgZjY6YTY6Y2U6MjA6ZDQ6NTI6YmU6MTk6MTg6OWM6YzY6ZmI6OTI6OTc6NDE6ZGQ6Y2I6ZDM6DQogICAgICAgICAwYzpjMzo4NTo0MTpjMTo2ZTo4MjoxNTphZDpiMzoxYzo3MTphZTo5YTo0ZDpkYTowYjo3NDoNCiAgICAgICAgIGZkOjUzOjczOjk4DQotLS0tLUJFR0lOIENFUlRJRklDQVRFLS0tLS0NCk1JSUU2VENDQTlHZ0F3SUJBZ0lCQWpBTkJna3Foa2lHOXcwQkFRUUZBRENCa1RFTE1Ba0dBMVVFQmhNQ1NFc3gNCkN6QUpCZ05WQkFnVEFraExNUkV3RHdZRFZRUUhFd2hJYjI1blMyOXVaekVRTUE0R0ExVUVDaE1IVUhWeVpWWlENClRqRUxNQWtHQTFVRUN4TUNTVlF4RURBT0JnTlZCQU1UQjFCMWNtVldVRTR4RURBT0JnTlZCQ2tUQjFCMWNtVlcNClVFNHhIekFkQmdrcWhraUc5dzBCQ1FFV0VHMWhhV3hBYUc5emRDNWtiMjFoYVc0d0hoY05NVFF3TkRFd01EY3oNCk5EVTRXaGNOTWpRd05EQTNNRGN6TkRVNFdqQ0JrVEVMTUFrR0ExVUVCaE1DU0VzeEN6QUpCZ05WQkFnVEFraEwNCk1SRXdEd1lEVlFRSEV3aEliMjVuUzI5dVp6RVFNQTRHQTFVRUNoTUhVSFZ5WlZaUVRqRUxNQWtHQTFVRUN4TUMNClNWUXhFREFPQmdOVkJBTVRCMmxQVXkxMWMyVXhFREFPQmdOVkJDa1RCMUIxY21WV1VFNHhIekFkQmdrcWhraUcNCjl3MEJDUUVXRUcxaGFXeEFhRzl6ZEM1a2IyMWhhVzR3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXcNCmdnRUtBb0lCQVFETmlaVnBXaGpHUGRJdkdoKzl6aEJCOWxsL3o2WE9SMWxjRGtPY2d6MTlRcGRHSGk4S2lWckINCmFwazkvSFROTCtJbUt2Uk1SM0wwTVBrell0MVFJZXYwdDR5aWxFY2w5ODBlNzczUWZjNjhIMVd6WWlKTytSTzMNCk1MY0Nldk4rNk9xeGEwZWdHK3E0VnRJY0Z1T3RTNXBoVDJJcGJsR3g3RUJjZTN1cERQM09UcTh4dVNpVjQ4WmoNCkwyN0VzVTBaeGRDN2g1aWtRcVlyNHJ1QThEalREaFlHbG1Nbk5FS09kOVhrY3F4c0xJeE5QcTh3QlB4SlJQbmwNCm8rOTRlV0FKcXpCd1ZPdnNOanU1OENyaUk2OHNXK3JPNkViUGg5WWg1bEhLaXBKTHRXamVwRUxDL2x4dktlT1oNCjcrRVdhM2RncEpyRWozYkVFakxoR0xiaXBBOHJ0SGRqQWdNQkFBR2pnZ0ZJTUlJQlJEQUpCZ05WSFJNRUFqQUENCk1DMEdDV0NHU0FHRytFSUJEUVFnRmg1RllYTjVMVkpUUVNCSFpXNWxjbUYwWldRZ1EyVnlkR2xtYVdOaGRHVXcNCkhRWURWUjBPQkJZRUZLS2tMaGVhd0RqZHpBN3BYU0VMZHBHcmRNWDhNSUhHQmdOVkhTTUVnYjR3Z2J1QUZMZnQNCmJ5ZGw5b2FOZGoxQTRYYU5nckVoMkYyMm9ZR1hwSUdVTUlHUk1Rc3dDUVlEVlFRR0V3SklTekVMTUFrR0ExVUUNCkNCTUNTRXN4RVRBUEJnTlZCQWNUQ0VodmJtZExiMjVuTVJBd0RnWURWUVFLRXdkUWRYSmxWbEJPTVFzd0NRWUQNClZRUUxFd0pKVkRFUU1BNEdBMVVFQXhNSFVIVnlaVlpRVGpFUU1BNEdBMVVFS1JNSFVIVnlaVlpRVGpFZk1CMEcNCkNTcUdTSWIzRFFFSkFSWVFiV0ZwYkVCb2IzTjBMbVJ2YldGcGJvSUpBTnlzQmRGRDZVMm9NQk1HQTFVZEpRUU0NCk1Bb0dDQ3NHQVFVRkJ3TUNNQXNHQTFVZER3UUVBd0lIZ0RBTkJna3Foa2lHOXcwQkFRUUZBQU9DQVFFQWpkbDMNCnJvWGlFT3NIQlJQQlB4MTFUVFNKdDkza1l6OEdReEVhbldWVTFidVI5UU5jRU9CWnZKcTdLRG01Zi92dWhjZ1oNCmtQUDl3bUtWOWpYeWdTMmp1VklWc044T1B1WHU0M0NWOCtBYnRUUmJNemdpZ2tVWVMwNTdlYjJkVzJ3RDNKbm0NCjZLSmR4QmhrNVdNUWpUeGdFWHEraDNvcEF1N2FZVURucE9yUDh6U0RjSXA2ai8xSFhYbXpFbXR0SlJSL2dkb0YNCnN5R0ZYSldFN20reUh5ZEQyd0dtbUxpdm1ZNFRyazJYNzJTRjZ2WEs3Mi9mNDh2TTNTTmcyeFYrU1RIaVRCMVoNCk0yL3hrQ2xGN05oTXhtR01NUWxVWm9BcFczdnE5cWJPSU5SU3Zoa1luTWI3a3BkQjNjdlRETU9GUWNGdWdoV3QNCnN4eHhycHBOMmd0MC9WTnptQT09DQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tDQo=</crt>
-		<prv>LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tDQpNSUlFdmdJQkFEQU5CZ2txaGtpRzl3MEJBUUVGQUFTQ0JLZ3dnZ1NrQWdFQUFvSUJBUUROaVpWcFdoakdQZEl2DQpHaCs5emhCQjlsbC96NlhPUjFsY0RrT2NnejE5UXBkR0hpOEtpVnJCYXBrOS9IVE5MK0ltS3ZSTVIzTDBNUGt6DQpZdDFRSWV2MHQ0eWlsRWNsOTgwZTc3M1FmYzY4SDFXellpSk8rUk8zTUxjQ2V2Tis2T3F4YTBlZ0crcTRWdEljDQpGdU90UzVwaFQySXBibEd4N0VCY2UzdXBEUDNPVHE4eHVTaVY0OFpqTDI3RXNVMFp4ZEM3aDVpa1FxWXI0cnVBDQo4RGpURGhZR2xtTW5ORUtPZDlYa2NxeHNMSXhOUHE4d0JQeEpSUG5sbys5NGVXQUpxekJ3Vk92c05qdTU4Q3JpDQpJNjhzVytyTzZFYlBoOVloNWxIS2lwSkx0V2plcEVMQy9seHZLZU9aNytFV2EzZGdwSnJFajNiRUVqTGhHTGJpDQpwQThydEhkakFnTUJBQUVDZ2dFQUdLM0ZaK0h1aVpjUXJxRW5ZSVhtZzlVTmlBQXB1MnZydWRib25WbFF2OEtJDQpJVjRzYmNweVFEa0piMXpwdFYxamZRdTVTNU5rcFJkZ1JLQkJUSWJXS3dzQzh0NTA4SVVoZHU1NFR4bGNBbENNDQozTDRTdW9MRHNFSkVKeU1XSzQzUjZEMm1XdjRmSDhVazgwUjRUKzE4K3VRcU9DbEwyOTR2R0N1bmZIUFg0Ylp2DQp4VUMyUm1lQ3E3R3RNRW5DV3BsNHRNNHFSYk5JeXJjS1VnazIwS3BYczVnYmVvdmdXTitOcEx4dWhZcHZjSzFyDQo4L1FwZ3lEeDYwWkhmNlNaRGNOUTJhVno3ZU41QW1nT1NjTzU1ZkJtZkM3UkN2bG9IdHFYZTRGM1hzL0x0Z2xEDQozNXdycG5EVEhhVkNHdnd5UVVmS3FUUWR5b2piY1VibmlieHFvWWlOd1FLQmdRRHZ0VWwxNDd5ZGR4aXorbWxXDQpiOEo3MlJEMlY1eHZ4RHhKWWx6VmY1VitKTUxFUHkrS3E0bityVEd2SG9yOFJtVGc0NUlHdzJDSUthZ2p6My8rDQpvZ2tMWUhvWFBrUVhoUFdmWGNwQUMreklxTVFLcS9RYmkvK3hnZGFZeGJQUjRBallyUVVnYjhmN3hTNmF4R1R0DQpmZDgyRjJTQmFDeDV6TzRnT0pWdlhWcWlRd0tCZ1FEYmdjR0lmMGRkWkE3a29ONWZ1NjhZSzJmdE9nVyt2K0puDQpCZmF1eGZzcTdwNUR3c29aQ1l4MEZFZGJoTmN0V2ZHaHY4WVkrV2EwS0xPVWpWbkk2WVpHM1ZxcWFJcGRpSlh1DQpZOGljQUEzcGJPeEZjend1SWlCVUJpemV6aGZqNkVwWWhiQ0Q2RlYxd1l4cXlCd0k4WEVhVnQyZzJhNG9ac0Z5DQo0OVl6Vi9WVVlRS0JnUUNPU3FmendoODV2Zk85Q3AyekFKNkxFL3hjcnY4ZTNYY0gvTXFzdFpLUkVkTkgyVllvDQpVOUdUaTAzZDdSeUZ5bWVoazVVZ1RLUWx6OHlPaldNbVRSdGZWSUxFLzJJK0w5LzZIUnVzenlkY3Fjbk5wK3M4DQoydXNLZk05ZFdxWjJwQzI4S1dETXMyNGNCeDIySTNUaUFZRVp3K01XYWpkVWloQ2tzZElMREhoN3J3S0JnQ1ovDQpYVmY1S3FVQWRYUTNtb2lqdkJPN0dTRUwraEg0U1ZiVVB1MXNINTdwOXF2ZnI5NHdSSWZmUHB5WWNieXNkNnBzDQpuZXVuWWhIYXlaUVdMbGNFVGQ2RDEvRG5JTTFDdFRqNEd5anhBWCtjOE50RldKcW10WkRHL0h1ZkhhV0ZDZlQ0DQpqWHEwOXJnT1YvZ3FYSEJkRi84TW1SWXExMWFTbnY3dFlwWGlxVTVCQW9HQkFLWExkWTVUZmtLVWoxSSs3WEg5DQptWk9RQnliUDlzTFZxN1VubnpxcksvUjZ5TCs3d3lzVU9DMGZXNXdEVkRocWdBMndpWjdBOFQ4V0FiM0M2SG9mDQpvOVRFbkVacWZnWHJ1UEsvc281SG9JRXE0Y2h2VXViVm9aSldPQjh4RForRytKZGZwN1VIRDIwNHVjTE9jeXIwDQp0aExNNW1tNDNxMVMxVFlhOWpYWUtLc0ENCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0NCg==</prv>
-		<caref>638c706e6fda3</caref>
 	</cert>
 	<ppps></ppps>
 	<gateways>
@@ -2713,7 +2857,7 @@
 			<pkginfolink>https://forum.netgate.com/topic/134339</pkginfolink>
 			<website>http://www.avahi.org/</website>
 			<descr><![CDATA[Avahi is a system which facilitates host and service discovery in local networks via mDNS (Multicast DNS) and DNS-SD (DNS Service Discovery).]]></descr>
-			<version>2.2_1</version>
+			<version>2.2_4</version>
 			<configurationfile>avahi.xml</configurationfile>
 			<include_file>/usr/local/pkg/avahi/avahi.inc</include_file>
 			<plugins>
@@ -2727,7 +2871,7 @@
 			<pkginfolink>https://docs.netgate.com/pfsense/en/latest/packages/acme/index.html</pkginfolink>
 			<descr><![CDATA[Automated Certificate Management Environment, for automated use of LetsEncrypt certificates.]]></descr>
 			<website>https://letsencrypt.org/</website>
-			<version>0.7.3</version>
+			<version>0.8_1</version>
 			<configurationfile>acme.xml</configurationfile>
 			<include_file>/usr/local/pkg/acme/acme.inc</include_file>
 			<plugins>
@@ -2739,9 +2883,34 @@
 		<package>
 			<name>Cron</name>
 			<descr><![CDATA[The cron utility is used to manage commands on a schedule.]]></descr>
-			<version>0.3.8_1</version>
+			<version>0.3.8_3</version>
 			<configurationfile>cron.xml</configurationfile>
 			<include_file>/usr/local/pkg/cron.inc</include_file>
+		</package>
+		<package>
+			<name>haproxy-devel</name>
+			<pkginfolink>https://docs.netgate.com/pfsense/en/latest/packages/haproxy.html</pkginfolink>
+			<descr><![CDATA[The Reliable, High Performance TCP/HTTP(S) Load Balancer.&lt;br /&gt;
+			This package implements the TCP, HTTP and HTTPS balancing features from haproxy.&lt;br /&gt;
+			Supports ACLs for smart backend switching.]]></descr>
+			<website>http://haproxy.1wt.eu/</website>
+			<version>0.63_2</version>
+			<configurationfile>haproxy.xml</configurationfile>
+			<logging>
+				<logsocket>/tmp/haproxy_chroot/var/run/log</logsocket>
+				<facilityname>haproxy</facilityname>
+				<logfilename>haproxy.log</logfilename>
+			</logging>
+			<filter_rule_function>haproxy_generate_rules</filter_rule_function>
+			<include_file>/usr/local/pkg/haproxy/haproxy.inc</include_file>
+			<plugins>
+				<item>
+					<type>plugin_carp</type>
+				</item>
+				<item>
+					<type>plugin_certificates</type>
+				</item>
+			</plugins>
 		</package>
 		<package>
 			<name>bind</name>
@@ -2749,7 +2918,7 @@
 			<descr><![CDATA[The most widely used name server software.]]></descr>
 			<website>http://www.isc.org/downloads/BIND/</website>
 			<category>Services</category>
-			<version>9.16_17</version>
+			<version>9.17</version>
 			<configurationfile>bind.xml</configurationfile>
 			<port_category>dns</port_category>
 			<tabs>
@@ -2782,7 +2951,8 @@
 			<descr><![CDATA[WireGuard is an extremely simple yet fast and modern VPN&lt;br /&gt;
 				that utilizes state-of-the-art cryptography. It aims to be&lt;br /&gt;
 				faster, simpler, leaner, and more useful than IPSec, while&lt;br /&gt;
-				avoiding the massive headache. It intends to be considerably&lt;br /&gt;more performant than OpenVPN. WireGuard is designed as a&lt;br /&gt;
+				avoiding the massive headache. It intends to be considerably&lt;br /&gt;
+				more performant than OpenVPN. WireGuard is designed as a&lt;br /&gt;
 				general purpose VPN for running on embedded interfaces and&lt;br /&gt;
 				super computers alike, fit for many different circumstances.&lt;br /&gt;
 				Initially released for the Linux kernel, it is now&lt;br /&gt;
@@ -2791,7 +2961,7 @@
 				most secure, easiest to use, and simplest VPN solution in&lt;br /&gt;
 				the industry.]]></descr>
 			<pkginfolink>https://github.com/pfsense/FreeBSD-ports/commits/devel/net/pfSense-pkg-WireGuard</pkginfolink>
-			<version>0.1.6_2</version>
+			<version>0.2.1</version>
 			<configurationfile>wireguard.xml</configurationfile>
 			<include_file>/usr/local/pkg/wireguard/includes/wg.inc</include_file>
 		</package>
@@ -2823,16 +2993,34 @@
 			<url>/avahi_settings.php</url>
 		</menu>
 		<menu>
-			<name>BIND DNS Server</name>
-			<tooltiptext>Modify BIND settings</tooltiptext>
+			<name>Acme Certificates</name>
+			<tooltiptext></tooltiptext>
 			<section>Services</section>
-			<url>/pkg_edit.php?xml=bind.xml</url>
+			<url>/acme/acme_certificates.php</url>
 		</menu>
 		<menu>
 			<name>Cron</name>
 			<section>Services</section>
 			<configfile>cron.xml</configfile>
 			<url>/packages/cron/cron.php</url>
+		</menu>
+		<menu>
+			<name>HAProxy</name>
+			<tooltiptext></tooltiptext>
+			<section>Services</section>
+			<url>/haproxy/haproxy_listeners.php</url>
+		</menu>
+		<menu>
+			<name>HAProxy Stats</name>
+			<tooltiptext>Stats of HAProxy</tooltiptext>
+			<section>Status</section>
+			<url>/haproxy/haproxy_stats.php?haproxystats=1</url>
+		</menu>
+		<menu>
+			<name>BIND DNS Server</name>
+			<tooltiptext>Modify BIND settings</tooltiptext>
+			<section>Services</section>
+			<url>/pkg_edit.php?xml=bind.xml</url>
 		</menu>
 		<menu>
 			<name>WireGuard</name>
@@ -2844,12 +3032,6 @@
 			<section>Status</section>
 			<url>/wg/status_wireguard.php</url>
 		</menu>
-		<menu>
-			<name>Acme Certificates</name>
-			<tooltiptext></tooltiptext>
-			<section>Services</section>
-			<url>/acme/acme_certificates.php</url>
-		</menu>
 		<service>
 			<name>avahi</name>
 			<rcfile>avahi-daemon.sh</rcfile>
@@ -2858,10 +3040,16 @@
 			<starts_on_sync></starts_on_sync>
 		</service>
 		<service>
+			<name>haproxy</name>
+			<rcfile>haproxy.sh</rcfile>
+			<executable>haproxy</executable>
+			<description><![CDATA[TCP/HTTP(S) Load Balancer]]></description>
+		</service>
+		<service>
 			<name>named</name>
 			<rcfile>named.sh</rcfile>
 			<executable>named</executable>
-			<description><![CDATA[Domain Name Service]]></description>
+			<description><![CDATA[Bind Domain Name Service]]></description>
 			<starts_on_sync></starts_on_sync>
 		</service>
 		<service>
@@ -2871,11 +3059,1333 @@
 			<description><![CDATA[WireGuard]]></description>
 		</service>
 		<acme>
-			<certificates></certificates>
 			<accountkeys></accountkeys>
-			<enable>yes</enable>
-			<writecerts>yes</writecerts>
+			<certificates></certificates>
 		</acme>
+		<haproxy>
+			<ha_backends>
+				<item>
+					<name>WAN_443</name>
+					<status>active</status>
+					<primary_frontend>WAN_HTTPS</primary_frontend>
+					<type>tcp</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce3df1674</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced>dGNwLXJlcXVlc3QgaW5zcGVjdC1kZWxheSA1cw0KdGNwLXJlcXVlc3QgY29udGVudCBhY2NlcHQgaWYgeyByZXEuc3NsX2hlbGxvX3R5cGUgMSB9IHx8ICF7IHJlcS5zc2xfaGVsbG9fdHlwZSAxIH0NCiN0Y3AtcmVxdWVzdCBjb250ZW50IGFjY2VwdCBpZiB7IHJlcS5zc2xfaGVsbG9fdHlwZSAxIH0NCg==</advanced>
+					<ha_acls></ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>443</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems></a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<descr><![CDATA[Sharing port 443]]></descr>
+					<backend_serverpool>DUMMY_BACKEND</backend_serverpool>
+				</item>
+				<item>
+					<name>WAN_HTTPS</name>
+					<status>active</status>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<forwardfor>yes</forwardfor>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>611639882875c</ssloffloadcert>
+					<advanced></advanced>
+					<ha_acls></ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>localhost_ipv4</extaddr>
+							<extaddr_port>2043</extaddr_port>
+							<extaddr_ssl>yes</extaddr_ssl>
+							<extaddr_advanced>accept-proxy alpn h2,http/1.1</extaddr_advanced>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems></a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<descr><![CDATA[WAN HTTPS]]></descr>
+				</item>
+				<item>
+					<name>WAN_443_HTTPS</name>
+					<status>active</status>
+					<secondary>yes</secondary>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce3df1674</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls>
+						<item>
+							<name>acl</name>
+							<expression>ssl_sni_matches</expression>
+							<not>yes</not>
+							<value>vpn-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl</name>
+							<expression>ssl_sni_matches</expression>
+							<not>yes</not>
+							<value>kodirsync-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl</name>
+							<expression>ssl_sni_matches</expression>
+							<not>yes</not>
+							<value>vpn-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl</name>
+							<expression>ssl_sni_matches</expression>
+							<not>yes</not>
+							<value>kodirsync-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>https-acl</name>
+							<expression>ssl_sni_matches</expression>
+							<value>sslh-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl1</name>
+							<expression>custom</expression>
+							<value>req.ssl_hello_type 1</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl2</name>
+							<expression>custom</expression>
+							<value>req.ssl_sni -m end -i .sllh-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl3</name>
+							<expression>custom</expression>
+							<value>req.ssl_sni -m end -i .vpn-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+					</ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>80</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems>
+						<item>
+							<action>tcp-request_content_accept</action>
+							<acl>acl1</acl>
+							<use_backendbackend>DUMMY_BACKEND</use_backendbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<action>tcp-request_content_reject</action>
+							<acl> acl2</acl>
+							<use_backendbackend>WAN_HTTPS</use_backendbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<action>tcp-request_content_reject</action>
+							<acl> acl3</acl>
+							<use_backendbackend>WAN_HTTPS</use_backendbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<action>use_backend</action>
+							<use_backendbackend>WAN_HTTPS</use_backendbackend>
+							<_index></_index>
+						</item>
+					</a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<descr><![CDATA[HTTPS]]></descr>
+				</item>
+				<item>
+					<name>WAN_443_SSLH</name>
+					<status>active</status>
+					<secondary>yes</secondary>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce655498a</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls>
+						<item>
+							<name>acl</name>
+							<expression>custom</expression>
+							<value>req.ssl_sni -m end -i .sslh-location.foobar.com</value>
+							<backendservercountbackend>jellyfin-location.foobar.com</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl</name>
+							<expression>custom</expression>
+							<value>req.ssl_sni -m end -i .vpn-location.foobar.com</value>
+							<backendservercountbackend>jellyfin-location.foobar.com</backendservercountbackend>
+							<_index></_index>
+						</item>
+					</ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>80</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems>
+						<item>
+							<action>use_backend</action>
+							<acl>acl</acl>
+							<use_backendbackend>WAN_SSLH</use_backendbackend>
+							<_index></_index>
+						</item>
+					</a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<descr><![CDATA[SSHd]]></descr>
+				</item>
+				<item>
+					<name>WAN_HTTPS_frontends</name>
+					<status>active</status>
+					<secondary>yes</secondary>
+					<primary_frontend>WAN_HTTPS</primary_frontend>
+					<type>http</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce3df1674</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls>
+						<item>
+							<name>acl</name>
+							<expression>ssl_sni_matches</expression>
+							<value>jellyfin-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>jellyfin-acl</name>
+							<expression>host_matches</expression>
+							<value>jellyfin-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>guacamole-acl</name>
+							<expression>host_matches</expression>
+							<value>guaca-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>notifiarr-acl</name>
+							<expression>host_matches</expression>
+							<value>notifiarr-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>testlab-acl</name>
+							<expression>host_matches</expression>
+							<value>testlab-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+					</ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>80</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems>
+						<item>
+							<action>use_backend</action>
+							<acl>jellyfin-acl</acl>
+							<use_backendbackend>jellyfin-server</use_backendbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<action>use_backend</action>
+							<acl>guacamole-acl</acl>
+							<use_backendbackend>guacamole-server</use_backendbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<action>use_backend</action>
+							<acl>notifiarr-acl</acl>
+							<use_backendbackend>notifiarr-server</use_backendbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<action>use_backend</action>
+							<acl>testlab-acl</acl>
+							<use_backendbackend>testlab-server</use_backendbackend>
+							<_index></_index>
+						</item>
+					</a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<descr><![CDATA[WAN HTTPS frontends]]></descr>
+				</item>
+				<item>
+					<name>WAN_SSLH</name>
+					<descr><![CDATA[WAN SSHd frontends (SSL-secured SSH gateway with X.509 authentication)]]></descr>
+					<status>active</status>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>https</type>
+					<forwardfor>yes</forwardfor>
+					<httpclose>http-keep-alive</httpclose>
+					<max_connections>300</max_connections>
+					<client_timeout>7200000</client_timeout>
+					<ssloffloadcert>60c1c9f46ef26</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls>
+						<item>
+							<name>acl-kodirsync</name>
+							<expression>custom</expression>
+							<value>ssl_fc_sni_reg -i kodirsync.sslh-location.foobar.com</value>
+							<backendservercountbackend>DUMMY_BACKEND</backendservercountbackend>
+							<_index></_index>
+						</item>
+					</ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca>
+						<item>
+							<cert_ca>60c1ce0ba99ca</cert_ca>
+							<_index></_index>
+						</item>
+					</clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>localhost_ipv4</extaddr>
+							<extaddr_port>2022</extaddr_port>
+							<extaddr_ssl>yes</extaddr_ssl>
+							<extaddr_advanced>accept-proxy alpn ssh/2.0</extaddr_advanced>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems>
+						<item>
+							<action>use_backend</action>
+							<acl>acl-kodirsync</acl>
+							<use_backendbackend>kodirsync.sslh-location.foobar.com</use_backendbackend>
+							<_index></_index>
+						</item>
+					</a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<dcertadv>no-sslv3</dcertadv>
+				</item>
+				<item>
+					<name>WAN_HTTP</name>
+					<descr><![CDATA[Redirect HTTP traffic to HTTPS]]></descr>
+					<status>active</status>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce3df1674</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls></ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>80</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems></a_actionitems>
+					<a_errorfiles></a_errorfiles>
+					<backend_serverpool>SSL-redirect</backend_serverpool>
+				</item>
+				<item>
+					<name>WAN_HTTPS_auth</name>
+					<descr><![CDATA[VPN  (HTTPS Reverse Proxy with X.509 Auth)]]></descr>
+					<status>active</status>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<forwardfor>yes</forwardfor>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1c9f46ef26</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls></ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca>
+						<item>
+							<cert_ca>60cae21b05b74</cert_ca>
+							<_index></_index>
+						</item>
+					</clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>localhost_ipv4</extaddr>
+							<extaddr_port>2044</extaddr_port>
+							<extaddr_ssl>yes</extaddr_ssl>
+							<extaddr_advanced>accept-proxy alpn h2,http/1.1</extaddr_advanced>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems></a_actionitems>
+					<a_errorfiles></a_errorfiles>
+				</item>
+				<item>
+					<name>WAN_443_OpenVPN</name>
+					<descr><![CDATA[OpenVPN]]></descr>
+					<status>active</status>
+					<secondary>yes</secondary>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce655498a</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls>
+						<item>
+							<name>acl1</name>
+							<expression>custom</expression>
+							<not>yes</not>
+							<value>req.ssl_hello_type 1</value>
+							<backendservercountbackend>jellyfin-location.foobar.com</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl2</name>
+							<expression>custom</expression>
+							<not>yes</not>
+							<value>req.len 0</value>
+							<backendservercountbackend>jellyfin-location.foobar.com</backendservercountbackend>
+							<_index></_index>
+						</item>
+					</ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>80</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems>
+						<item>
+							<action>use_backend</action>
+							<acl>acl1 acl2</acl>
+							<use_backendbackend>OpenVPN</use_backendbackend>
+							<_index></_index>
+						</item>
+					</a_actionitems>
+					<a_errorfiles></a_errorfiles>
+				</item>
+				<item>
+					<name>WAN_443_HTTP_auth</name>
+					<descr><![CDATA[VPN]]></descr>
+					<status>active</status>
+					<secondary>yes</secondary>
+					<primary_frontend>WAN_443</primary_frontend>
+					<type>http</type>
+					<httpclose>http-keep-alive</httpclose>
+					<ssloffloadcert>60c1ce655498a</ssloffloadcert>
+					<ssloffloadacl_an>yes</ssloffloadacl_an>
+					<advanced></advanced>
+					<ha_acls>
+						<item>
+							<name>acl1</name>
+							<expression>custom</expression>
+							<value>req.ssl_hello_type 1</value>
+							<backendservercountbackend>jellyfin-location.foobar.com</backendservercountbackend>
+							<_index></_index>
+						</item>
+						<item>
+							<name>acl2</name>
+							<expression>custom</expression>
+							<value>req.ssl_sni -m end -i .vpn-location.foobar.com</value>
+							<backendservercountbackend>jellyfin-location.foobar.com</backendservercountbackend>
+							<_index></_index>
+						</item>
+					</ha_acls>
+					<ha_certificates></ha_certificates>
+					<clientcert_ca></clientcert_ca>
+					<clientcert_crl></clientcert_crl>
+					<a_extaddr>
+						<item>
+							<extaddr>wan_ipv4</extaddr>
+							<extaddr_port>80</extaddr_port>
+							<_index></_index>
+						</item>
+					</a_extaddr>
+					<a_actionitems>
+						<item>
+							<action>use_backend</action>
+							<acl>acl1 acl2</acl>
+							<use_backendbackend>WAN_HTTPS_auth</use_backendbackend>
+							<_index></_index>
+						</item>
+					</a_actionitems>
+					<a_errorfiles></a_errorfiles>
+				</item>
+			</ha_backends>
+			<ha_pools>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>wan_https</name>
+							<address>127.0.0.1</address>
+							<port>2043</port>
+							<checkssl>yes</checkssl>
+							<id>117</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced>c2VuZC1wcm94eQ==</advanced>
+					<advanced_backend></advanced_backend>
+					<name>WAN_HTTPS</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>WAN_HTTPS</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries></retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>116</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>wan_sslh</name>
+							<address>127.0.0.1</address>
+							<port>2022</port>
+							<checkssl>yes</checkssl>
+							<id>121</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced>c2VuZC1wcm94eQ==</advanced>
+					<advanced_backend></advanced_backend>
+					<name>WAN_SSLH</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>WAN_SSLH</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout>300000</connection_timeout>
+					<server_timeout></server_timeout>
+					<retries></retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>120</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>jellyfin-server</name>
+							<address>192.168.50.150</address>
+							<port>8096</port>
+							<id>122</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend>aHR0cC1yZXF1ZXN0IHNldC1oZWFkZXIgWC1Gb3J3YXJkZWQtUG9ydCAlW2RzdF9wb3J0XQ0KaHR0cC1yZXF1ZXN0IGFkZC1oZWFkZXIgWC1Gb3J3YXJkZWQtUHJvdG8gaHR0cHMgaWYgeyBzc2xfZmMgfQ0KI3NlcnZlciBqZWxseWZpbiAxOTIuMTY4LjUwLjE1MDo4MDk2DQpodHRwLXJlc3BvbnNlIHNldC1oZWFkZXIgQ2FjaGUtQ29udHJvbCAibm8tY2FjaGUsIG5vLXN0b3JlLCBtdXN0LXJldmFsaWRhdGUsIHByaXZhdGUiDQpodHRwLXJlc3BvbnNlIGRlbC1oZWFkZXIgU2VydmVy</advanced_backend>
+					<name>jellyfin-server</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>HTTP</check_type>
+					<checkinter>5000</checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>GET</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion>HTTP/1.1\r\nHost:\ jellyfin</monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>jellyfin-server</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout>300000</connection_timeout>
+					<server_timeout>300000</server_timeout>
+					<retries>10</retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>106</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>kodirsync-server</name>
+							<address>kodirsync.local</address>
+							<port>22</port>
+							<id>103</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend></advanced_backend>
+					<name>kodirsync.sslh-location.foobar.com</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>kodirsync.sslh-location.foobar.com</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries>30</retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>102</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>disabled</status>
+							<name>none</name>
+							<address>127.0.0.1</address>
+							<port>80</port>
+							<id>105</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend></advanced_backend>
+					<name>DUMMY_BACKEND</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>DUMMY_BACKEND</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries></retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>104</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>inactive</status>
+							<name>ssl-redirect</name>
+							<address>127.0.0.1</address>
+							<port>8081</port>
+							<id>108</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend>cmVkaXJlY3Qgc2NoZW1lIGh0dHBzIGNvZGUgMzAx</advanced_backend>
+					<name>SSL-redirect</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>SSL-redirect</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries></retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>107</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>openvpn</name>
+							<address>127.0.0.1</address>
+							<port>1194</port>
+							<_index></_index>
+							<id>110</id>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend></advanced_backend>
+					<name>OpenVPN</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport></monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries>2</retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>109</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>wan_https_auth</name>
+							<address>127.0.0.1</address>
+							<port>2044</port>
+							<checkssl>yes</checkssl>
+							<_index></_index>
+							<id>112</id>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced>c2VuZC1wcm94eQ==</advanced>
+					<advanced_backend></advanced_backend>
+					<name>WAN_HTTPS_auth</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>WAN_HTTPS_auth</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries></retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>111</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>guacamole-server</name>
+							<address>guacamole.local</address>
+							<port>8080</port>
+							<id>122</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend></advanced_backend>
+					<name>guacamole-server</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>guacamole-server</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries>3</retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>101</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>notifiarr-server</name>
+							<address>notifiarr.local</address>
+							<port>5454</port>
+							<id>122</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend></advanced_backend>
+					<name>notifiarr-server</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks></log-health-checks>
+					<httpcheck_method>OPTIONS</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>notifiarr-server</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries>3</retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>113</id>
+				</item>
+				<item>
+					<ha_servers>
+						<item>
+							<status>active</status>
+							<name>testlab</name>
+							<address>192.168.1.190</address>
+							<port>80</port>
+							<id>114</id>
+							<_index></_index>
+						</item>
+					</ha_servers>
+					<a_acl></a_acl>
+					<a_actionitems></a_actionitems>
+					<errorfiles></errorfiles>
+					<advanced></advanced>
+					<advanced_backend></advanced_backend>
+					<name>testlab-server</name>
+					<balance></balance>
+					<balance_urilen></balance_urilen>
+					<balance_uridepth></balance_uridepth>
+					<balance_uriwhole></balance_uriwhole>
+					<transparent_clientip></transparent_clientip>
+					<transparent_interface>lan</transparent_interface>
+					<check_type>none</check_type>
+					<checkinter></checkinter>
+					<log-health-checks>yes</log-health-checks>
+					<httpcheck_method>GET</httpcheck_method>
+					<monitor_uri></monitor_uri>
+					<monitor_httpversion></monitor_httpversion>
+					<monitor_username></monitor_username>
+					<monitor_domain></monitor_domain>
+					<monitor_agentport>testlab-server</monitor_agentport>
+					<agent_check></agent_check>
+					<agent_port></agent_port>
+					<agent_inter></agent_inter>
+					<connection_timeout></connection_timeout>
+					<server_timeout></server_timeout>
+					<retries></retries>
+					<stats_enabled></stats_enabled>
+					<stats_username>admin</stats_username>
+					<stats_password>admin</stats_password>
+					<stats_uri></stats_uri>
+					<stats_scope></stats_scope>
+					<stats_realm></stats_realm>
+					<stats_admin></stats_admin>
+					<stats_node></stats_node>
+					<stats_desc></stats_desc>
+					<stats_refresh></stats_refresh>
+					<persist_stick_expire></persist_stick_expire>
+					<persist_stick_tablesize></persist_stick_tablesize>
+					<persist_stick_length></persist_stick_length>
+					<persist_stick_cookiename></persist_stick_cookiename>
+					<persist_sticky_type>none</persist_sticky_type>
+					<persist_cookie_enabled></persist_cookie_enabled>
+					<persist_cookie_name></persist_cookie_name>
+					<persist_cookie_mode>passive</persist_cookie_mode>
+					<persist_cookie_cachable></persist_cookie_cachable>
+					<persist_cookie_postonly></persist_cookie_postonly>
+					<persist_cookie_httponly></persist_cookie_httponly>
+					<persist_cookie_secure></persist_cookie_secure>
+					<haproxy_cookie_maxidle></haproxy_cookie_maxidle>
+					<haproxy_cookie_maxlife></haproxy_cookie_maxlife>
+					<haproxy_cookie_domains></haproxy_cookie_domains>
+					<haproxy_cookie_dynamic_cookie_key></haproxy_cookie_dynamic_cookie_key>
+					<strict_transport_security></strict_transport_security>
+					<cookie_attribute_secure></cookie_attribute_secure>
+					<email_level></email_level>
+					<email_to></email_to>
+					<id>100</id>
+				</item>
+			</ha_pools>
+			<configversion>00.58</configversion>
+			<email_mailers></email_mailers>
+			<dns_resolvers>
+				<item>
+					<name>Unifi</name>
+					<server>192.168.1.5</server>
+					<port>53</port>
+					<_index></_index>
+				</item>
+				<item>
+					<name>PiHole</name>
+					<server>192.168.1.6</server>
+					<port>53</port>
+					<_index></_index>
+				</item>
+			</dns_resolvers>
+			<terminate_on_reload></terminate_on_reload>
+			<maxconn>256</maxconn>
+			<logfacility>syslog</logfacility>
+			<loglevel>info</loglevel>
+			<localstatsport>2200</localstatsport>
+			<nbthread></nbthread>
+			<hard_stop_after></hard_stop_after>
+			<localstats_refreshtime></localstats_refreshtime>
+			<localstats_sticktable_refreshtime></localstats_sticktable_refreshtime>
+			<log-send-hostname>HaproxyMasterNode</log-send-hostname>
+			<ssldefaultdhparam>4096</ssldefaultdhparam>
+			<email_level></email_level>
+			<email_myhostname></email_myhostname>
+			<email_from></email_from>
+			<email_to></email_to>
+			<resolver_retries></resolver_retries>
+			<resolver_timeoutretry></resolver_timeoutretry>
+			<resolver_holdvalid></resolver_holdvalid>
+			<files>
+				<item>
+					<name>error</name>
+					<content>aGVsbG8=</content>
+					<_index></_index>
+				</item>
+			</files>
+			<advanced>c3NsLWRlZmF1bHQtYmluZC1jaXBoZXJzIEVDREhFLVJTQS1BRVMxMjgtR0NNLVNIQTI1NjpFQ0RIRS1FQ0RTQS1BRVMxMjgtR0NNLVNIQTI1NjpFQ0RIRS1SU0EtQUVTMjU2LUdDTS1TSEEzODQ6RUNESEUtRUNEU0EtQUVTMjU2LUdDTS1TSEEzODQ6REhFLVJTQS1BRVMxMjgtR0NNLVNIQTI1NjpESEUtRFNTLUFFUzEyOC1HQ00tU0hBMjU2OmtFREgrQUVTR0NNOkVDREhFLVJTQS1BRVMxMjgtU0hBMjU2OkVDREhFLUVDRFNBLUFFUzEyOC1TSEEyNTY6RUNESEUtUlNBLUFFUzEyOC1TSEE6RUNESEUtRUNEU0EtQUVTMTI4LVNIQTpFQ0RIRS1SU0EtQUVTMjU2LVNIQTM4NDpFQ0RIRS1FQ0RTQS1BRVMyNTYtU0hBMzg0OkVDREhFLVJTQS1BRVMyNTYtU0hBOkVDREhFLUVDRFNBLUFFUzI1Ni1TSEE6REhFLVJTQS1BRVMxMjgtU0hBMjU2OkRIRS1SU0EtQUVTMTI4LVNIQTpESEUtRFNTLUFFUzEyOC1TSEEyNTY6REhFLVJTQS1BRVMyNTYtU0hBMjU2OkRIRS1EU1MtQUVTMjU2LVNIQTpESEUtUlNBLUFFUzI1Ni1TSEE6IWFOVUxMOiFlTlVMTDohRVhQT1JUOiFERVM6IVJDNDohM0RFUzohTUQ1OiFQU0sNCnR1bmUuc3NsLm1heHJlY29yZCAxMzcwDQpzc2wtZGVmYXVsdC1iaW5kLW9wdGlvbnMgbm8tc3NsdjMgbm8tdGxzLXRpY2tldHM=</advanced>
+			<remotesyslog>/var/run/log</remotesyslog>
+			<sslcompatibilitymode>auto</sslcompatibilitymode>
+			<config>
+				<enable>off</enable>
+			</config>
+		</haproxy>
 		<miniupnpd>
 			<config>
 				<enable></enable>
@@ -2901,31 +4411,23 @@
 			<config>
 				<name>none</name>
 				<description><![CDATA[BIND Built-in ACL]]></description>
-				<row></row>
-				<row></row>
 			</config>
 			<config>
 				<name>any</name>
 				<description><![CDATA[BIND Built-in ACL]]></description>
-				<row></row>
-				<row></row>
 			</config>
 			<config>
 				<name>localhost</name>
 				<description><![CDATA[BIND Built-in ACL]]></description>
-				<row></row>
-				<row></row>
 			</config>
 			<config>
 				<name>localnets</name>
 				<description><![CDATA[BIND Built-in ACL]]></description>
-				<row></row>
-				<row></row>
 			</config>
 		</bindacls>
 		<bind>
 			<config>
-				<enable_bind></enable_bind>
+				<enable_bind>on</enable_bind>
 				<bind_ip_version>-4</bind_ip_version>
 				<listenon>All</listenon>
 				<bind_notify></bind_notify>
@@ -2955,7 +4457,7 @@
 		</shellcmdsettings>
 		<wireguard>
 			<config>
-				<enable>off</enable>
+				<enable>on</enable>
 				<keep_conf>yes</keep_conf>
 				<resolve_interval>300</resolve_interval>
 				<resolve_interval_track>no</resolve_interval_track>
@@ -2963,18 +4465,7 @@
 				<hide_secrets>no</hide_secrets>
 				<hide_peers>yes</hide_peers>
 			</config>
-			<tunnels>
-				<item>
-					<addresses></addresses>
-					<name>tun_wg0</name>
-					<enabled>yes</enabled>
-					<descr><![CDATA[Pure WGVPN tunnel - world01 ]]></descr>
-					<listenport>51820</listenport>
-					<privatekey>KLiQ1Nl82ogK6EYbZaNR/SCnHsrP2bEEqgfkXbT18Es=</privatekey>
-					<publickey>qK45rigtYq51qBSurtntAEzCJBPI/Uh4pHUnJD028wg=</publickey>
-					<mtu>1500</mtu>
-				</item>
-			</tunnels>
+			<tunnels></tunnels>
 			<peers>
 				<item>
 					<allowedips>
@@ -2985,16 +4476,47 @@
 						</row>
 					</allowedips>
 					<enabled>yes</enabled>
-					<tun>tun_wg0</tun>
+					<tun>unassigned</tun>
 					<descr><![CDATA[Pure WGVPN client - world01]]></descr>
 					<endpoint>sx040780-wg.pointtoserver.com</endpoint>
 					<port>51820</port>
 					<persistentkeepalive>21</persistentkeepalive>
-					<publickey>6F2wndiiFrRe0j4ClqDdOD8QN732vinzj5LCYRi9ITQ=</publickey>
+					<publickey>6F2wndDiFrRe0j4ClqDdOD8QN662vinzj5LCYRi9ITQ=</publickey>
 					<presharedkey></presharedkey>
 				</item>
 			</peers>
 		</wireguard>
+		<syslogng>
+			<config>
+				<enable>off</enable>
+				<interfaces>lan</interfaces>
+				<default_protocol>udp</default_protocol>
+				<default_port>5140</default_port>
+				<default_logdir>/var/syslog-ng</default_logdir>
+				<default_logfile>default.log</default_logfile>
+				<archive_frequency>daily</archive_frequency>
+				<compress_archives>on</compress_archives>
+				<compress_type>gz</compress_type>
+				<max_archives>30</max_archives>
+			</config>
+		</syslogng>
+		<syslogngadvanced>
+			<config>
+				<objecttype>destination</objecttype>
+				<objectname>_DEFAULT</objectname>
+				<objectparameters>eyBmaWxlKCIvdmFyL3N5c2xvZy1uZy9kZWZhdWx0LmxvZyIpOyB9Ow==</objectparameters>
+			</config>
+			<config>
+				<objecttype>log</objecttype>
+				<objectname>_DEFAULT</objectname>
+				<objectparameters>eyBzb3VyY2UoX0RFRkFVTFQpOyBkZXN0aW5hdGlvbihfREVGQVVMVCk7IH07</objectparameters>
+			</config>
+			<config>
+				<objecttype>source</objecttype>
+				<objectname>_DEFAULT</objectname>
+				<objectparameters>eyBpbnRlcm5hbCgpOyBzeXNsb2codHJhbnNwb3J0KHVkcCkgcG9ydCg1MTQwKSBpcCgxOTIuMTY4LjEuMjUzKSk7IH07</objectparameters>
+			</config>
+		</syslogngadvanced>
 	</installedpackages>
 	<virtualip></virtualip>
 	<dyndnses></dyndnses>
@@ -3047,7 +4569,7 @@
 	</vlans>
 	<ifgroups>
 		<ifgroupentry>
-			<members>opt3 opt4 opt8</members>
+			<members>opt3 opt4</members>
 			<descr><![CDATA[Group of VPN world connection interfaces]]></descr>
 			<ifname>VPN_world_grp</ifname>
 		</ifgroupentry>
@@ -3057,4 +4579,8 @@
 			<ifname>VPN_local_grp</ifname>
 		</ifgroupentry>
 	</ifgroups>
+	<dhcpbackend>kea</dhcpbackend>
+	<checkipservices>
+		<disable_factory_default></disable_factory_default>
+	</checkipservices>
 </pfsense>
