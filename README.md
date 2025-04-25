@@ -312,7 +312,7 @@ Navigate using the Proxmox PVE-01 web interface to  (should be https://192.168.1
 | Storage | `local-lvm` or `local-zfs`
 | Disk size (GiB) | `32`
 | Cache | `Default (No Cache)`
-| Discard | `☐`
+| Discard | `☑`
 | SSD emulation | `☐`
 | Async IO | `Default (io_uring)`
 | **CPU**
